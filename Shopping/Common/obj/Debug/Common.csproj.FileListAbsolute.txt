@@ -1,0 +1,6 @@
+C:\Users\Nam\source\repos\Shopping\Common\bin\Debug\Common.dll
+C:\Users\Nam\source\repos\Shopping\Common\bin\Debug\Common.pdb
+C:\Users\Nam\source\repos\Shopping\Common\obj\Debug\Common.csprojAssemblyReference.cache
+C:\Users\Nam\source\repos\Shopping\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\Nam\source\repos\Shopping\Common\obj\Debug\Common.dll
+C:\Users\Nam\source\repos\Shopping\Common\obj\Debug\Common.pdb

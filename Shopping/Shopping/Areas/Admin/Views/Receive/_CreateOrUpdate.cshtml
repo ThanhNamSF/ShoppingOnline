@@ -1,0 +1,492 @@
+﻿@model DataAccess.Models.ReceiveModel
+
+@{
+    var defaultGridPageSize = 20;
+    var gridPageSizes = "10,20,50,100,500";
+}
+
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <strong style="font-size: 16px">Thông tin chính</strong>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Ngày chứng từ</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.DocumentDateTime)" name="@Html.IdFor(model => model.DocumentDateTime)" value="@Model.DocumentDateTime" />
+                                    @Html.ValidationMessageFor(model => model.DocumentDateTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Mã phiếu nhập</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Nhà cung cấp</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.ReceiveFrom, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    @Html.ValidationMessageFor(model => model.ReceiveFrom, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="col-md-2">
+                                <label class="control-label">Ghi chú</label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Description, new { @class = "k-textbox", style = "width: 95%" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-4">
+                                <label class="control-label">Trạng thái</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="@Html.IdFor(model => model.Status)" style="width: 85%" />
+                                <input type="hidden" name="@Html.IdFor(model => model.Status)" value="@Html.AttributeEncode(Model.Status)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-group">
+            <strong style="font-size: 16px">Thông tin mở rộng</strong>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Vận chuyển</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Deliver, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    @Html.ValidationMessageFor(model => model.Deliver, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Người tạo</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.CreatedBy)" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.CreatedBy)" value="@Model.CreatedBy" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Người duyệt</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.ApprovedBy)" name="@Html.IdFor(model => model.ApprovedBy)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Tài xế</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Driver, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    @Html.ValidationMessageFor(model => model.Driver, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Ngày tạo</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.CreatedDateTime)" value="@Model.CreatedDateTime" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.CreatedDateTime)" value="@Model.CreatedDateTime" />
+                                    @Html.ValidationMessageFor(model => model.CreatedDateTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Ngày duyệt</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.ApprovedDateTime)" value="@Model.ApprovedDateTime" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.ApprovedDateTime)" value="@Model.ApprovedDateTime" />
+                                    @Html.ValidationMessageFor(model => model.ApprovedDateTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Biển số</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.CarNumber, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    @Html.ValidationMessageFor(model => model.CarNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (Model.Id > 0)
+        {
+            <div class="panel-group">
+                <strong style="font-size: 16px">Chi tiết sản phẩm</strong>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Mã sản phẩm</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                        @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Số lượng</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { min = 0 } })
+                                        <script>
+                                        $(document).ready(function() {
+                                            $("#@Html.IdFor(model => model.Quantity)").kendoNumericTextBox({
+                                                format: "#"
+                                            });
+                                        });
+                                        </script>
+                                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            @if (!Model.ApprovedBy.HasValue)
+                            {
+                                <div class="col-md-4">
+                                    <div id="window"></div>
+                                    <div class="pull-right">
+                                        <a href="#" id="button-add-product" class="btn bg-blue">
+                                            <i class="fa fa-plus-square"></i>
+                                            Thêm
+                                        </a>
+                                        <a href="#" id="button-search-product" class="btn bg-blue">
+                                            <i class="fa fa-plus-square"></i>
+                                            Chọn từ danh sách
+                                        </a>
+                                    </div>
+                                </div>
+                                <input type="submit" id="btnRefreshItems" style="display: none" />
+                                <script>
+                                $(document).ready(function () {
+                                    $('#btnRefreshItems').click(function() {
+                                        //refresh grid
+                                        var grid = $("#main-grid").data('kendoGrid');
+                                        grid.dataSource.read();
+                                        //return false to don't reload a page
+                                        return false;
+                                    });
+                                    $("#button-search-product").click(function () {
+                                        var productWindow = $("#window");
+                                        productWindow.kendoWindow({
+                                            title: "Chọn sản phẩm",
+                                            actions: ["Close"],
+                                            content: "/Admin/Receive/ProductAddPopup?receiveId=" +
+                                                "@Model.Id" +
+                                                "&btnId=btnRefreshItems&formId=receive-edit-form",
+                                            visible: false
+                                        }).data('kendoWindow').center();
+                                        productWindow.data("kendoWindow").open().maximize();
+                                    });
+                                });
+                                </script>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="main-grid"></div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <strong style="font-size: 16px">Vui lòng lưu thông tin trước khi nhập chi tiết!</strong>
+        }
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#@Html.IdFor(model => model.DocumentDateTime)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss"
+        });
+        var data = [
+            { text: "Mở", value: "False" },
+            { text: "Đã duyệt", value: "True" }
+        ];
+        $("#@Html.IdFor(model => model.Status)").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: data,
+            value: "@Model.Status",
+            enable: false
+        });
+
+        $("#@Html.IdFor(model => model.CreatedBy)").kendoDropDownList({
+            dataTextField: "UserName",
+            dataValueField: "Id",
+            enable: false,
+            dataSource: {
+                type: "json",
+                serverFiltering: true,
+                transport: {
+                    read: {
+                        dataType: "json",
+                        url: "/User/GetAllAdminUser"
+                    }
+                }
+            },
+            value: "@Model.CreatedBy"
+        });
+
+        $("#@Html.IdFor(model => model.ApprovedBy)").kendoDropDownList({
+            dataTextField: "UserName",
+            dataValueField: "Id",
+            enable: false,
+            dataSource: {
+                type: "json",
+                serverFiltering: true,
+                transport: {
+                    read: {
+                        dataType: "json",
+                        url: "/User/GetAllAdminUser"
+                    }
+                }
+            },
+            value: "@Model.ApprovedBy"
+        });
+
+        $("#@Html.IdFor(model => model.CreatedDateTime)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss"
+        }).data("kendoDatePicker").enable(false);
+
+        $("#@Html.IdFor(model => model.ApprovedDateTime)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss"
+        }).data("kendoDatePicker").enable(false);;
+
+
+        $(document).ready(function () {
+                        var current;
+                        $("#main-grid").kendoGrid({
+                            dataSource: {
+                                type: "json",
+                                autoSync: false,
+                                transport: {
+                                    read: {
+                                        url: "@Html.Raw(Url.Action("ReceiveDetailList", "Receive", new {receiveId = Model.Id}))", //edit
+                                        type: "POST",
+                                        dataType: "json"
+                                    },
+                                    update: {
+                                        url: "@Html.Raw(Url.Action("ReceiveDetailEdit", "Receive"))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: addAntiForgeryToken
+                                    },
+                                    destroy: {
+                                        url: "@Html.Raw(Url.Action("ReceiveDetailDelete", "Receive"))",
+                                        type: "POST",
+                                        dataType: "json"
+                                    },
+                                    parameterMap: function(data, operation) {
+                                        if (operation !== "read") {
+                                            return data;
+                                        } else {
+                                            //for some reasons only such "Filter" data be parsed
+                                            return JSON.stringify(data);
+                                        }
+                                    }
+                                },
+                                schema: {
+                                    data: "Data",
+                                    total: "Total",
+                                    errors: "Errors",
+                                    model: {
+                                        id: "Id",
+                                        fields: {
+                                            ProductImagePath: { editable: false, type: "string" },
+                                            ProductCode: { editable: false, type: "string" },
+                                            ProductName: { editable: false, type: "string" },
+                                            UnitPrice: { editable: true, type: "number" },
+                                            Quantity: { editable: true, type: "number" },
+                                            DiscountRate: { editable: true, type: "number" },
+                                            VatRate: { editable: true, type: "number" },
+                                            SubAmount: { editable: false, type: "number" },
+                                            DiscountAmount: { editable: false, type: "number" },
+                                            VatAmount: { editable: false, type: "number" },
+                                            Amount: { editable: false, type: "number" }
+                                        }
+                                    }
+                                },
+                                requestEnd: function(e) {
+                                    if (e.type === "create" || e.type === "update") {
+                                        this.read();
+                                    }
+                                },
+                                error: function(e) {
+                                    display_kendoui_grid_error(e);
+                                    // Cancel the changes
+                                    this.cancelChanges();
+                                },
+                                pageSize: @(defaultGridPageSize),
+                                serverPaging: true,
+                                serverFiltering: false,
+                                serverSorting: false
+                            },
+                            pageable: {
+                                refresh: true,
+                                pageSizes: [@(gridPageSizes)],
+                                messages: {
+                                    itemsPerPage: "Số hàng trên trang",
+                                    empty: "Không có chi tiết phiếu nhập kho",
+                                    display: "{0} - {1} của {2} chi tiết phiếu nhập kho",
+                                },
+                            },
+                            scrollable: false,
+                            columns: [
+                                {
+                                    template: '<img src="../../../..#=ProductImagePath#" width="100px" alt="image" />',
+                                    width: 120,
+                                    title: "Hình ảnh",
+                                    field: "ProductImagePath"
+                                }, {
+                                    field: "ProductCode",
+                                    title: "Mã sản phẩm"
+                                }, {
+                                    field: "ProductName",
+                                    title: "Tên sản phẩm"
+                                }, {
+                                    field: "UnitPrice",
+                                    title: "Đơn giá",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "Quantity",
+                                    title: "Số Lượng",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "SubAmount",
+                                    title: "Thành tiền",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "DiscountRate",
+                                    title: "%CK",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "DiscountAmount",
+                                    title: "Tiền CK",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "VatRate",
+                                    title: "%VAT",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "VatAmount",
+                                    title: "Tiền VAT",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "Amount",
+                                    title: "Tổng tiền",
+                                    format: "{0:#,#}"
+                                }, {
+                                    command: ["edit", "destroy"],
+                                    hidden: @((Model.ApprovedBy.HasValue).ToString().ToLower())
+                                }
+                            ],
+                            editable:"popup"
+                        });
+
+        });
+
+
+        $("#button-add-product").click(function(e) {
+            e.preventDefault();
+            var qty = $("#@Html.IdFor(model => model.Quantity)").val();
+            if (qty === '0' || qty==='') {
+                alert('Vui lòng nhập số lượng!');
+                return;
+            }
+            $.post("@Url.Action("AddReceiveDetail","Receive")",
+                    addAntiForgeryToken({
+                        ReceiveId: @Model.Id,
+                        ProductCode: $("#@Html.IdFor(model => model.ProductCode)").val(),
+                        Quantity: $("#@Html.IdFor(model => model.Quantity)").val()
+                    }))
+                .done(function(data) {
+                    if (data.IsProductSkusNotFound) {
+                        alert('Không tìm thấy sản phẩm.');
+                        return;
+                    }
+                    if (data.IsDupp) {
+                        alert('Sản phẩm đã tồn tại trong chi tiết phiếu nhập.');
+                        return;
+                    }
+                    var grid = $('#main-grid').data('kendoGrid');
+                    grid.dataSource.page(1);
+                })
+                .then(function() {
+
+                });
+        });
+    });
+
+</script>
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+﻿@model DataAccess.Models.ProductModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            @Model.Name
+        </h1>
+        <div class="pull-right">
+            <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Quay Lại</a>
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu
+            </button>
+            <button type="submit" name="ContinueEditing" value="true" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu và chỉnh sửa
+            </button>
+            <span id="button-delete" class="btn bg-red">
+                <i class="fa fa-trash-o"></i>
+                Xóa
+            </span>
+        </div>
+    </div>
+
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Xác nhận</h4>
+            </div>
+            @using (Html.BeginForm("Delete", "Product", new { id = Model.Id }))
+            {
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa sản phẩm này ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Không! cảm ơn.</button>
+                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $("#button-delete").click(function () {
+            $("#delete-modal").modal("show");
+        });
+    })
+    
+</script>
+

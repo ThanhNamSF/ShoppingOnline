@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataAccess.Entity
+{
+    public class Product : BaseEntity
+    {
+        [Required]
+        [StringLength(6)]
+        [Index(IsUnique = true)]
+        public string Code { get; set; }
+
+        [StringLength(250)]
+        public string Name { get; set; }
+
+        [StringLength(250)]
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public double Price { get; set; }
+
+        public float Promotion { get; set; }
+
+        public int Quantity { get; set; }
+
+        public string Detail { get; set; }
+
+        public DateTime CreatedDateTime { get; set; }
+        public int CreatedBy { get; set; }
+
+        public DateTime? UpdatedDateTime { get; set; }
+        public int? UpdatedBy { get; set; }
+
+        public bool Status { get; set; }
+
+        public string ImagePath { get; set; }
+
+        public int ProductCategoryId { get; set; }
+
+        public virtual ProductCategory ProductCategory { get; set; }
+
+        
+    }
+}

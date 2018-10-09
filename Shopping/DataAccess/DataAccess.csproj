@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D83EA4E9-6CCA-4F2C-A7A5-10276F591E6B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataAccess</RootNamespace>
+    <AssemblyName>DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.3.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.3.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entity\About.cs" />
+    <Compile Include="Entity\BaseEntity.cs" />
+    <Compile Include="Entity\Contact.cs" />
+    <Compile Include="Entity\Delivery.cs" />
+    <Compile Include="Entity\DeliveryDetail.cs" />
+    <Compile Include="Entity\FeedBack.cs" />
+    <Compile Include="Entity\Footer.cs" />
+    <Compile Include="Entity\New.cs" />
+    <Compile Include="Entity\NewCategory.cs" />
+    <Compile Include="Entity\Order.cs" />
+    <Compile Include="Entity\OrderDetail.cs" />
+    <Compile Include="Entity\Product.cs" />
+    <Compile Include="Entity\ProductCategory.cs" />
+    <Compile Include="Entity\Receive.cs" />
+    <Compile Include="Entity\ReceiveDetail.cs" />
+    <Compile Include="Entity\Slide.cs" />
+    <Compile Include="Entity\User.cs" />
+    <Compile Include="Infrastructure\AutoMapperProfile.cs" />
+    <Compile Include="Infrastructure\ServiceDependecyRegistration.cs" />
+    <Compile Include="Interfaces\IDeliveryService.cs" />
+    <Compile Include="Interfaces\IProductCategoryService.cs" />
+    <Compile Include="Interfaces\IProductService.cs" />
+    <Compile Include="Interfaces\IReceiveService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Migrations\201809290852403_InitializeDatabase.cs" />
+    <Compile Include="Migrations\201809290852403_InitializeDatabase.Designer.cs">
+      <DependentUpon>201809290852403_InitializeDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810031405588_UpdateDatabase.cs" />
+    <Compile Include="Migrations\201810031405588_UpdateDatabase.Designer.cs">
+      <DependentUpon>201810031405588_UpdateDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810031409287_AddTables.cs" />
+    <Compile Include="Migrations\201810031409287_AddTables.Designer.cs">
+      <DependentUpon>201810031409287_AddTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810031609454_EditProductUpdateBy.cs" />
+    <Compile Include="Migrations\201810031609454_EditProductUpdateBy.Designer.cs">
+      <DependentUpon>201810031609454_EditProductUpdateBy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810060909061_DeleteImageEnitity.cs" />
+    <Compile Include="Migrations\201810060909061_DeleteImageEnitity.Designer.cs">
+      <DependentUpon>201810060909061_DeleteImageEnitity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810070812278_UpdateReceive.cs" />
+    <Compile Include="Migrations\201810070812278_UpdateReceive.Designer.cs">
+      <DependentUpon>201810070812278_UpdateReceive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810071016204_EditReceive.cs" />
+    <Compile Include="Migrations\201810071016204_EditReceive.Designer.cs">
+      <DependentUpon>201810071016204_EditReceive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810091425549_UpdateRêciveDelivery.cs" />
+    <Compile Include="Migrations\201810091425549_UpdateRêciveDelivery.Designer.cs">
+      <DependentUpon>201810091425549_UpdateRêciveDelivery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810091547204_UpdateDelivery.cs" />
+    <Compile Include="Migrations\201810091547204_UpdateDelivery.Designer.cs">
+      <DependentUpon>201810091547204_UpdateDelivery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DeliveryDetailModel.cs" />
+    <Compile Include="Models\DeliveryModel.cs" />
+    <Compile Include="Models\ProductCategoryModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ReceiveDetailModel.cs" />
+    <Compile Include="Models\ReceiveModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DeliveryService.cs" />
+    <Compile Include="Services\ProductCategoryService.cs" />
+    <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\ReceiveService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="ShoppingContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201809290852403_InitializeDatabase.resx">
+      <DependentUpon>201809290852403_InitializeDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810031405588_UpdateDatabase.resx">
+      <DependentUpon>201810031405588_UpdateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810031409287_AddTables.resx">
+      <DependentUpon>201810031409287_AddTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810031609454_EditProductUpdateBy.resx">
+      <DependentUpon>201810031609454_EditProductUpdateBy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810060909061_DeleteImageEnitity.resx">
+      <DependentUpon>201810060909061_DeleteImageEnitity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810070812278_UpdateReceive.resx">
+      <DependentUpon>201810070812278_UpdateReceive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810071016204_EditReceive.resx">
+      <DependentUpon>201810071016204_EditReceive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810091425549_UpdateRêciveDelivery.resx">
+      <DependentUpon>201810091425549_UpdateRêciveDelivery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810091547204_UpdateDelivery.resx">
+      <DependentUpon>201810091547204_UpdateDelivery.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{08c5e219-2b2e-425c-96a7-c0ebffff5a67}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
