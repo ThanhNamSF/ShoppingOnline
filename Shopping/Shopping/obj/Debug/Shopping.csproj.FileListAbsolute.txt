@@ -236,3 +236,5 @@ D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.csproj.CoreCompileInputs.
 D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.csproj.CopyComplete
 D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.dll
 D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.pdb
+D:\ShoppingOnline\Shopping\Shopping\bin\PayPal.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\PayPal.xml
