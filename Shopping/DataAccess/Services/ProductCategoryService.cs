@@ -20,7 +20,7 @@ namespace DataAccess.Services
         }
         public IEnumerable<ProductCategoryModel> GetAllProductCategories()
         {
-            var productCategories = _shoppingContext.ProductCategories.AsNoTracking().Where(p => !p.Deleted).ToList();
+            var productCategories = _shoppingContext.ProductCategories.AsNoTracking().ToList();
             return Mapper.Map<List<ProductCategoryModel>>(productCategories);
         }
     }

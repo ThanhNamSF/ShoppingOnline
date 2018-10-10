@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class Order : BaseEntity
+    public class Order
     {
+        [Key]
+        public int Id { get; set; }
         public double Amount { get; set; }
 
         [Required]

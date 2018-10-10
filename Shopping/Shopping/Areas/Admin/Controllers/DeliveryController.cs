@@ -84,7 +84,7 @@ namespace Shopping.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var delivery = _deliveryService.GetDeliveryById(id);
-            if (delivery == null || delivery.Deleted)
+            if (delivery == null)
                 return RedirectToAction("List");
             return View(delivery);
         }
@@ -118,7 +118,7 @@ namespace Shopping.Areas.Admin.Controllers
             try
             {
                 var delivery = _deliveryService.GetDeliveryById(id);
-                if (delivery == null || delivery.Deleted)
+                if (delivery == null)
                     return RedirectToAction("List");
                 _deliveryService.DeleteDelivery(id);
                 SuccessNotification("Xóa phiếu xuất thành công");
@@ -278,7 +278,7 @@ namespace Shopping.Areas.Admin.Controllers
         public ActionResult Approve(int id)
         {
             var delivery = _deliveryService.GetDeliveryById(id);
-            if (delivery == null || delivery.Deleted == true)
+            if (delivery == null)
             {
                 return RedirectToAction("Create");
             }
@@ -313,7 +313,7 @@ namespace Shopping.Areas.Admin.Controllers
         public ActionResult Open(int id)
         {
             var delivery = _deliveryService.GetDeliveryById(id);
-            if (delivery == null || delivery.Deleted == true)
+            if (delivery == null)
             {
                 return RedirectToAction("Create");
             }

@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class ProductCategory : BaseEntity
+    public class ProductCategory
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         [StringLength(50)]
         public string Name { get; set; }

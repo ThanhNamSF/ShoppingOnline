@@ -52,7 +52,6 @@ namespace DataAccess.Models
         public bool Status { get; set; }
 
         public bool ContinueEditing { get; set; }
-        public bool Deleted { get; set; }
         public string ProductCode { get; set; }
         public int Quantity { get; set; }
     }

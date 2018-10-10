@@ -38,8 +38,6 @@ namespace DataAccess.Models
 
         public bool Status { get; set; }
 
-        public bool Deleted { get; set; }
-
         public bool ContinueEditing { get; set; }
 
         public int ProductCategoryId { get; set; }

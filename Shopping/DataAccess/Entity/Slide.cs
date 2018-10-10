@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class Slide : BaseEntity
+    public class Slide
     {
+        [Key]
+        public int Id { get; set; }
         public int DisplayOrder { get; set; }
 
         [StringLength(250)]

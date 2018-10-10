@@ -84,7 +84,7 @@ namespace Shopping.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var receive = _receiveService.GetReceiveById(id);
-            if (receive == null || receive.Deleted)
+            if (receive == null)
                 return RedirectToAction("List");
             return View(receive);
         }
@@ -118,7 +118,7 @@ namespace Shopping.Areas.Admin.Controllers
             try
             {
                 var receive = _receiveService.GetReceiveById(id);
-                if (receive == null || receive.Deleted)
+                if (receive == null)
                     return RedirectToAction("List");
                 _receiveService.DeleteReceive(id);
                 SuccessNotification("Xóa phiếu nhập thành công");
@@ -278,7 +278,7 @@ namespace Shopping.Areas.Admin.Controllers
         public ActionResult Approve(int id)
         {
             var receive = _receiveService.GetReceiveById(id);
-            if (receive == null || receive.Deleted == true)
+            if (receive == null)
             {
                 return RedirectToAction("Create");
             }
@@ -306,7 +306,7 @@ namespace Shopping.Areas.Admin.Controllers
         public ActionResult Open(int id)
         {
             var receive = _receiveService.GetReceiveById(id);
-            if (receive == null || receive.Deleted == true)
+            if (receive == null)
             {
                 return RedirectToAction("Create");
             }

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class OrderDetail : BaseEntity
+    public class OrderDetail
     {
+        [Key]
+        public int Id { get; set; }
         public double UnitPrice { get; set; }
 
         public int Quantity { get; set; }

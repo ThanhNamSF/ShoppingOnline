@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class Delivery : BaseEntity
+    public class Delivery
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         [StringLength(6)]
         [Index(IsUnique = true)]

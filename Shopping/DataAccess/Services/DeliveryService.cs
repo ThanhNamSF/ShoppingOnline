@@ -24,7 +24,7 @@ namespace DataAccess.Services
         public bool Approved(DeliveryModel deliveryModel)
         {
             var delivery = _shoppingContext.Deliveries.Find(deliveryModel.Id);
-            if (delivery == null || delivery.Deleted)
+            if (delivery == null)
             {
                 return false;
             }
@@ -44,10 +44,10 @@ namespace DataAccess.Services
 
         private bool DecreaseQuantityIntoProduct(Delivery delivery)
         {
-            var deliveryDetails = delivery.DeliveryDetails.Where(w => !w.Deleted);
+            var deliveryDetails = delivery.DeliveryDetails;
             foreach (var item in deliveryDetails)
             {
-                var product = _shoppingContext.Products.FirstOrDefault(w => !w.Deleted && w.Id == item.ProductId);
+                var product = _shoppingContext.Products.FirstOrDefault(w =>w.Id == item.ProductId);
                 if (product != null)
                 {
                     if (product.Quantity < item.Quantity)
@@ -62,7 +62,7 @@ namespace DataAccess.Services
         public bool CheckProductExistedInDelivery(int deliveryId, int productId)
         {
             var delivery = _shoppingContext.Deliveries.Find(deliveryId);
-            if (delivery != null && !delivery.Deleted)
+            if (delivery != null)
             {
                 return delivery.DeliveryDetails.Any(x => x.ProductId == productId);
             }
@@ -71,15 +71,15 @@ namespace DataAccess.Services
 
         public bool CheckQuantityInDeliveryDetail(int deliveryId)
         {
-            return _shoppingContext.DeliveryDetails.AsNoTracking().Any(w => w.Quantity < 0 && w.DeliveryId == deliveryId && !w.Deleted);
+            return _shoppingContext.DeliveryDetails.AsNoTracking().Any(w => w.Quantity < 0 && w.DeliveryId == deliveryId);
         }
 
         public void DeleteDelivery(int id)
         {
             var deliveryDeleted = _shoppingContext.Deliveries.Find(id);
-            if (deliveryDeleted != null && !deliveryDeleted.Deleted)
+            if (deliveryDeleted != null)
             {
-                deliveryDeleted.Deleted = true;
+                _shoppingContext.Deliveries.Remove(deliveryDeleted);
                 _shoppingContext.SaveChanges();
             }
         }
@@ -87,9 +87,9 @@ namespace DataAccess.Services
         public void DeleteDeliveryDetail(int id)
         {
             var deliveryDetail = _shoppingContext.DeliveryDetails.Find(id);
-            if (deliveryDetail == null || deliveryDetail.Deleted)
+            if (deliveryDetail == null)
                 return;
-            deliveryDetail.Deleted = true;
+            _shoppingContext.DeliveryDetails.Remove(deliveryDetail);
             _shoppingContext.SaveChanges();
         }
 
@@ -104,14 +104,14 @@ namespace DataAccess.Services
         public DeliveryDetailModel GetDeliveryDetailById(int id)
         {
             var deliveryDetail = _shoppingContext.DeliveryDetails.Find(id);
-            if (deliveryDetail != null && !deliveryDetail.Deleted)
+            if (deliveryDetail != null)
                 return Mapper.Map<DeliveryDetailModel>(deliveryDetail);
             return null;
         }
 
         public bool HasDeliveryDetail(int deliveryId)
         {
-            return _shoppingContext.DeliveryDetails.AsNoTracking().Any(w => !w.Deleted && w.DeliveryId == deliveryId);
+            return _shoppingContext.DeliveryDetails.AsNoTracking().Any(w =>w.DeliveryId == deliveryId);
         }
 
         public void InsertDelivery(DeliveryModel deliveryModel)
@@ -132,7 +132,7 @@ namespace DataAccess.Services
         public void Open(DeliveryModel deliveryModel)
         {
             var delivery = _shoppingContext.Deliveries.Find(deliveryModel.Id);
-            if (delivery == null || delivery.Deleted)
+            if (delivery == null)
             {
                 return;
             }
@@ -145,10 +145,10 @@ namespace DataAccess.Services
 
         private void IncreaseQuantityInProduct(Delivery delivery)
         {
-            var deliveryDetails = delivery.DeliveryDetails.Where(w => !w.Deleted);
+            var deliveryDetails = delivery.DeliveryDetails;
             foreach (var item in deliveryDetails)
             {
-                var product = _shoppingContext.Products.FirstOrDefault(p => !p.Deleted && p.Id == item.ProductId);
+                var product = _shoppingContext.Products.FirstOrDefault(p =>p.Id == item.ProductId);
                 if (product != null)
                 {
                     product.Quantity += item.Quantity;
@@ -158,7 +158,7 @@ namespace DataAccess.Services
 
         public PageList<DeliveryModel> SearchDeliveries(DeliverySearchCondition condition)
         {
-            var query = _shoppingContext.Deliveries.AsNoTracking().Where(p => !p.Deleted);
+            var query = _shoppingContext.Deliveries.AsNoTracking().AsQueryable();
             if (condition.ApprovedBy > 0)
             {
                 query = query.Where(p => p.ApprovedBy == condition.ApprovedBy);
@@ -185,7 +185,7 @@ namespace DataAccess.Services
 
         public PageList<DeliveryDetailModel> SearchDeliveryDetails(DeliveryDetailSearchCondition condition)
         {
-            var query = _shoppingContext.DeliveryDetails.AsNoTracking().Where(p => !p.Deleted);
+            var query = _shoppingContext.DeliveryDetails.AsNoTracking().AsQueryable();
             if (condition.DeliveryId > 0)
             {
                 query = query.Where(p => p.DeliveryId == condition.DeliveryId);
@@ -199,7 +199,7 @@ namespace DataAccess.Services
         public void UpdateDelivery(DeliveryModel deliveryModel)
         {
             var deliveryUpdated = _shoppingContext.Deliveries.Find(deliveryModel.Id);
-            if (deliveryUpdated != null && !deliveryUpdated.Deleted)
+            if (deliveryUpdated != null)
             {
                 deliveryUpdated = Mapper.Map<Delivery>(deliveryModel);
                 _shoppingContext.Deliveries.AddOrUpdate(deliveryUpdated);
@@ -210,7 +210,7 @@ namespace DataAccess.Services
         public void UpdateDeliveryDetail(DeliveryDetailModel deliveryDetailModel)
         {
             var deliveryDetail = _shoppingContext.DeliveryDetails.Find(deliveryDetailModel.Id);
-            if (deliveryDetail == null || deliveryDetail.Deleted)
+            if (deliveryDetail == null)
                 return;
             deliveryDetail = Mapper.Map<DeliveryDetail>(deliveryDetailModel);
             _shoppingContext.DeliveryDetails.AddOrUpdate(deliveryDetail);

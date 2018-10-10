@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class ReceiveDetail : BaseEntity
+    public class ReceiveDetail
     {
+        [Key]
+        public int Id { get; set; }
         public double UnitPrice { get; set; }
         public int Quantity { get; set; }
         public float DiscountRate { get; set; }

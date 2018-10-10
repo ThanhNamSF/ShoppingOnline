@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class Footer : BaseEntity
+    public class Footer 
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         public string Content { get; set; }
 

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class New : BaseEntity
+    public class New
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         [StringLength(250)]
         public string Title { get; set; }

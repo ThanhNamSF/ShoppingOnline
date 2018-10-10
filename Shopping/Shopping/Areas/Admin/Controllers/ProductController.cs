@@ -76,7 +76,7 @@ namespace Shopping.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var product = _productService.GetProductById(id);
-            if (product == null || product.Deleted)
+            if (product == null)
                 return RedirectToAction("List");
             return View(product);
         }
@@ -110,7 +110,7 @@ namespace Shopping.Areas.Admin.Controllers
             try
             {
                 var product = _productService.GetProductById(id);
-                if (product == null || product.Deleted)
+                if (product == null)
                     return RedirectToAction("List");
                 _productService.DeleteProduct(id);
                 SuccessNotification("Xóa sản phẩm thành công.");

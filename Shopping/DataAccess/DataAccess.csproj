@@ -81,7 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\About.cs" />
-    <Compile Include="Entity\BaseEntity.cs" />
     <Compile Include="Entity\Contact.cs" />
     <Compile Include="Entity\Delivery.cs" />
     <Compile Include="Entity\DeliveryDetail.cs" />
@@ -140,6 +139,10 @@
     <Compile Include="Migrations\201810091547204_UpdateDelivery.Designer.cs">
       <DependentUpon>201810091547204_UpdateDelivery.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810101256051_RemoveSoftDeleted.cs" />
+    <Compile Include="Migrations\201810101256051_RemoveSoftDeleted.Designer.cs">
+      <DependentUpon>201810101256051_RemoveSoftDeleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DeliveryDetailModel.cs" />
     <Compile Include="Models\DeliveryModel.cs" />
@@ -187,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810091547204_UpdateDelivery.resx">
       <DependentUpon>201810091547204_UpdateDelivery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810101256051_RemoveSoftDeleted.resx">
+      <DependentUpon>201810101256051_RemoveSoftDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -21,7 +21,7 @@ namespace DataAccess.Services
 
         public IEnumerable<UserModel> GetAllUserByRole(int role)
         {
-            var users = _shoppingContext.Users.AsNoTracking().Where(p => !p.Deleted && p.Role == role).ToList();
+            var users = _shoppingContext.Users.AsNoTracking().Where(p =>p.Role == role).ToList();
             return Mapper.Map<List<UserModel>>(users);
         }
 

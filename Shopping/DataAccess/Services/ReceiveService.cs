@@ -25,7 +25,7 @@ namespace DataAccess.Services
         public void Approved(ReceiveModel receiveModel)
         {
             var receive = _shoppingContext.Receives.Find(receiveModel.Id);
-            if (receive == null || receive.Deleted)
+            if (receive == null)
             {
                 return;
             }
@@ -39,10 +39,10 @@ namespace DataAccess.Services
 
         private void AddQuantityIntoProduct(Receive receive)
         {
-            var receiveDetails = receive.ReceiveDetails.Where(w => !w.Deleted);
+            var receiveDetails = receive.ReceiveDetails;
             foreach (var item in receiveDetails)
             {
-                var product = _shoppingContext.Products.FirstOrDefault(p => !p.Deleted && p.Id == item.ProductId);
+                var product = _shoppingContext.Products.FirstOrDefault(p =>p.Id == item.ProductId);
                 if (product != null)
                 {
                     product.Quantity += item.Quantity;
@@ -53,7 +53,7 @@ namespace DataAccess.Services
         public bool CheckProductExistedInReceive(int receiveId, int productId)
         {
             var receive = _shoppingContext.Receives.Find(receiveId);
-            if (receive != null && !receive.Deleted)
+            if (receive != null)
             {
                 return receive.ReceiveDetails.Any(x => x.ProductId == productId);
             }
@@ -62,15 +62,15 @@ namespace DataAccess.Services
 
         public bool CheckQuantityInReceiveDetail(int receiveId)
         {
-            return _shoppingContext.ReceiveDetails.AsNoTracking().Any(w => w.Quantity < 0 && w.ReceiveId == receiveId && !w.Deleted);
+            return _shoppingContext.ReceiveDetails.AsNoTracking().Any(w => w.Quantity < 0 && w.ReceiveId == receiveId);
         }
 
         public void DeleteReceive(int id)
         {
             var receiveDeleted = _shoppingContext.Receives.Find(id);
-            if (receiveDeleted != null && !receiveDeleted.Deleted)
+            if (receiveDeleted != null)
             {
-                receiveDeleted.Deleted = true;
+                _shoppingContext.Receives.Remove(receiveDeleted);
                 _shoppingContext.SaveChanges();
             }
         }
@@ -78,9 +78,9 @@ namespace DataAccess.Services
         public void DeleteReceiveDetail(int id)
         {
             var receiveDetail = _shoppingContext.ReceiveDetails.Find(id);
-            if(receiveDetail == null || receiveDetail.Deleted)
+            if(receiveDetail == null)
                 return;
-            receiveDetail.Deleted = true;
+            _shoppingContext.ReceiveDetails.Remove(receiveDetail);
             _shoppingContext.SaveChanges();
 
         }
@@ -96,14 +96,14 @@ namespace DataAccess.Services
         public ReceiveDetailModel GetReceiveDetailById(int id)
         {
             var receiveDetail = _shoppingContext.ReceiveDetails.Find(id);
-            if (receiveDetail != null && !receiveDetail.Deleted)
+            if (receiveDetail != null)
                 return Mapper.Map<ReceiveDetailModel>(receiveDetail);
             return null;
         }
 
         public bool HasReceiveDetail(int receiveId)
         {
-            return _shoppingContext.ReceiveDetails.AsNoTracking().Any(w => !w.Deleted && w.ReceiveId == receiveId);
+            return _shoppingContext.ReceiveDetails.AsNoTracking().Any(w => w.ReceiveId == receiveId);
         }
 
         public void InsertReceiveDetail(ReceiveDetailModel receiveDetailModel)
@@ -124,7 +124,7 @@ namespace DataAccess.Services
         public bool Open(ReceiveModel receiveModel)
         {
             var receive = _shoppingContext.Receives.Find(receiveModel.Id);
-            if (receive == null || receive.Deleted)
+            if (receive == null)
             {
                 return false;
             }
@@ -142,10 +142,10 @@ namespace DataAccess.Services
 
         private bool DecreaseQuantityInProduct(Receive receive)
         {
-            var receiveDetails = receive.ReceiveDetails.Where(w => !w.Deleted);
+            var receiveDetails = receive.ReceiveDetails;
             foreach (var item in receiveDetails)
             {
-                var product = _shoppingContext.Products.FirstOrDefault(p => !p.Deleted && p.Id == item.ProductId);
+                var product = _shoppingContext.Products.FirstOrDefault(p =>p.Id == item.ProductId);
                 if (product != null)
                 {
                     if (product.Quantity < item.Quantity)
@@ -159,7 +159,7 @@ namespace DataAccess.Services
 
         public PageList<ReceiveDetailModel> SearchReceiveDetails(ReceiveDetailSearchCondition condition)
         {
-            var query = _shoppingContext.ReceiveDetails.AsNoTracking().Where(p => !p.Deleted);
+            var query = _shoppingContext.ReceiveDetails.AsNoTracking().AsQueryable();
             if (condition.ReceiveId > 0)
             {
                 query = query.Where(p => p.ReceiveId == condition.ReceiveId);
@@ -172,7 +172,7 @@ namespace DataAccess.Services
 
         public PageList<ReceiveModel> SearchReceives(ReceiveSearchCondition condition)
         {
-            var query = _shoppingContext.Receives.AsNoTracking().Where(p => !p.Deleted);
+            var query = _shoppingContext.Receives.AsNoTracking().AsQueryable();
             if (condition.ApprovedBy > 0)
             {
                 query = query.Where(p => p.ApprovedBy == condition.ApprovedBy);
@@ -200,7 +200,7 @@ namespace DataAccess.Services
         public void UpdateReceive(ReceiveModel receiveModel)
         {
             var receiveUpdated = _shoppingContext.Receives.Find(receiveModel.Id);
-            if (receiveUpdated != null && !receiveUpdated.Deleted)
+            if (receiveUpdated != null)
             {
                 receiveUpdated = Mapper.Map<Receive>(receiveModel);
                 _shoppingContext.Receives.AddOrUpdate(receiveUpdated);
@@ -211,7 +211,7 @@ namespace DataAccess.Services
         public void UpdateReceiveDetail(ReceiveDetailModel receiveDetailModel)
         {
             var receiveDetail = _shoppingContext.ReceiveDetails.Find(receiveDetailModel.Id);
-            if (receiveDetail == null || receiveDetail.Deleted)
+            if (receiveDetail == null)
                 return;
             receiveDetail = Mapper.Map<ReceiveDetail>(receiveDetailModel);
             _shoppingContext.ReceiveDetails.AddOrUpdate(receiveDetail);

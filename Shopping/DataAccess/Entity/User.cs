@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class User : BaseEntity
+    public class User
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         [StringLength(32)]
         [Index(IsUnique = true)]

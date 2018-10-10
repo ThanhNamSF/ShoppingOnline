@@ -21,7 +21,7 @@ namespace DataAccess.Services
 
         public PageList<ProductModel> SearchProducts(ProductSearchCondition condition)
         {
-            var query = _shoppingContext.Products.AsNoTracking().Where(p => !p.Deleted);
+            var query = _shoppingContext.Products.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(condition.Name))
             {
                 query = query.Where(p => p.Name.ToLower().Contains(condition.Name.ToLower()));
@@ -64,9 +64,9 @@ namespace DataAccess.Services
         public void DeleteProduct(int id)
         {
             var productDeleted = _shoppingContext.Products.Find(id);
-            if (productDeleted != null && !productDeleted.Deleted)
+            if (productDeleted != null)
             {
-                productDeleted.Deleted = true;
+                _shoppingContext.Products.Remove(productDeleted);
                 _shoppingContext.SaveChanges();
             }
             
@@ -75,7 +75,7 @@ namespace DataAccess.Services
         public void UpdateProduct(ProductModel productModel)
         {
             var productUpdated = _shoppingContext.Products.Find(productModel.Id);
-            if (productUpdated != null && !productUpdated.Deleted)
+            if (productUpdated != null)
             {
                 productUpdated = Mapper.Map<Product>(productModel);
                 _shoppingContext.Products.AddOrUpdate(productUpdated);
@@ -87,7 +87,7 @@ namespace DataAccess.Services
         {
             var product = _shoppingContext.Products.AsNoTracking().FirstOrDefault(p =>
                 p.Code.ToLower().Equals(code.ToLower()));
-            if (product != null && !product.Deleted)
+            if (product != null)
                 return Mapper.Map<ProductModel>(product);
             return null;
         }
