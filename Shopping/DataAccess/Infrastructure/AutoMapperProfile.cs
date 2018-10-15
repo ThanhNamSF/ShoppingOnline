@@ -25,6 +25,10 @@ namespace DataAccess.Infrastructure
             CreateMap<DeliveryModel, Delivery>();
             CreateMap<DeliveryDetailModel, DeliveryDetail>();
             CreateMap<DeliveryDetail, DeliveryDetailModel>();
+            CreateMap<Order, OrderModel>();
+            CreateMap<OrderModel, Order>();
+            CreateMap<OrderDetail, OrderDetailModel>();
+            CreateMap<OrderDetailModel, OrderDetail>();
         }
     }
 }

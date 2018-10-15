@@ -10,5 +10,7 @@ namespace Common.Constants
     {
         public const string USER_SESSION = "USER_SESSION";
         public const string ApplicationJson = "application/json";
+        public const string CartSession = "CartSession";
+        public const double USDRatio = 22000;
     }
 }

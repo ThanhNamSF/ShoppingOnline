@@ -1,16 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Common.Constants;
+using DataAccess.Interfaces;
+using DataAccess.Models;
 using PayPal.Api;
+using Shopping.Helpers;
+using Shopping.Models;
 
 namespace Shopping.Controllers
 {
-    public class PayPalController : Controller
+    public class PaypalController : Controller
     {
-        // GET: PayPal
+        private readonly IOrderService _orderService;
+        private static ReceiverInformation _receiverInformation;
+
+        public PaypalController(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
+        // GET: Paypal
         public ActionResult Index()
         {
             return View();
@@ -27,18 +38,35 @@ namespace Shopping.Controllers
 
         private Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
-
+            var cart = Session[Values.CartSession] as List<CartItem>;
+            if (cart == null || cart.Count == 0)
+                return null;
             //similar to credit card create itemlist and add item objects to it
             var itemList = new ItemList() { items = new List<Item>() };
+            double subAmount = 0; //USD
+            double taxAmount = 1; //USD
+            double shippingAmount = 1; //USD
 
-            itemList.items.Add(new Item()
+            foreach (var item in cart)
             {
-                name = "Item Name",
-                currency = "USD",
-                price = "5",
-                quantity = "1",
-                sku = "sku"
-            });
+                itemList.items.Add(new Item()
+                {
+                    name = item.Product.Name,
+                    currency = "USD",
+                    price = string.Format("{0:n}" ,item.Product.Price / Values.USDRatio),
+                    quantity = item.Quantity.ToString(),
+                    sku = item.Product.Code
+                });
+                subAmount += (item.Product.Price / Values.USDRatio) * item.Quantity;
+            }
+            //itemList.items.Add(new Item()
+            //{
+            //    name = "Item Name",
+            //    currency = "USD",
+            //    price = "5",
+            //    quantity = "1",
+            //    sku = "sku"
+            //});
 
             var payer = new Payer() { payment_method = "paypal" };
 
@@ -52,16 +80,16 @@ namespace Shopping.Controllers
             // similar as we did for credit card, do here and create details object
             var details = new Details()
             {
-                tax = "1",
-                shipping = "1",
-                subtotal = "5"
+                tax = string.Format("{0:n}", taxAmount),
+                shipping = string.Format("{0:n}", shippingAmount),
+                subtotal = string.Format("{0:n}", subAmount)
             };
 
             // similar as we did for credit card, do here and create amount object
             var amount = new Amount()
             {
                 currency = "USD",
-                total = "7", // Total must be equal to sum of shipping, tax and subtotal.
+                total = string.Format("{0:n}", taxAmount + shippingAmount + subAmount), // Total must be equal to sum of shipping, tax and subtotal.
                 details = details
             };
 
@@ -70,7 +98,7 @@ namespace Shopping.Controllers
             transactionList.Add(new Transaction()
             {
                 description = "Transaction description.",
-                invoice_number = "your invoice number",
+                invoice_number = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
                 amount = amount,
                 item_list = itemList
             });
@@ -186,7 +214,7 @@ namespace Shopping.Controllers
                 //to authenticate the payment to facilitator account.
                 //An access token could be an alphanumeric string
 
-                APIContext apiContext = Helpers.Configuration.GetAPIContext();
+                APIContext apiContext = Configuration.GetAPIContext();
 
                 //Create is a Payment class function which actually sends the payment details
                 //to the paypal API for the payment. The function is passed with the ApiContext
@@ -203,16 +231,27 @@ namespace Shopping.Controllers
             }
             catch (PayPal.PayPalException ex)
             {
-                
                 return View("FailureView");
             }
 
             return View("SuccessView");
         }
-        public ActionResult PaymentWithPaypal()
+
+        public ActionResult PaymentWithPaypal(ReceiverInformation receiverInformation)
         {
+            if (TryValidateModel(receiverInformation))
+            {
+                _receiverInformation = new ReceiverInformation
+                {
+                    Address = receiverInformation.Address,
+                    FullName = receiverInformation.FullName,
+                    Street = receiverInformation.Street,
+                    MobileNumber = receiverInformation.MobileNumber
+                };
+            }
+                
             //getting the apiContext as earlier
-            APIContext apiContext = Helpers.Configuration.GetAPIContext();
+            APIContext apiContext = Configuration.GetAPIContext();
 
             try
             {
@@ -284,7 +323,40 @@ namespace Shopping.Controllers
                 return View("FailureView");
             }
 
-            return View("SuccessView");
+            InsertOrder();
+            return RedirectToAction("List", "Product", new {categoryId = 1});
+        }
+
+        private void InsertOrder()
+        {
+            var cart = Session[Values.CartSession] as List<CartItem>;
+            if (cart != null && cart.Count > 0)
+            {
+                var order = new OrderModel()
+                {
+                    ReceiverName = _receiverInformation.FullName,
+                    ReceiverPhone = _receiverInformation.MobileNumber,
+                    ReceiverAddress = _receiverInformation.Address + ", " + _receiverInformation.Street,
+                    CreatedDateTime = DateTime.Now,
+                    Amount = cart.Sum(item => item.Product.Price * item.Quantity),
+                    Status = false,
+                    UserId = 2 //Edit later
+                };
+                _orderService.InsertOrder(order);
+
+                foreach (var item in cart)
+                {
+                    var orderDetail = new OrderDetailModel()
+                    {
+                        OrderId = order.Id,
+                        ProductId = item.Product.Id,
+                        UnitPrice = item.Product.Price,
+                        Quantity = item.Quantity
+                    };
+                    _orderService.InsertOrderDetail(orderDetail);
+                }
+                Session.Remove(Values.CartSession);
+            }
         }
     }
 }

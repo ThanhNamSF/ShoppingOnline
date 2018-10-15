@@ -20,6 +20,7 @@ namespace DataAccess.Infrastructure
             container.Register<IProductCategoryService, ProductCategoryService>(Lifestyle.Scoped);
             container.Register<IReceiveService, ReceiveService>(Lifestyle.Scoped);
             container.Register<IDeliveryService, DeliveryService>(Lifestyle.Scoped);
+            container.Register<IOrderService, OrderService>(Lifestyle.Scoped);
         }
     }
 }
