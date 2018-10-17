@@ -33,16 +33,18 @@ namespace DataAccess.Entity
 
         public DateTime CreatedDateTime { get; set; }
 
-        [ForeignKey("User")]
+        
         public int UserId { get; set; }
-        [ForeignKey("Approver")]
+        
         public int? ApprovedId { get; set; }
-        [ForeignKey("Deliver")]
-        public int? DiliveredId { get; set; }
+        
+        public int? DeliveredId { get; set; }
 
+        [ForeignKey("UserId")]
         public virtual User User { get; set; }
-
+        [ForeignKey("ApprovedId")]
         public virtual User Approver { get; set; }
+        [ForeignKey("DeliveredId")]
         public virtual User Deliver { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

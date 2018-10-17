@@ -95,6 +95,7 @@
     <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -150,6 +151,45 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.5.1\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.5.1\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.5.1\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.5.1\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.5.1\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting, Version=12.2.18.1017, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Telerik.Reporting.Services.WebApi, Version=12.2.18.1017, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.Mvc, Version=12.2.18.1017, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Diagnostics.DiagnosticSource">
@@ -194,11 +234,13 @@
     <Compile Include="Areas\Admin\Controllers\ProductCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReceiveController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaypalController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -208,6 +250,18 @@
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ReceiverInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\InventoryReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\InventoryReport.Designer.cs">
+      <DependentUpon>InventoryReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RevenueReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\RevenueReport.Designer.cs">
+      <DependentUpon>RevenueReport.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AdminTLE\bower_components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css" />
@@ -9093,6 +9147,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="ReportViewer\js\telerikReportViewer-11.2.17.1025.js" />
+    <Content Include="ReportViewer\js\telerikReportViewer-11.2.17.1025.min.js" />
+    <Content Include="ReportViewer\js\telerikReportViewer.kendo-11.2.17.1025.min.js" />
+    <Content Include="ReportViewer\styles\blueopal\loading.gif" />
+    <Content Include="ReportViewer\styles\blueopal\sprite.png" />
+    <Content Include="ReportViewer\styles\kendo.blueopal.min.css" />
+    <Content Include="ReportViewer\styles\kendo.common.min.css" />
+    <Content Include="ReportViewer\styles\telerikReportViewer.css" />
+    <Content Include="ReportViewer\templates\telerikReportViewerTemplate-FA.html" />
+    <Content Include="ReportViewer\templates\telerikReportViewerTemplate-sass.html" />
+    <Content Include="ReportViewer\templates\telerikReportViewerTemplate.html" />
     <Content Include="Scripts\admin.common.js" />
     <Content Include="Scripts\angular-moment.js" />
     <Content Include="Scripts\angular-moment.min.js" />
@@ -10891,6 +10956,7 @@
     <Content Include="Content\web\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\web\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\web\images\Thumbs.db" />
+    <Content Include="Areas\Admin\Views\Report\ProductInventoryReport.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -10936,6 +11002,7 @@
     <Folder Include="Areas\Admin\Views\User\" />
     <Folder Include="Data\files\" />
     <Folder Include="Data\flash\" />
+    <Folder Include="Views\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -10965,6 +11032,15 @@
       <Project>{d83ea4e9-6cca-4f2c-a7a5-10276f591e6b}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\InventoryReport.resx">
+      <DependentUpon>InventoryReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RevenueReport.resx">
+      <DependentUpon>RevenueReport.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

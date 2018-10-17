@@ -51,6 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchConditions\DeliveryDetailSearchCondition.cs" />
     <Compile Include="SearchConditions\DeliverySearchCondition.cs" />
+    <Compile Include="SearchConditions\InventorySearchConditionReport.cs" />
     <Compile Include="SearchConditions\ProductSearchCondition.cs" />
     <Compile Include="SearchConditions\ReceiveDetailSearchCondition.cs" />
     <Compile Include="SearchConditions\ReceiveSearchCondition.cs" />

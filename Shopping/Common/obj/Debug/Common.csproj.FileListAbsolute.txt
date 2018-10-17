@@ -6,7 +6,7 @@ C:\Users\Nam\source\repos\Shopping\Common\obj\Debug\Common.dll
 C:\Users\Nam\source\repos\Shopping\Common\obj\Debug\Common.pdb
 D:\ShoppingOnline\Shopping\Common\bin\Debug\Common.dll
 D:\ShoppingOnline\Shopping\Common\bin\Debug\Common.pdb
-D:\ShoppingOnline\Shopping\Common\obj\Debug\Common.csprojAssemblyReference.cache
 D:\ShoppingOnline\Shopping\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 D:\ShoppingOnline\Shopping\Common\obj\Debug\Common.dll
 D:\ShoppingOnline\Shopping\Common\obj\Debug\Common.pdb
+D:\ShoppingOnline\Shopping\Common\obj\Debug\Common.csprojAssemblyReference.cache

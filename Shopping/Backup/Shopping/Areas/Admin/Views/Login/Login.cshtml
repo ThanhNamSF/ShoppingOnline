@@ -1,0 +1,121 @@
+﻿@using System.Web.UI.WebControls
+@model DataAccess.Models.UserModel
+@{
+    Layout = null;
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/Content/AdminTLE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/AdminTLE/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/AdminTLE/bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/AdminTLE/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/AdminTLE/plugins/iCheck/square/blue.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="~/Content/KendoUI/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/Content/KendoUI/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="~/Content/KendoUI/styles/kendo.default.mobile.min.css" />
+    <link rel="stylesheet" href="~/Content/MyStyle.css"/>
+</head>
+<body class="hold-transition login-page">
+    <span id="notification" style="display:none;"></span>
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#"><b>Admin</b></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+            @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group has-feedback">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "User Name" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(model => Model.Password, new { @class = "form-control", placeholder = "Password" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox"> Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            }
+            <!-- /.social-auth-links -->
+            <a href="#">I forgot my password</a><br>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <script src="~/Content/AdminTLE/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/AdminTLE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/AdminTLE/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/Content/KendoUI/js/kendo.all.min.js"></script>
+
+    @*<script id="errorTemplate" type="text/x-kendo-template">
+        <div id="wrong" class="wrong-pass">
+            <img src="@Url.Content("~/Content/Resources/Icons/error-icon.png")" />
+            <h3>#= title #</h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+    <script id="successTemplate" type="text/x-kendo-template">
+        <div class="upload-success">
+            <img src="@Url.Content("~/Content/Resources/Icons/success-icon.png")" />
+            <h3>#= message #</h3>
+        </div>
+    </script>*@
+
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%' /* optional */
+                });
+            });
+        });
+
+        //var notification = $("#notification").kendoNotification({
+        //    position: {
+        //        pinned: true,
+        //        top: 10,
+        //        right: 20
+        //    },
+        //    autoHideAfter: 0,
+        //    stacking: "down",
+        //    templates: [{
+        //        type: "error",
+        //        template: $("#errorTemplate").html()
+        //    }, {
+        //        type: "upload-success",
+        //        template: $("#successTemplate").html()
+        //    }]
+
+        //}).data("kendoNotification");
+
+        //notification.show({
+        //    message: "Login failed!"
+        //}, "upload-success");
+
+    </script>
+</body>
+</html>

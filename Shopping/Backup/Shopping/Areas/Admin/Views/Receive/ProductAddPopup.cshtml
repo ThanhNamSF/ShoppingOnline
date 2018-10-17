@@ -1,0 +1,196 @@
+﻿@model Common.SearchConditions.ProductSearchCondition
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_PopupLayout.cshtml";
+    var defaultGridPageSize = 20;
+    var gridPageSizes = "10,20,50,100,500";
+}
+
+@if (ViewBag.RefreshPage == true)
+{
+    <script type="text/javascript">
+        var grid = $("#main-grid").data('kendoGrid');
+        grid.dataSource.read();
+        $("#window").data("kendoWindow").close();
+    </script>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Danh mục sản phẩm
+        </h1>
+        <button type="button" id="button-search" class="btn btn-primary pull-right">
+            <i class="fa fa-search"></i>
+            Tìm kiếm
+        </button>
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Mã sản phẩm</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="PopupProductCode" class="k-textbox" style="width: 80%" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Tên sản phẩm</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="ProductName" class="k-textbox" style="width: 80%" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        <label class="control-label">Nhóm sản phẩm</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="@Html.IdFor(model => model.CategoryId)" name="@Html.IdFor(model => model.CategoryId)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="product-grid"></div>
+                        <input type="text" style="display: none" name="ProductIds" id="ProductIds" />
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" name="save" class="btn bg-blue">
+                            <i class="fa fa-floppy-o"></i>
+                            Lưu & Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#@Html.IdFor(model => model.CategoryId)").kendoDropDownList({
+                dataTextField: "Name",
+                dataValueField: "Id",
+                dataSource: {
+                    type: "json",
+                    serverFiltering: true,
+                    transport: {
+                        read: {
+                            dataType: "json",
+                            url: "/ProductCategory/GetAllProductCategories"
+                        }
+                    }
+                },
+                value: "@Model.CategoryId"
+            });
+
+            $('#button-search').click(function () {
+                var grid = $('#product-grid').data('kendoGrid');
+                grid.dataSource.page(1); //new search. Set page size to 1
+                return false;
+            });
+
+            function additionalData() {
+                var data = {
+                    Name: $('#ProductName').val(),
+                    Code: $('#PopupProductCode').val(),
+                    CategoryId: $('#@Html.IdFor(model => model.CategoryId)').val()
+                };
+                addAntiForgeryToken(data);
+                return data;
+            }
+
+            function onChange(arg) {
+                $("#ProductIds").val(this.selectedKeyNames());
+                console.log(this.selectedKeyNames());
+                console.log($("#ProductIds").val());
+                //kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
+            }
+
+            $("#product-grid").kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: {
+                            url: "@Html.Raw(Url.Action("SearchProducts", "Receive"))",
+                            type: "POST",
+                            dataType: "json",
+                            data: additionalData
+                        }
+                    },
+                    schema: {
+                        data: "Data",
+                        total: "Total",
+                        errors: "Errors",
+                        model: {
+                            id: "Id"
+                        }
+                    },
+                    pageSize: @(defaultGridPageSize),
+                    serverPaging: true
+                },
+                pageable: {
+                    refresh: true,
+                    pageSizes: [@(gridPageSizes)],
+                    messages: {
+                        itemsPerPage: "Số sản phẩm trên trang",
+                        empty: "Không có sản phẩm",
+                        display: "{0} - {1} của {2} sản phẩm",
+                    }
+                },
+                editable: {
+                    confirmation: "Delete",
+                    mode: "inline"
+                },
+                filterable: false,
+                sortable: false,
+                persistSelection: true,
+                change: onChange,
+                columns: [{
+                    selectable: true, width: "50px"
+                }, {
+                    template: '<img src="../../../..#=ImagePath#" width="100px" alt="image" />',
+                    width: 120,
+                    title: "Hình ảnh"
+                }, {
+                    field: "Code",
+                    title: "Mã sản phẩm"
+                }, {
+                    field: "Name",
+                    title: "Tên sản phẩm"
+                }, {
+                    field: "Quantity",
+                    title: "Số lượng",
+                    format: "{0:#,#}"
+                }, {
+                    field: "CreatedDateTime",
+                    title: "Ngày tạo",
+                    template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
+                }, {
+                    field: "Status",
+                    title: "Đã kích hoạt",
+                    width: 100,
+                    attributes: { style: "text-align:center" },
+                    template: "#if(Status){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
+                }]
+            });
+        });
+    </script>
+}
+
+

@@ -87,3 +87,4 @@ D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.dll
 D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.pdb
 D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.Migrations.RemoveSoftDeleted.resources
+D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.Migrations.Edit.resources

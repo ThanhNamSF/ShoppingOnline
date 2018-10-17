@@ -238,3 +238,16 @@ D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.dll
 D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.pdb
 D:\ShoppingOnline\Shopping\Shopping\bin\PayPal.dll
 D:\ShoppingOnline\Shopping\Shopping\bin\PayPal.xml
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.Reporting.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.Reporting.Services.WebApi.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.ReportViewer.Mvc.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.Reporting.pdb
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.Reporting.xml
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.Reporting.Services.WebApi.pdb
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.Reporting.Services.WebApi.xml
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.ReportViewer.Mvc.pdb
+D:\ShoppingOnline\Shopping\Shopping\bin\Telerik.ReportViewer.Mvc.xml
+D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.Reports.InventoryReport.resources
+D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.csproj.GenerateResource.cache
+D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.dll.licenses
+D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.Reports.RevenueReport.resources

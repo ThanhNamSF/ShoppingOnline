@@ -18,4 +18,10 @@ namespace Common
         Customer,
         Admin
     }
+
+    public enum OrderStatus
+    {
+        Open,
+        Closed
+    }
 }
