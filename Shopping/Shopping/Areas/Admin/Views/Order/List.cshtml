@@ -1,0 +1,294 @@
+﻿@model Common.SearchConditions.OrderSearchCondition
+
+@{
+    var defaultGridPageSize = 20;
+    var gridPageSizes = "10,20,50,100,500";
+}
+
+@Html.AntiForgeryToken()
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Danh sách đơn hàng
+    </h1>
+    <div class="pull-right">
+        <a href="@Url.Action("Create")" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Thêm
+        </a>
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Mã đơn hàng</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.OrderCode)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Người nhận</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.ReceiverName)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Hủy</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.Canceled)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Phân công</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.AsignmentStatus)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Giao hàng</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.DeliveredStatus)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Duyệt</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.ApprovedStatus)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Từ ngày</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.DateFrom)" value="@Model.DateFrom" />
+                                    @Html.ValidationMessageFor(model => model.DateFrom)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Đến ngày</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.DateTo)" value="@Model.DateTo" />
+                                    @Html.ValidationMessageFor(model => model.DateTo)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button type="button" id="button-search" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                        Tìm kiếm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="main-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var cancelStatusData = [
+            { text: "Đã hủy", value: "True" },
+            { text: "Chưa hủy", value: "False" }
+        ];
+        var asignmentStatusData = [
+            { text: "Đã phân công", value: "True" },
+            { text: "Chưa phân công", value: "False" }
+        ];
+        var deliveryStatusData = [
+            { text: "Đã giao hàng", value: "True" },
+            { text: "Chưa giao hàng", value: "False" }
+        ];
+        var approvedStatusData = [
+            { text: "Đã duyệt", value: "True" },
+            { text: "Chưa duyệt", value: "False" }
+        ];
+        $("#@Html.IdFor(model => model.Canceled)").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            optionLabel: "Tất cả",
+            dataSource: cancelStatusData,
+            value: "@Model.Canceled"
+        });
+        $("#@Html.IdFor(model => model.AsignmentStatus)").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            optionLabel: "Tất cả",
+            dataSource: asignmentStatusData,
+            value: "@Model.AsignmentStatus"
+        });
+        $("#@Html.IdFor(model => model.DeliveredStatus)").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            optionLabel: "Tất cả",
+            dataSource: deliveryStatusData,
+            value: "@Model.DeliveredStatus"
+        });
+        $("#@Html.IdFor(model => model.ApprovedStatus)").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            optionLabel: "Tất cả",
+            dataSource: approvedStatusData,
+            value: "@Model.ApprovedStatus"
+        });
+
+        $("#@Html.IdFor(model => model.DateFrom)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss"
+        });
+        $("#@Html.IdFor(model => model.DateTo)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss"
+        });
+
+        $('#button-search').click(function () {
+            var grid = $('#main-grid').data('kendoGrid');
+            grid.dataSource.page(1); //new search. Set page size to 1
+            return false;
+        });
+
+        function additionalData() {
+            var data = {
+                ReceiverName: $('#@Html.IdFor(model => model.ReceiverName)').val(),
+                OrderCode: $('#@Html.IdFor(model => model.OrderCode)').val(),
+                Canceled: $('#@Html.IdFor(model => model.Canceled)').val(),
+                AsignmentStatus: $('#@Html.IdFor(model => model.AsignmentStatus)').val(),
+                DeliveredStatus: $('#@Html.IdFor(model => model.DeliveredStatus)').val(),
+                ApprovedStatus: $('#@Html.IdFor(model => model.ApprovedStatus)').val(),
+                DateFrom: $('#@Html.IdFor(model => model.DateFrom)').val(),
+                DateTo: $('#@Html.IdFor(model => model.DateTo)').val()
+            };
+            addAntiForgeryToken(data);
+            return data;
+        }
+
+
+        $("#main-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("List", "Order"))",
+                        type: "POST",
+                        dataType: "json",
+                        data: additionalData
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors"
+                },
+                pageSize: @(defaultGridPageSize),
+                serverPaging: true
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: [@(gridPageSizes)],
+                messages: {
+                    itemsPerPage: "Số sản đơn hàng trên trang",
+                    empty: "Không có đơn hàng",
+                    display: "{0} - {1} của {2} đơn hàng",
+                },
+            },
+            editable: {
+                confirmation: "Delete",
+                mode: "inline"
+            },
+            filterable: false,
+            sortable: false,
+            columns: [{
+                field: "Code",
+                title: "Mã đơn hàng"
+            }, {
+                field: "ReceiverName",
+                title: "Tên người nhận"
+            }, {
+                field: "CreatedDateTime",
+                title: "Ngày đặt hàng",
+                template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
+            }, {
+                field: "DeliveredId",
+                title: "Đã phân công",
+                width: 100,
+                attributes: { style: "text-align:center" },
+                headerAttributes: { style: "text-align:center" },
+                template: "#if(DeliveredId){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
+            }, {
+                field: "ApprovedId",
+                title: "Đã duyệt",
+                width: 100,
+                attributes: { style: "text-align:center" },
+                headerAttributes: { style: "text-align:center" },
+                template: "#if(ApprovedId){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
+            }, {
+                field: "ReceivedDateTime",
+                title: "Đã giao hàng",
+                width: 100,
+                attributes: { style: "text-align:center" },
+                headerAttributes: { style: "text-align:center" },
+                template: "#if(ReceivedDateTime){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
+            }, {
+                field: "Canceled",
+                title: "Đã hủy",
+                width: 100,
+                attributes: { style: "text-align:center" },
+                headerAttributes: { style: "text-align:center" },
+                template: "#if(Canceled){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
+            }, {
+                field: "Id",
+                title: " ",
+                width: 100,
+                headerAttributes: { style: "text-align:center" },
+                attributes: { style: "text-align:center" },
+                template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Chi tiết</a>'
+            }]
+        });
+    });
+</script>
+

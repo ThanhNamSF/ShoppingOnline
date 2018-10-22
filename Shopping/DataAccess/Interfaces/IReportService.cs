@@ -9,7 +9,7 @@ namespace DataAccess.Interfaces
 {
     public interface IReportService
     {
-        ProductCategoryReportModel GetProductCategoryReport(int categoryId);
-        RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo);
+        ProductCategoryReportModel GetProductCategoryReport(int categoryId, string createdBy);
+        RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo, string createdBy);
     }
 }

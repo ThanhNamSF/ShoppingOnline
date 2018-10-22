@@ -251,3 +251,12 @@ D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.Reports.InventoryReport.r
 D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.csproj.GenerateResource.cache
 D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.dll.licenses
 D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.Reports.RevenueReport.resources
+D:\ShoppingOnline\Shopping\Shopping\bin\Microsoft.IdentityModel.Logging.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\Microsoft.IdentityModel.Tokens.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\System.IdentityModel.Tokens.Jwt.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\Twilio.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\Microsoft.IdentityModel.Tokens.xml
+D:\ShoppingOnline\Shopping\Shopping\bin\System.IdentityModel.Tokens.Jwt.xml
+D:\ShoppingOnline\Shopping\Shopping\bin\Twilio.xml
+D:\ShoppingOnline\Shopping\Shopping\bin\Twilio.AspNet.Common.dll
+D:\ShoppingOnline\Shopping\Shopping\bin\Twilio.AspNet.Mvc.dll

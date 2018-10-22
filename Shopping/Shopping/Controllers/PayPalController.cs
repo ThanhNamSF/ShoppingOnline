@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Common.Constants;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using PayPal.Api;
-using Shopping.Helpers;
 using Shopping.Models;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
+using Twilio;
+using Twilio.AspNet.Mvc;
+using Configuration = Shopping.Helpers.Configuration;
 
 namespace Shopping.Controllers
 {
@@ -16,10 +20,12 @@ namespace Shopping.Controllers
     {
         private readonly IOrderService _orderService;
         private static ReceiverInformation _receiverInformation;
+        private readonly IProductService _productService;
 
-        public PaypalController(IOrderService orderService)
+        public PaypalController(IOrderService orderService, IProductService productService)
         {
             _orderService = orderService;
+            _productService = productService;
         }
         // GET: Paypal
         public ActionResult Index()
@@ -340,7 +346,9 @@ namespace Shopping.Controllers
                     CreatedDateTime = DateTime.Now,
                     Amount = cart.Sum(item => item.Product.Price * item.Quantity),
                     Status = false,
-                    UserId = 2 //Edit later
+                    UserId = 2, //Edit later
+                    Code = DateTime.Now.ToString("yyyyMMddHHmmss"),
+                    PaymentId = payment.id
                 };
                 _orderService.InsertOrder(order);
 
@@ -354,9 +362,22 @@ namespace Shopping.Controllers
                         Quantity = item.Quantity
                     };
                     _orderService.InsertOrderDetail(orderDetail);
+                    _productService.DescreaseProduct(item.Product.Id, item.Quantity);
                 }
                 Session.Remove(Values.CartSession);
             }
+        }
+
+        public ActionResult SendSmsToCustomer(string phoneNumber, string body)
+        {
+            var to = new PhoneNumber("+84967148162");
+            var from = new PhoneNumber("+19257054026");
+            var message = MessageResource.Create(
+                to: to,
+                from: from,
+                body: "Đơn hàng của bạn đã được xác nhận"
+            );
+            return View("SuccessView");
         }
     }
 }

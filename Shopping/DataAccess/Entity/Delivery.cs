@@ -13,7 +13,7 @@ namespace DataAccess.Entity
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(6)]
+        [StringLength(30)]
         [Index(IsUnique = true)]
         public string Code { get; set; }
 

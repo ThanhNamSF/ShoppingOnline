@@ -25,6 +25,12 @@ namespace DataAccess.Services
             return Mapper.Map<List<UserModel>>(users);
         }
 
+        public UserModel GetUserById(int id)
+        {
+            var user = _shoppingContext.Users.Find(id);
+            return Mapper.Map<UserModel>(user);
+        }
+
         public UserModel GetUserLogin(UserModel user)
         {
             var userLogin = _shoppingContext.Users.AsNoTracking().FirstOrDefault(x =>

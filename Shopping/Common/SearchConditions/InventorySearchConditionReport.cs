@@ -9,5 +9,6 @@ namespace Common.SearchConditions
     public class InventorySearchConditionReport
     {
         public int CategoryId { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

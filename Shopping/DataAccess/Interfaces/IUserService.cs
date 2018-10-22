@@ -12,5 +12,6 @@ namespace DataAccess.Interfaces
     {
         UserModel GetUserLogin(UserModel user);
         IEnumerable<UserModel> GetAllUserByRole(int role);
+        UserModel GetUserById(int id);
     }
 }

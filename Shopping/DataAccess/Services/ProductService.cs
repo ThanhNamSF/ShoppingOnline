@@ -91,5 +91,14 @@ namespace DataAccess.Services
                 return Mapper.Map<ProductModel>(product);
             return null;
         }
+
+        public void DescreaseProduct(int id, int quantity)
+        {
+            var product = _shoppingContext.Products.Find(id);
+            if (product == null || product.Quantity < quantity)
+                return;
+            product.Quantity -= quantity;
+            _shoppingContext.SaveChanges();
+        }
     }
 }

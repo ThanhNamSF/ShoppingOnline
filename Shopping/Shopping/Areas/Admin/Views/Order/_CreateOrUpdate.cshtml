@@ -1,0 +1,294 @@
+﻿@model DataAccess.Models.OrderModel
+
+@{
+    var defaultGridPageSize = 20;
+    var gridPageSizes = "10,20,50,100,500";
+}
+
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.UserId)
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <strong style="font-size: 16px">Thông tin hóa đơn</strong>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Ngày tạo</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.CreatedDateTime)" value="@Model.CreatedDateTime" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.CreatedDateTime)" value="@Model.CreatedDateTime" />
+                                    @Html.ValidationMessageFor(model => model.CreatedDateTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Mã hóa đơn</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input disabled="disabled" type="text" id="@Html.IdFor(model => model.Code)" value="@Model.Code" style="width: 85%" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.Code)" value="@Model.Code" />
+                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Tổng tiền</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input disabled="disabled" type="text" id="@Html.IdFor(model => model.Amount)" value="@string.Format("{0:#,#}", Model.Amount)" style="width: 85%" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.Amount)" value="@Model.Amount" />
+                                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Người nhận</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input disabled="disabled" type="text" id="@Html.IdFor(model => model.ReceiverName)" value="@Model.ReceiverName" style="width: 85%" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.ReceiverName)" value="@Model.ReceiverName" />
+                                    @Html.ValidationMessageFor(model => model.ReceiverName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Số điện thoại</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input disabled="disabled" type="text" id="@Html.IdFor(model => model.ReceiverPhone)" value="@Model.ReceiverPhone" style="width: 85%" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.ReceiverPhone)" value="@Model.ReceiverPhone" />
+                                    @Html.ValidationMessageFor(model => model.ReceiverPhone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Địa chỉ</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input disabled="disabled" type="text" id="@Html.IdFor(model => model.ReceiverAddress)" value="@Model.ReceiverAddress" style="width: 85%" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.ReceiverAddress)" value="@Model.ReceiverAddress" />
+                                    @Html.ValidationMessageFor(model => model.ReceiverAddress, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Ngày giao</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.ReceivedDateTime)" name="@Html.IdFor(model => model.ReceivedDateTime)" value="@Model.ReceivedDateTime" />
+                                    @Html.ValidationMessageFor(model => model.ReceivedDateTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Ngày duyệt</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.ApprovedDateTime)" value="@Model.ApprovedDateTime" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.ApprovedDateTime)" value="@Model.ApprovedDateTime" />
+                                    @Html.ValidationMessageFor(model => model.ApprovedDateTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Trạng thái</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.Status)" style="width: 85%" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.Status)" value="@Html.AttributeEncode(Model.Status)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Người giao</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.DeliveredId)" name="@Html.IdFor(model => model.DeliveredId)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Người duyệt</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="@Html.IdFor(model => model.ApprovedId)" style="width: 85%" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.ApprovedId)" value="@Html.AttributeEncode(Model.ApprovedId)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-group">
+            <strong style="font-size: 16px">Danh sách sản phẩm</strong>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="main-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#@Html.IdFor(model => model.CreatedDateTime)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss"
+        }).data("kendoDatePicker").enable(false);
+
+        var data = [
+            { text: "Chưa duyệt", value: "False" },
+            { text: "Đã duyệt", value: "True" }
+        ];
+        $("#@Html.IdFor(model => model.Status)").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: data,
+            value: "@Model.Status",
+            enable: false
+        });
+
+        $("#@Html.IdFor(model => model.ReceivedDateTime)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss"
+        });
+
+        $("#@Html.IdFor(model => model.ApprovedDateTime)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss"
+        }).data("kendoDatePicker").enable(false);;
+
+        $("#@Html.IdFor(model => model.DeliveredId)").kendoDropDownList({
+            dataTextField: "UserName",
+            dataValueField: "Id",
+            dataSource: {
+                type: "json",
+                serverFiltering: true,
+                transport: {
+                    read: {
+                        dataType: "json",
+                        url: "/User/GetAllAdminUser"
+                    }
+                }
+            },
+            value: "@Model.DeliveredId"
+        });
+
+        $("#@Html.IdFor(model => model.ApprovedId)").kendoDropDownList({
+            dataTextField: "UserName",
+            dataValueField: "Id",
+            optionLabel: " ",
+            enable: false,
+            dataSource: {
+                type: "json",
+                serverFiltering: true,
+                transport: {
+                    read: {
+                        dataType: "json",
+                        url: "/User/GetAllAdminUser"
+                    }
+                }
+            },
+            value: "@Model.ApprovedId"
+        });
+
+        $(document).ready(function () {
+                        $("#main-grid").kendoGrid({
+                            dataSource: {
+                                type: "json",
+                                transport: {
+                                    read: {
+                                        url: "@Html.Raw(Url.Action("OrderDetailList", "Order", new { orderId = Model.Id }))",
+                                        type: "POST",
+                                        dataType: "json"
+                                    }
+                                },
+                                schema: {
+                                    data: "Data",
+                                    total: "Total",
+                                    errors: "Errors"
+                                },
+                                pageSize: @(defaultGridPageSize),
+                                serverPaging: true
+                            },
+                            pageable: {
+                                refresh: true,
+                                pageSizes: [@(gridPageSizes)],
+                                messages: {
+                                    itemsPerPage: "Số sản phẩm trên trang",
+                                    empty: "Không có sản phẩm",
+                                    display: "{0} - {1} của {2} sản phẩm",
+                                },
+                            },
+                            filterable: false,
+                            sortable: false,
+                            columns: [
+                                {
+                                    template: '<img src="../../../..#=ProductImagePath#" width="100px" alt="image" />',
+                                    width: 120,
+                                    title: "Hình ảnh",
+                                    field: "ProductImagePath"
+                                }, {
+                                    field: "ProductCode",
+                                    title: "Mã sản phẩm"
+                                }, {
+                                    field: "ProductName",
+                                    title: "Tên sản phẩm"
+                                }, {
+                                    field: "UnitPrice",
+                                    title: "Đơn giá",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "Quantity",
+                                    title: "Số Lượng",
+                                    format: "{0:#,#}"
+                                }, {
+                                    field: "SubAmount",
+                                    title: "Thành tiền",
+                                    format: "{0:#,#}"
+                                }
+                            ]
+                        });
+        });
+    });
+
+</script>
+
+
+
+
+
+

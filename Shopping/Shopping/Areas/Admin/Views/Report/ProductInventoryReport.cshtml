@@ -18,6 +18,7 @@
     </style>
     var typeReportSource = new TypeReportSource() { TypeName = "Shopping.Reports.InventoryReport,Shopping" };
     typeReportSource.Parameters.Add("categoryId", Model.CategoryId);
+    typeReportSource.Parameters.Add("createdBy", Model.CreatedBy);
     <script src="~/ReportViewer/js/telerikReportViewer.kendo-12.2.18.1017.min.js"></script>
     <script src="~/ReportViewer/js/telerikReportViewer-12.2.18.1017.js"></script>
 }
@@ -112,7 +113,8 @@
                                 viewer.reportSource({
                                     report: viewer.reportSource().report,
                                     parameters: {
-                                        categoryId: $('#@Html.IdFor(model => model.CategoryId)').val()
+                                        categoryId: $('#@Html.IdFor(model => model.CategoryId)').val(),
+                                        createdBy: "@Model.CreatedBy"
                                     }
                                 });
                                 return false;

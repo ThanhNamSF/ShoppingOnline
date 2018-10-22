@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Configuration;
+using AutoMapper;
 using DataAccess.Infrastructure;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -8,6 +10,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Twilio;
+using Twilio.AspNet.Mvc;
 
 namespace Shopping
 {
@@ -15,6 +19,12 @@ namespace Shopping
     {
         protected void Application_Start()
         {
+            //Twilio
+            TwilioClient.Init(
+                "AC5a90f4c08845d2654bd03e6ae0804777",
+                "cb8b72b5dc75f921421b7b90dcbf7646"
+            );
+            //Telerik Report
             Telerik.Reporting.Services.WebApi.ReportsControllerConfiguration.RegisterRoutes(System.Web.Http.GlobalConfiguration.Configuration);
             //AutoMapper
             Mapper.Initialize(cfg => {

@@ -52,9 +52,12 @@
     <Compile Include="SearchConditions\DeliveryDetailSearchCondition.cs" />
     <Compile Include="SearchConditions\DeliverySearchCondition.cs" />
     <Compile Include="SearchConditions\InventorySearchConditionReport.cs" />
+    <Compile Include="SearchConditions\OrderDetailSearchCondition.cs" />
+    <Compile Include="SearchConditions\OrderSearchCondition.cs" />
     <Compile Include="SearchConditions\ProductSearchCondition.cs" />
     <Compile Include="SearchConditions\ReceiveDetailSearchCondition.cs" />
     <Compile Include="SearchConditions\ReceiveSearchCondition.cs" />
+    <Compile Include="SearchConditions\RevenueSearchConditionReport.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

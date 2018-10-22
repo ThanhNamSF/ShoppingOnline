@@ -12,6 +12,12 @@ namespace DataAccess.Entity
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(30)]
+        [Index(IsUnique = true)]
+        public string Code { get; set; }
+
         public double Amount { get; set; }
 
         [Required]
@@ -32,8 +38,14 @@ namespace DataAccess.Entity
         public DateTime? ReceivedDateTime { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
 
-        
+        [Required]
+        public string PaymentId { get; set; }
+
+        public bool Canceled { get; set; }
+
+        public int? UpdatedBy { get; set; }
         public int UserId { get; set; }
         
         public int? ApprovedId { get; set; }

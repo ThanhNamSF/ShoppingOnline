@@ -304,6 +304,7 @@
         $("#@Html.IdFor(model => model.ApprovedBy)").kendoDropDownList({
             dataTextField: "UserName",
             dataValueField: "Id",
+            optionLabel: " ",
             enable: false,
             dataSource: {
                 type: "json",

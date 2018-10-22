@@ -14,5 +14,6 @@ namespace DataAccess.Interfaces
         void DeleteProduct(int id);
         void UpdateProduct(ProductModel productModel);
         ProductModel GetProductByCode(string code);
+        void DescreaseProduct(int id, int quantity);
     }
 }

@@ -57,8 +57,8 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
@@ -105,49 +105,17 @@
     <Compile Include="Interfaces\IReceiveService.cs" />
     <Compile Include="Interfaces\IReportService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Migrations\201809290852403_InitializeDatabase.cs" />
-    <Compile Include="Migrations\201809290852403_InitializeDatabase.Designer.cs">
-      <DependentUpon>201809290852403_InitializeDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201810191435007_GenerateDatabase.cs" />
+    <Compile Include="Migrations\201810191435007_GenerateDatabase.Designer.cs">
+      <DependentUpon>201810191435007_GenerateDatabase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810031405588_UpdateDatabase.cs" />
-    <Compile Include="Migrations\201810031405588_UpdateDatabase.Designer.cs">
-      <DependentUpon>201810031405588_UpdateDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201810211601453_AddPaymentIdIntoOrder.cs" />
+    <Compile Include="Migrations\201810211601453_AddPaymentIdIntoOrder.Designer.cs">
+      <DependentUpon>201810211601453_AddPaymentIdIntoOrder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810031409287_AddTables.cs" />
-    <Compile Include="Migrations\201810031409287_AddTables.Designer.cs">
-      <DependentUpon>201810031409287_AddTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810031609454_EditProductUpdateBy.cs" />
-    <Compile Include="Migrations\201810031609454_EditProductUpdateBy.Designer.cs">
-      <DependentUpon>201810031609454_EditProductUpdateBy.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810060909061_DeleteImageEnitity.cs" />
-    <Compile Include="Migrations\201810060909061_DeleteImageEnitity.Designer.cs">
-      <DependentUpon>201810060909061_DeleteImageEnitity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810070812278_UpdateReceive.cs" />
-    <Compile Include="Migrations\201810070812278_UpdateReceive.Designer.cs">
-      <DependentUpon>201810070812278_UpdateReceive.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810071016204_EditReceive.cs" />
-    <Compile Include="Migrations\201810071016204_EditReceive.Designer.cs">
-      <DependentUpon>201810071016204_EditReceive.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810091425549_UpdateRêciveDelivery.cs" />
-    <Compile Include="Migrations\201810091425549_UpdateRêciveDelivery.Designer.cs">
-      <DependentUpon>201810091425549_UpdateRêciveDelivery.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810091547204_UpdateDelivery.cs" />
-    <Compile Include="Migrations\201810091547204_UpdateDelivery.Designer.cs">
-      <DependentUpon>201810091547204_UpdateDelivery.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810101256051_RemoveSoftDeleted.cs" />
-    <Compile Include="Migrations\201810101256051_RemoveSoftDeleted.Designer.cs">
-      <DependentUpon>201810101256051_RemoveSoftDeleted.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810171545152_Edit.cs" />
-    <Compile Include="Migrations\201810171545152_Edit.Designer.cs">
-      <DependentUpon>201810171545152_Edit.cs</DependentUpon>
+    <Compile Include="Migrations\201810211606193_UpdateLength.cs" />
+    <Compile Include="Migrations\201810211606193_UpdateLength.Designer.cs">
+      <DependentUpon>201810211606193_UpdateLength.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DeliveryDetailModel.cs" />
@@ -179,45 +147,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201809290852403_InitializeDatabase.resx">
-      <DependentUpon>201809290852403_InitializeDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810031405588_UpdateDatabase.resx">
-      <DependentUpon>201810031405588_UpdateDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810031409287_AddTables.resx">
-      <DependentUpon>201810031409287_AddTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810031609454_EditProductUpdateBy.resx">
-      <DependentUpon>201810031609454_EditProductUpdateBy.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810060909061_DeleteImageEnitity.resx">
-      <DependentUpon>201810060909061_DeleteImageEnitity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810070812278_UpdateReceive.resx">
-      <DependentUpon>201810070812278_UpdateReceive.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810071016204_EditReceive.resx">
-      <DependentUpon>201810071016204_EditReceive.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810091425549_UpdateRêciveDelivery.resx">
-      <DependentUpon>201810091425549_UpdateRêciveDelivery.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810091547204_UpdateDelivery.resx">
-      <DependentUpon>201810091547204_UpdateDelivery.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810101256051_RemoveSoftDeleted.resx">
-      <DependentUpon>201810101256051_RemoveSoftDeleted.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810171545152_Edit.resx">
-      <DependentUpon>201810171545152_Edit.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{08c5e219-2b2e-425c-96a7-c0ebffff5a67}</Project>
       <Name>Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810191435007_GenerateDatabase.resx">
+      <DependentUpon>201810191435007_GenerateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810211601453_AddPaymentIdIntoOrder.resx">
+      <DependentUpon>201810211601453_AddPaymentIdIntoOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810211606193_UpdateLength.resx">
+      <DependentUpon>201810211606193_UpdateLength.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

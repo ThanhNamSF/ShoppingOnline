@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Common;
+using Common.SearchConditions;
 using DataAccess.Models;
 
 namespace DataAccess.Interfaces
@@ -11,5 +9,13 @@ namespace DataAccess.Interfaces
     {
         void InsertOrder(OrderModel orderModel);
         void InsertOrderDetail(OrderDetailModel orderDetailModel);
+        PageList<OrderModel> SearchOrders(OrderSearchCondition condition);
+        OrderModel GetOrderById(int id);
+        void DeleteOrder(int id);
+        void UpdateOrder(OrderModel orderModel);
+        PageList<OrderDetailModel> SearchOrderDetails(OrderDetailSearchCondition condition);
+        void Approved(OrderModel orderModel);
+        void Cancel(int orderId);
+        IEnumerable<OrderDetailModel> GetOrderDetailsByOrderId(int orderId);
     }
 }

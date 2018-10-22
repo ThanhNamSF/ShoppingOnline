@@ -16,5 +16,11 @@ namespace DataAccess.Models
         public int OrderId { get; set; }
 
         public int ProductId { get; set; }
+
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
+        public string ProductImagePath { get; set; }
+
+        public double SubAmount { get; set; }
     }
 }

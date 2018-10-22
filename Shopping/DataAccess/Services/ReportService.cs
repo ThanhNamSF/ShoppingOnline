@@ -19,9 +19,8 @@ namespace DataAccess.Services
         {
             _shoppingContext = shoppingContext;
         }
-        public ProductCategoryReportModel GetProductCategoryReport(int categoryId)
+        public ProductCategoryReportModel GetProductCategoryReport(int categoryId, string createdBy)
         {
-            var currentUser = HttpContext.Current.Session[Values.USER_SESSION] as UserModel;
             var model = new ProductCategoryReportModel();
             IQueryable<Product> products;
             if (categoryId > 0)
@@ -37,13 +36,14 @@ namespace DataAccess.Services
                 products = _shoppingContext.Products.AsNoTracking().Where(x => x.Quantity > 0);
                 model.CategoryName = Values.All;
             }
-            
+
+            model.CreatedBy = createdBy;
             model.Details = products.Select(s => new ProductCategoryDetailReportModel()
             {
                 Price = s.Price,
                 Quantity = s.Quantity,
                 Amount = s.Price * s.Quantity,
-                CategoryId = categoryId,
+                CategoryId = s.ProductCategory.Id,
                 CategoryName = s.ProductCategory.Name,
                 ProductCode = s.Code,
                 ProductName = s.Name
@@ -51,26 +51,28 @@ namespace DataAccess.Services
             return model;
         }
 
-        public RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo)
+        public RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo, string createdBy)
         {
             var monthFrom = dateFrom.Month;
             var yearFrom = dateFrom.Year;
             var monthTo = dateTo.Month;
             var yearTo = dateTo.Year;
-            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => w.ApprovedId.HasValue &&
-                                                                           (w.CreatedDateTime.Month >= monthFrom && w.CreatedDateTime.Year >= yearFrom) &&
-                                                                           (w.CreatedDateTime.Month <= monthTo && w.CreatedDateTime.Year <= yearTo));
+            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => (w.CreatedDateTime.Month >= monthFrom && w.CreatedDateTime.Year >= yearFrom) &&
+                                                                           (w.CreatedDateTime.Month <= monthTo && w.CreatedDateTime.Year <= yearTo) &&
+                                                                           !w.Canceled).OrderBy(w => w.CreatedDateTime).ToList();
+
             var model = new RevenueReportModel()
             {
                 TimeFrom = dateFrom.ToString("MM/yyyy"),
-                TimeTo = dateTo.ToString("MM/yyyy")
+                TimeTo = dateTo.ToString("MM/yyyy"),
+                CreatedBy = createdBy
             };
             foreach (var item in orders)
             {
                 foreach (var orderDetail in item.OrderDetails)
                 {
                     var existedItem =
-                        model.Details.FirstOrDefault(w => w.CategoryId == orderDetail.Product.ProductCategoryId);
+                        model.Details.FirstOrDefault(w => item.CreatedDateTime.ToString("MM/yyyy").Equals(w.Time, StringComparison.OrdinalIgnoreCase));
                     if (existedItem != null)
                     {
                         existedItem.Quantity += orderDetail.Quantity;

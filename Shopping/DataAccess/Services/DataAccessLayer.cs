@@ -19,14 +19,14 @@ namespace DataAccess.Services
             _reportService = new ReportService(shoppingContext);
         }
 
-        public ProductCategoryReportModel GetProductCategoryReport(int categoryId)
+        public ProductCategoryReportModel GetProductCategoryReport(int categoryId, string createdBy)
         {
-            return _reportService.GetProductCategoryReport(categoryId);
+            return _reportService.GetProductCategoryReport(categoryId, createdBy);
         }
 
-        public RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo)
+        public RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo, string createdBy)
         {
-            return _reportService.GetRevenueReport(dateFrom, dateTo);
+            return _reportService.GetRevenueReport(dateFrom, dateTo, createdBy);
         }
     }
 }
