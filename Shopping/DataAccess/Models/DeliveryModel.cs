@@ -13,7 +13,7 @@ namespace DataAccess.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Mã phiếu không được bỏ trống!")]
-        [StringLength(6, ErrorMessage = "Mã phiếu không được vượt quá 6 ký tự")]
+        [StringLength(30, ErrorMessage = "Mã phiếu không được vượt quá 30 ký tự")]
         public string Code { get; set; }
 
         [Required(ErrorMessage = "Nơi xuất bán không được để trống")]

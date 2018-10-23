@@ -8,7 +8,7 @@ namespace DataAccess.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Mã sản phẩm không được bỏ trống")]
-        [StringLength(6, ErrorMessage = "Mã sản phẩm không vượt quá 6 ký tự")]
+        [StringLength(30, ErrorMessage = "Mã sản phẩm không vượt quá 30 ký tự")]
         public string Code { get; set; }
 
         [StringLength(250, ErrorMessage = "Tên sản phẩm không vượt quá 250 ký tự")]

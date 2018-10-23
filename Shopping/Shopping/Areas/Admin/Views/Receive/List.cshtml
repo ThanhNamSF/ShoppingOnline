@@ -2,7 +2,7 @@
 
 @{
     var defaultGridPageSize = 20;
-    var gridPageSizes = "10,20,50,100,500";
+    var gridPageSizes = "20,50,100,500";
 }
 
 @Html.AntiForgeryToken()
@@ -113,6 +113,7 @@
         $("#@Html.IdFor(model => model.ApprovedBy)").kendoDropDownList({
             dataTextField: "UserName",
             dataValueField: "Id",
+            optionLabel:"Tất cả",
             dataSource: {
                 type: "json",
                 serverFiltering: true,
@@ -136,7 +137,7 @@
             var data = {
                 ReceiveFrom: $('#@Html.IdFor(model => model.ReceiveFrom)').val(),
                 Code: $('#@Html.IdFor(model => model.Code)').val(),
-                Deliver: $('#@Html.IdFor(model => model.ApprovedBy)').val(),
+                ApprovedBy: $('#@Html.IdFor(model => model.ApprovedBy)').val() || 0,
                 DateFrom: $('#@Html.IdFor(model => model.DateFrom)').val(),
                 DateTo: $('#@Html.IdFor(model => model.DateTo)').val()
             };

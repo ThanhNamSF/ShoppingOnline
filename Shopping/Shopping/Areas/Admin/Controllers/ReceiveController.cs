@@ -192,14 +192,11 @@ namespace Shopping.Areas.Admin.Controllers
         #region ReceiveDetail
 
         [HttpPost]
-        public ActionResult ReceiveDetailList(DataSourceRequest command, int receiveId)
+        public ActionResult ReceiveDetailList(DataSourceRequest command, ReceiveDetailSearchCondition condition)
         {
-            var receiveDetails = _receiveService.SearchReceiveDetails(new ReceiveDetailSearchCondition()
-            {
-                ReceiveId = receiveId,
-                PageSize = command.PageSize,
-                PageNumber = command.Page - 1
-            });
+            condition.PageNumber = command.Page - 1;
+            condition.PageSize = command.PageSize;
+            var receiveDetails = _receiveService.SearchReceiveDetails(condition);
             receiveDetails.DataSource.ForEach(x => CalculateAmount(x));
             var gridModel = new DataSourceResult
             {

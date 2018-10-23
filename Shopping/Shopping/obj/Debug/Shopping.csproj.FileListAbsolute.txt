@@ -260,3 +260,4 @@ D:\ShoppingOnline\Shopping\Shopping\bin\System.IdentityModel.Tokens.Jwt.xml
 D:\ShoppingOnline\Shopping\Shopping\bin\Twilio.xml
 D:\ShoppingOnline\Shopping\Shopping\bin\Twilio.AspNet.Common.dll
 D:\ShoppingOnline\Shopping\Shopping\bin\Twilio.AspNet.Mvc.dll
+D:\ShoppingOnline\Shopping\Shopping\obj\Debug\Shopping.Reports.TopProductProfitableReport.resources

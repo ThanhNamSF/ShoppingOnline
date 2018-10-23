@@ -57,9 +57,14 @@ namespace DataAccess.Services
             var yearFrom = dateFrom.Year;
             var monthTo = dateTo.Month;
             var yearTo = dateTo.Year;
-            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => (w.CreatedDateTime.Month >= monthFrom && w.CreatedDateTime.Year >= yearFrom) &&
-                                                                           (w.CreatedDateTime.Month <= monthTo && w.CreatedDateTime.Year <= yearTo) &&
+            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => w.ApprovedId.HasValue && 
+                                                                           (w.ApprovedDateTime.Value.Month >= monthFrom && w.ApprovedDateTime.Value.Year >= yearFrom) &&
+                                                                           (w.ApprovedDateTime.Value.Month <= monthTo && w.ApprovedDateTime.Value.Year <= yearTo) &&
                                                                            !w.Canceled).OrderBy(w => w.CreatedDateTime).ToList();
+            var deliveries = _shoppingContext.Deliveries.AsNoTracking().Where(w => w.ApprovedBy.HasValue &&
+                                                                                   (w.ApprovedDateTime.Value.Month >= monthFrom && w.ApprovedDateTime.Value.Year >= yearFrom) &&
+                                                                                   (w.ApprovedDateTime.Value.Month <= monthTo && w.ApprovedDateTime.Value.Year <= yearTo))
+                                                                                    .OrderBy(w => w.CreatedDateTime).ToList();
 
             var model = new RevenueReportModel()
             {
@@ -92,7 +97,47 @@ namespace DataAccess.Services
                 }
             }
 
+            foreach (var item in deliveries)
+            {
+                foreach (var detail in item.DeliveryDetails)
+                {
+                    var existedItem =
+                        model.Details.FirstOrDefault(w => item.CreatedDateTime.ToString("MM/yyyy").Equals(w.Time, StringComparison.OrdinalIgnoreCase));
+                    if (existedItem != null)
+                    {
+                        existedItem.Quantity += detail.Quantity;
+                        existedItem.Amount += detail.Quantity * detail.UnitPrice;
+                    }
+                    else
+                    {
+                        model.Details.Add(new RevenueDetailReportModel()
+                        {
+                            Quantity = detail.Quantity,
+                            Amount = detail.Quantity * detail.UnitPrice,
+                            CategoryId = detail.Product.ProductCategoryId,
+                            CategoryName = detail.Product.ProductCategory.Name,
+                            Time = item.CreatedDateTime.ToString("MM/yyyy")
+                        });
+                    }
+                }
+            }
+
             return model;
+        }
+
+        public TopProductProfitableReportModel GetTopProductProfitableReportModel(int topNumber)
+        {
+            var deliveryDetails = _shoppingContext.DeliveryDetails.AsNoTracking().AsQueryable();
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().AsQueryable();
+            var receiveDetails = _shoppingContext.ReceiveDetails.AsNoTracking().AsQueryable();
+            var groupDeliveryDetails = deliveryDetails.GroupBy(s => s.Product).Select(k => new
+            {
+                Product = k.Key,
+                Quantity = k.Sum(i => i.Quantity),
+                UnitPriceAverage = k.Sum(i => i.UnitPrice) / k.Count()
+            });
+            return null;
+
         }
     }
 }

@@ -11,5 +11,7 @@ namespace DataAccess.Interfaces
     {
         ProductCategoryReportModel GetProductCategoryReport(int categoryId, string createdBy);
         RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo, string createdBy);
+        TopProductProfitableReportModel GetTopProductProfitableReportModel(int topNumber);
+
     }
 }

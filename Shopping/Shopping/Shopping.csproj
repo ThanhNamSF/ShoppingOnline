@@ -282,6 +282,12 @@
     <Compile Include="Reports\RevenueReport.Designer.cs">
       <DependentUpon>RevenueReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\TopProductProfitableReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\TopProductProfitableReport.Designer.cs">
+      <DependentUpon>TopProductProfitableReport.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AdminTLE\bower_components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css" />
@@ -11064,6 +11070,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\RevenueReport.resx">
       <DependentUpon>RevenueReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TopProductProfitableReport.resx">
+      <DependentUpon>TopProductProfitableReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

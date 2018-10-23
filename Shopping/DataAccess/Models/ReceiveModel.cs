@@ -14,7 +14,7 @@ namespace DataAccess.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Mã phiếu không được bỏ trống!")]
-        [StringLength(6, ErrorMessage = "Mã phiếu không được vượt quá 6 ký tự")]
+        [StringLength(30, ErrorMessage = "Mã phiếu không được vượt quá 30 ký tự")]
         public string Code { get; set; }
 
         [Required(ErrorMessage = "Nhà cung cấp không được để trống")]
@@ -41,7 +41,7 @@ namespace DataAccess.Models
 
         public int? UpdatedBy { get; set; }
 
-        public DateTime UpdatedDateTime { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
 
         public int? ApprovedBy { get; set; }
 

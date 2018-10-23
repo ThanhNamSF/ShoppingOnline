@@ -231,17 +231,31 @@
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-book"></i> <span>Categories</span>
+                            <i class="fa fa-book"></i> <span>Quản lý</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-object-group"></i>Product Category</a></li>
-                            <li><a href="#"><i class="fa fa-product-hunt"></i>Product</a></li>
+                            <li><a href="@Html.Raw(Url.Action("List","Product"))"><i class="fa fa-product-hunt"></i>Sản phẩm</a></li>
+                            <li><a href="@Html.Raw(Url.Action("List","Order"))"><i class="fa fa-first-order"></i>Đặt hàng</a></li>
+                            <li><a href="@Html.Raw(Url.Action("List","Delivery"))"><i class="fa fa-sellsy"></i>Xuất hàng</a></li>
+                            <li><a href="@Html.Raw(Url.Action("List","Receive"))"><i class="fa fa-car"></i>Nhập hàng</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-files-o"></i> <span>Báo cáo</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Html.Raw(Url.Action("ProductInventoryReport","Report"))"><i class="fa fa-plus"></i>Báo cáo tồn kho</a></li>
+                            <li><a href="@Html.Raw(Url.Action("RevenueReport","Report"))"><i class="fa fa-money"></i>Báo cáo doanh thu</a></li>
+                        </ul>
+                    </li>
+                    @*<li class="treeview">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Layout Options</span>
@@ -398,7 +412,7 @@
                     <li class="header">LABELS</li>
                     <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
                     <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>*@
                 </ul>
             </section>
             <!-- /.sidebar -->

@@ -113,6 +113,7 @@
         $("#@Html.IdFor(model => model.ApprovedBy)").kendoDropDownList({
             dataTextField: "UserName",
             dataValueField: "Id",
+            optionLabel: "Tất cả",
             dataSource: {
                 type: "json",
                 serverFiltering: true,
@@ -136,7 +137,7 @@
             var data = {
                 DeliveryTo: $('#@Html.IdFor(model => model.DeliveryTo)').val(),
                 Code: $('#@Html.IdFor(model => model.Code)').val(),
-                Deliver: $('#@Html.IdFor(model => model.ApprovedBy)').val(),
+                ApprovedBy: $('#@Html.IdFor(model => model.ApprovedBy)').val() || 0,
                 DateFrom: $('#@Html.IdFor(model => model.DateFrom)').val(),
                 DateTo: $('#@Html.IdFor(model => model.DateTo)').val()
             };

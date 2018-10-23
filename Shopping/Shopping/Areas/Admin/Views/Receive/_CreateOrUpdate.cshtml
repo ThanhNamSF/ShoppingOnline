@@ -317,20 +317,25 @@
         $("#@Html.IdFor(model => model.ApprovedDateTime)").kendoDatePicker({
             culture: "vi-VN",
             format: "dd-MM-yyyy HH:mm:ss"
-        }).data("kendoDatePicker").enable(false);;
+        }).data("kendoDatePicker").enable(false);
 
+        function additionalData() {
+            var data = {
+                ReceiveId: "@Model.Id"
+            };
+            addAntiForgeryToken(data);
+            return data;
+        }
 
-        $(document).ready(function () {
-                        var current;
-                        $("#main-grid").kendoGrid({
+        $("#main-grid").kendoGrid({
                             dataSource: {
                                 type: "json",
-                                autoSync: false,
                                 transport: {
                                     read: {
-                                        url: "@Html.Raw(Url.Action("ReceiveDetailList", "Receive", new {receiveId = Model.Id}))", //edit
+                                        url: "@Html.Raw(Url.Action("ReceiveDetailList", "Receive"))", //edit
                                         type: "POST",
-                                        dataType: "json"
+                                        dataType: "json",
+                                        data: additionalData
                                     },
                                     update: {
                                         url: "@Html.Raw(Url.Action("ReceiveDetailEdit", "Receive"))",
@@ -343,14 +348,11 @@
                                         type: "POST",
                                         dataType: "json"
                                     },
-                                    parameterMap: function(data, operation) {
-                                        if (operation !== "read") {
-                                            return data;
-                                        } else {
-                                            //for some reasons only such "Filter" data be parsed
-                                            return JSON.stringify(data);
-                                        }
-                                    }
+                                    //parameterMap: function(data, operation) {
+                                    //    if (operation !== "read") {
+                                    //        return data;
+                                    //    } 
+                                    //}
                                 },
                                 schema: {
                                     data: "Data",
@@ -384,9 +386,7 @@
                                     this.cancelChanges();
                                 },
                                 pageSize: @(defaultGridPageSize),
-                                serverPaging: true,
-                                serverFiltering: false,
-                                serverSorting: false
+                                serverPaging: true
                             },
                             pageable: {
                                 refresh: true,
@@ -397,6 +397,8 @@
                                     display: "{0} - {1} của {2} chi tiết phiếu nhập kho",
                                 },
                             },
+                            filterable: false,
+                            sortable: false,
                             scrollable: false,
                             columns: [
                                 {
@@ -409,7 +411,8 @@
                                     title: "Mã sản phẩm"
                                 }, {
                                     field: "ProductName",
-                                    title: "Tên sản phẩm"
+                                    title: "Tên sản phẩm",
+                                    width: 100
                                 }, {
                                     field: "UnitPrice",
                                     title: "Đơn giá",
@@ -417,6 +420,7 @@
                                 }, {
                                     field: "Quantity",
                                     title: "Số Lượng",
+                                    width: 75,
                                     format: "{0:#,#}"
                                 }, {
                                     field: "SubAmount",
@@ -425,18 +429,22 @@
                                 }, {
                                     field: "DiscountRate",
                                     title: "%CK",
+                                    width: 50,
                                     format: "{0:#,#}"
                                 }, {
                                     field: "DiscountAmount",
                                     title: "Tiền CK",
+                                    width: 80,
                                     format: "{0:#,#}"
                                 }, {
                                     field: "VatRate",
                                     title: "%VAT",
+                                    width: 60,
                                     format: "{0:#,#}"
                                 }, {
                                     field: "VatAmount",
                                     title: "Tiền VAT",
+                                    width: 80,
                                     format: "{0:#,#}"
                                 }, {
                                     field: "Amount",
@@ -444,13 +452,12 @@
                                     format: "{0:#,#}"
                                 }, {
                                     command: ["edit", "destroy"],
+                                    width: "80px",
                                     hidden: @((Model.ApprovedBy.HasValue).ToString().ToLower())
                                 }
                             ],
                             editable:"popup"
                         });
-
-        });
 
 
         $("#button-add-product").click(function(e) {
