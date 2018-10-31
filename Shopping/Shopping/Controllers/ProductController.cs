@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Common.SearchConditions;
 using DataAccess.Interfaces;
+using Shopping.Models;
 
 namespace Shopping.Controllers
 {
@@ -33,6 +34,20 @@ namespace Shopping.Controllers
                 PageNumber = 0,
             });
             return View(products);
+        }
+
+        public ActionResult Detail(int productId)
+        {
+            var product = _productService.GetProductById(productId);
+            if (product == null)
+                return View("List");
+            var otherProducts = _productService.GetOthersProductByCategoryId(product.Id, product.ProductCategoryId, 4);
+            var model = new ProductDetailModel()
+            {
+                Product = product,
+                OtherProducts = otherProducts
+            };
+            return View(model);
         }
     }
 }

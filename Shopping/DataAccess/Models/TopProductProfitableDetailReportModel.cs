@@ -14,6 +14,7 @@ namespace DataAccess.Models
         public double ReceivePriceAverage { get; set; }
         public double SellPriceAverage { get; set; }
         public int Quantity { get; set; }
-        public double Amount { get; set; }
+        public double UnitPrice { get; set; }
+        public double Profitable { get; set; }
     }
 }

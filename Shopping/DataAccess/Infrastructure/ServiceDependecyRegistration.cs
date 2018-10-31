@@ -22,6 +22,9 @@ namespace DataAccess.Infrastructure
             container.Register<IDeliveryService, DeliveryService>(Lifestyle.Scoped);
             container.Register<IOrderService, OrderService>(Lifestyle.Scoped);
             container.Register<IReportService, ReportService>(Lifestyle.Scoped);
+            container.Register<ISlideService, SlideService>(Lifestyle.Scoped);
+            container.Register<IAboutService, AboutService>(Lifestyle.Scoped);
+            container.Register<IContactService, ContactService>(Lifestyle.Scoped);
         }
     }
 }

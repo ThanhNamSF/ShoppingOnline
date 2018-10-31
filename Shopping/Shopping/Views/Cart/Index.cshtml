@@ -9,57 +9,57 @@
             <h3>Chec<span>kout</span></h3>
 
             <div class="checkout-right">
-                <h4>Your shopping cart contains: <span>@Model.Count() Products</span></h4>
+                <h4>Your shopping cart contains: <span id="totalProduct">@Model.Count() Products</span></h4>
                 <table class="timetable_sub">
                     <thead>
-                        <tr>
-                            <th>SL No.</th>
-                            <th>Product</th>
-                            <th>Quality</th>
-                            <th>Product Name</th>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Product</th>
+                        <th>Quality</th>
+                        <th>Product Name</th>
 
-                            <th>Price</th>
-                            <th>Remove</th>
-                        </tr>
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.Count(); i++)
-                        {
-                            <tr class="rem">
-                                <td class="invert">@(i + 1)</td>
-                                <td class="invert-image"><a href="#"><img src="../@Model.ElementAt(i).Product.ImagePath" alt=" " class="img-responsive"></a></td>
-                                <td class="invert">
-                                    <div class="quantity">
-                                        <div class="quantity-select">
-                                            <div class="entry value-minus">&nbsp;</div>
-                                            <div class="entry value"><span>@Model.ElementAt(i).Quantity</span></div>
-                                            <div class="entry value-plus active">&nbsp;</div>
-                                        </div>
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        <tr class="rem@(Model.ElementAt(i).Product.Id)">
+                            <td class="invert">@(i + 1)</td>
+                            <td class="invert-image"><a href="#"><img src="../@Model.ElementAt(i).Product.ImagePath" alt=" " class="img-responsive"></a></td>
+                            <td class="invert">
+                                <div class="quantity">
+                                    <div class="quantity-select">
+                                        <div class="entry value-minus">&nbsp;</div>
+                                        <div id="@Model.ElementAt(i).Product.Id" class="entry value"><span>@Model.ElementAt(i).Quantity</span></div>
+                                        <div class="entry value-plus active">&nbsp;</div>
                                     </div>
-                                </td>
-                                <td class="invert">@Model.ElementAt(i).Product.Name</td>
+                                </div>
+                            </td>
+                            <td class="invert">@Model.ElementAt(i).Product.Name</td>
 
-                                <td class="invert">@string.Format("{0:#,#}", Model.ElementAt(i).Product.Price * Model.ElementAt(i).Quantity) VND</td>
-                                <td class="invert">
-                                    <div class="rem">
-                                        <div class="close1"> </div>
-                                    </div>
+                            <td class="invert">@string.Format("{0:#,#}", Model.ElementAt(i).Product.Price * (1 - Model.ElementAt(i).Product.Promotion) * Model.ElementAt(i).Quantity) VND</td>
+                            <td class="invert">
+                                <div class="rem">
+                                    <div title="@(Model.ElementAt(i).Product.Id)" class="close1"> </div>
+                                </div>
 
-                                </td>
-                            </tr>
-                        }
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
             <div class="checkout-left">
                 <div class="col-md-4 checkout-left-basket">
-                    <h4>Continue to basket</h4>
+                    <a href="javascript:void(0);" onclick="history.go(-1);" style="width: 400px; display: block">Continue to basket</a>
                     <ul>
                         @foreach (var item in Model)
                         {
-                            <li>@item.Product.Name<i>-</i> <span>@string.Format("{0:#,#}", item.Product.Price * item.Quantity) VND</span></li>
+                            <li id="item@(item.Product.Id)">@item.Product.Name<i>-</i> <span id="totalItem@(item.Product.Id)">@string.Format("{0:#,#}", item.Product.Price * (1 - item.Product.Promotion) * item.Quantity) VND</span></li>
                         }
-                        <li>Total <i>-</i> <span>@string.Format("{0:#,#}", Model.Sum(item => item.Product.Price * item.Quantity)) VND</span></li>
+                        <li>Total <i>-</i> <span id="total">@string.Format("{0:#,#}", Model.Sum(item => item.Product.Price * (1 - item.Product.Promotion) * item.Quantity)) VND</span></li>
                     </ul>
                 </div>
                 <div class="col-md-8 address_form">
@@ -204,3 +204,52 @@
         <div class="clearfix"> </div>
     </div>
 </div>
+<!--quantity-->
+<script>
+    $('.value-plus').on('click', function () {
+        var divUpd = $(this).parent().find('.value'),
+            newVal = parseInt(divUpd.text(), 10) + 1;
+        var productId = divUpd.attr('id');
+        $.post('/Cart/UpdateQuantity', { productId: productId, quantity: 1 },
+            function (returnedData) {
+                if (returnedData.status == true) {
+                    divUpd.text(newVal);
+                    $("#totalItem" + productId).text(returnedData.amount + "VND");
+                    $("#total").text(returnedData.amountTotal + "VND");
+                }
+                
+            });
+    });
+    $('.value-minus').on('click', function () {
+        var divUpd = $(this).parent().find('.value'),
+            newVal = parseInt(divUpd.text(), 10) - 1;
+        var productId = divUpd.attr('id');
+        $.post('/Cart/UpdateQuantity', { productId: productId, quantity: -1 },
+            function (returnedData) {
+                if (returnedData.status == true) {
+                    divUpd.text(newVal);
+                    $("#totalItem" + productId).text(returnedData.amount + "VND");
+                    $("#total").text(returnedData.amountTotal + "VND");
+                }
+            });
+    });
+</script>
+<!--quantity-->
+<script>
+    $(document).ready(function (c) {
+        $('.close1').on('click', function (c) {
+            var productId = $(this).attr('title');
+            $.post('/Cart/DeleteProduct', { productId: productId},
+                function (returnedData) {
+                    if (returnedData.status == true) {
+                        $("#item" + productId).remove();
+                        $("#total").text(returnedData.amountTotal + "VND");
+                        $("#totalProduct").text(returnedData.totalProduct + " Products")
+                        $('.rem' + productId).fadeOut('slow', function (c) {
+                            $('.rem' + productId).remove();
+                        });
+                    }
+                });
+        });
+    });
+</script>

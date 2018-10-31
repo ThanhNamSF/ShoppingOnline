@@ -170,6 +170,7 @@ namespace Shopping.Areas.Admin.Controllers
                         var isExisted = _deliveryService.CheckProductExistedInDelivery(deliveryId, id);
                         if (isExisted)
                             continue;
+                        var product = _productService.GetProductById(id);
                         var deliveryDetailModel = new DeliveryDetailModel()
                         {
                             Quantity = 1,
@@ -177,7 +178,7 @@ namespace Shopping.Areas.Admin.Controllers
                             DiscountRate = 0,
                             ProductId = id,
                             DeliveryId = deliveryId,
-                            UnitPrice = 0
+                            UnitPrice = product.Price
                         };
                         _deliveryService.InsertDeliveryDetail(deliveryDetailModel);
                     }
@@ -192,14 +193,11 @@ namespace Shopping.Areas.Admin.Controllers
         #region deliveryDetail
 
         [HttpPost]
-        public ActionResult DeliveryDetailList(DataSourceRequest command, int deliveryId)
+        public ActionResult DeliveryDetailList(DataSourceRequest command, DeliveryDetailSearchCondition condition)
         {
-            var deliveryDetails = _deliveryService.SearchDeliveryDetails(new DeliveryDetailSearchCondition()
-            {
-                DeliveryId = deliveryId,
-                PageSize = command.PageSize,
-                PageNumber = command.Page - 1
-            });
+            condition.PageSize = command.PageSize;
+            condition.PageNumber = command.Page - 1;
+            var deliveryDetails = _deliveryService.SearchDeliveryDetails(condition);
             deliveryDetails.DataSource.ForEach(x => CalculateAmount(x));
             var gridModel = new DataSourceResult
             {

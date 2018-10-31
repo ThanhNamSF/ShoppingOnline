@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<DataAccess.Models.ProductCategoryModel>
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -47,10 +48,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                     <nav>
                         <ul>
-                            <li><a href="#" class="active">Home</a></li>
+                            <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="#">Team</a></li>
-                            <li><a href="#">Shop Now</a></li>
+                            <li><a href="@Url.Action("Index","Product")">Shop Now</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
                     </nav>
@@ -157,13 +158,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="col-md-6 style-grid style-grid-2">
             <div class="style-image-1_info">
                 <div class="style-grid-2-text_info">
-                    <h3>Nike DOWNSHIFTER</h3>
+                    <h3>@Model.ElementAt(0).Name</h3>
                     <p>
-                        Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur.sed quia non numquam eius modi
-                        tempora incidunt ut labore et dolore .
+                        @Model.ElementAt(0).Description
                     </p>
                     <div class="shop-button">
-                        <a href="#">Shop Now</a>
+                        <a href="@Url.Action("List","Product", new {categoryId = @Model.ElementAt(0).Id})">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -183,13 +183,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="col-md-6 grids_sec_2_left">
                 <div class="grid_sec_info">
                     <div class="style-grid-2-text_info">
-                        <h3>Sneakers</h3>
+                        <h3>@Model.ElementAt(1).Name</h3>
                         <p>
-                            Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur.sed quia non numquam eius modi
-                            tempora incidunt ut labore .
+                            @Model.ElementAt(1).Description
                         </p>
                         <div class="shop-button">
-                            <a href="#">Shop Now</a>
+                            <a href="@Url.Action("List","Product", new {categoryId = @Model.ElementAt(1).Id})">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -210,13 +209,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
                 <div class="grid_sec_info last">
                     <div class="style-grid-2-text_info">
-                        <h3>Sneakers</h3>
+                        <h3>@Model.ElementAt(1).Name</h3>
                         <p>
-                            Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur.sed quia non numquam eius modi
-                            tempora incidunt ut labore .
+                            @Model.ElementAt(1).Description
                         </p>
                         <div class="shop-button two">
-                            <a href="#">Shop Now</a>
+                            <a href="@Url.Action("List","Product", new {categoryId = @Model.ElementAt(1).Id})">Shop Now</a>
                         </div>
                     </div>
                 </div>

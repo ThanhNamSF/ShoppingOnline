@@ -12,11 +12,12 @@ namespace DataAccess.Entity
         [Key]
         public int Id { get; set; }
         public int DisplayOrder { get; set; }
+        [StringLength(32)]
+        public string Name { get; set; }
+        [StringLength(255)]
+        public string Title { get; set; }
 
-        [StringLength(250)]
-        public string Link { get; set; }
-
-        public string Description { get; set; }
+        public string ImagePath { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 

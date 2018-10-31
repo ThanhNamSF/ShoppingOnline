@@ -98,26 +98,18 @@
     <Compile Include="Entity\User.cs" />
     <Compile Include="Infrastructure\AutoMapperProfile.cs" />
     <Compile Include="Infrastructure\ServiceDependecyRegistration.cs" />
+    <Compile Include="Interfaces\IAboutService.cs" />
+    <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\IDeliveryService.cs" />
     <Compile Include="Interfaces\IOrderService.cs" />
     <Compile Include="Interfaces\IProductCategoryService.cs" />
     <Compile Include="Interfaces\IProductService.cs" />
     <Compile Include="Interfaces\IReceiveService.cs" />
     <Compile Include="Interfaces\IReportService.cs" />
+    <Compile Include="Interfaces\ISlideService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Migrations\201810191435007_GenerateDatabase.cs" />
-    <Compile Include="Migrations\201810191435007_GenerateDatabase.Designer.cs">
-      <DependentUpon>201810191435007_GenerateDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810211601453_AddPaymentIdIntoOrder.cs" />
-    <Compile Include="Migrations\201810211601453_AddPaymentIdIntoOrder.Designer.cs">
-      <DependentUpon>201810211601453_AddPaymentIdIntoOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810211606193_UpdateLength.cs" />
-    <Compile Include="Migrations\201810211606193_UpdateLength.Designer.cs">
-      <DependentUpon>201810211606193_UpdateLength.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AboutModel.cs" />
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\DeliveryDetailModel.cs" />
     <Compile Include="Models\DeliveryModel.cs" />
     <Compile Include="Models\OrderDetailModel.cs" />
@@ -130,10 +122,15 @@
     <Compile Include="Models\ReceiveModel.cs" />
     <Compile Include="Models\RevenueDetailReportModel.cs" />
     <Compile Include="Models\RevenueReportModel.cs" />
+    <Compile Include="Models\SlideModel.cs" />
+    <Compile Include="Models\TopProductBestSellerDetailReportModel.cs" />
+    <Compile Include="Models\TopProductBestSellerReportModel.cs" />
     <Compile Include="Models\TopProductProfitableDetailReportModel.cs" />
     <Compile Include="Models\TopProductProfitableReportModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AboutService.cs" />
+    <Compile Include="Services\ContactService.cs" />
     <Compile Include="Services\DataAccessLayer.cs" />
     <Compile Include="Services\DeliveryService.cs" />
     <Compile Include="Services\OrderService.cs" />
@@ -141,6 +138,7 @@
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\ReceiveService.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Services\SlideService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ShoppingContext.cs" />
   </ItemGroup>
@@ -153,17 +151,6 @@
       <Project>{08c5e219-2b2e-425c-96a7-c0ebffff5a67}</Project>
       <Name>Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810191435007_GenerateDatabase.resx">
-      <DependentUpon>201810191435007_GenerateDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810211601453_AddPaymentIdIntoOrder.resx">
-      <DependentUpon>201810211601453_AddPaymentIdIntoOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810211606193_UpdateLength.resx">
-      <DependentUpon>201810211606193_UpdateLength.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

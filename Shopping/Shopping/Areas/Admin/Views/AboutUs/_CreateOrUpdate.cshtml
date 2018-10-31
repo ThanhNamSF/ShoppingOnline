@@ -1,0 +1,137 @@
+﻿@model DataAccess.Models.AboutModel
+
+@Html.HiddenFor(model => model.Id)
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <strong style="font-size: 16px">Chào mừng đến với Shop</strong>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label">Mô tả</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label">Hình ảnh</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.WelcomeImagePath, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    <a id="btnSelectWelcomeImage" href="#">Chọn ảnh</a>
+                                    @Html.ValidationMessageFor(model => model.WelcomeImagePath, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-group">
+            <strong style="font-size: 16px">Chúng tôi là ai?</strong>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label">Thông tin về shop</label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Information, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                @Html.ValidationMessageFor(model => model.Information, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label">Chất lượng</label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Quality, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                @Html.ValidationMessageFor(model => model.Quality, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label">Phục vụ</label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Service, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                @Html.ValidationMessageFor(model => model.Service, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label">Hỗ trợ</label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Support, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                @Html.ValidationMessageFor(model => model.Support, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label">Hình ảnh</label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.WhoWeAreImagePath, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                <a id="btnSelectWhoWeAreImage" href="#">Chọn ảnh</a>
+                                @Html.ValidationMessageFor(model => model.WhoWeAreImagePath, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $("#btnSelectWelcomeImage").on('click',
+            function(e) {
+                e.preventDefault();
+                var finder = new CKFinder();
+                finder.selectActionFunction = function(url) {
+                    $("#@Html.IdFor(model => model.WelcomeImagePath)").val(url);
+                };
+                finder.popup();
+            });
+        $("#btnSelectWhoWeAreImage").on('click',
+            function(e) {
+                e.preventDefault();
+                var finder = new CKFinder();
+                finder.selectActionFunction = function(url) {
+                    $("#@Html.IdFor(model => model.WhoWeAreImagePath)").val(url);
+                };
+                finder.popup();
+            });
+        var descriptionEditor = CKEDITOR.replace('@Html.IdFor(model => model.Description)',
+            {
+                customConfig: '/Content/ckeditor/config.js'
+            });
+        var informationEditor = CKEDITOR.replace('@Html.IdFor(model => model.Information)',
+            {
+                customConfig: '/Content/ckeditor/config.js'
+            });
+        var qualityEditor = CKEDITOR.replace('@Html.IdFor(model => model.Quality)',
+            {
+                customConfig: '/Content/ckeditor/config.js'
+            });
+        var serviceEditor = CKEDITOR.replace('@Html.IdFor(model => model.Service)',
+            {
+                customConfig: '/Content/ckeditor/config.js'
+            });
+        var supportEditor = CKEDITOR.replace('@Html.IdFor(model => model.Support)',
+            {
+                customConfig: '/Content/ckeditor/config.js'
+            });
+    });
+</script>
+

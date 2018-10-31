@@ -118,14 +118,55 @@
             value: "@Model.CategoryId"
         });
 
-        $("#@Html.IdFor(model => model.DateFrom)").kendoDatePicker({
+        
+
+        function startChange() {
+            var startDate = start.value(),
+                endDate = end.value();
+
+            if (startDate) {
+                startDate = new Date(startDate);
+                startDate.setDate(startDate.getDate());
+                end.min(startDate);
+            } else if (endDate) {
+                start.max(new Date(endDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        function endChange() {
+            var endDate = end.value(),
+                startDate = start.value();
+
+            if (endDate) {
+                endDate = new Date(endDate);
+                endDate.setDate(endDate.getDate());
+                start.max(endDate);
+            } else if (startDate) {
+                end.min(new Date(startDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        var start = $("#@Html.IdFor(model => model.DateFrom)").kendoDatePicker({
             culture: "vi-VN",
-            format: "dd-MM-yyyy HH:mm:ss"
-        });
-        $("#@Html.IdFor(model => model.DateTo)").kendoDatePicker({
+            format: "dd-MM-yyyy HH:mm:ss",
+            change: startChange
+        }).data("kendoDatePicker");
+        var end = $("#@Html.IdFor(model => model.DateTo)").kendoDatePicker({
             culture: "vi-VN",
-            format: "dd-MM-yyyy HH:mm:ss"
-        });
+            format: "dd-MM-yyyy HH:mm:ss",
+            change: endChange
+        }).data("kendoDatePicker");
+
+        start.max(end.value());
+        end.min(start.value());
 
         $('#button-search').click(function () {
             var grid = $('#main-grid').data('kendoGrid');

@@ -29,6 +29,15 @@ namespace DataAccess.Infrastructure
             CreateMap<OrderModel, Order>();
             CreateMap<OrderDetail, OrderDetailModel>();
             CreateMap<OrderDetailModel, OrderDetail>();
+            CreateMap<SlideModel, Slide>();
+            CreateMap<Slide, SlideModel>();
+            CreateMap<AboutModel, About>();
+            CreateMap<About, AboutModel>();
+            CreateMap<ContactModel, Contact>();
+            CreateMap<Contact, ContactModel>()
+                .ForMember(x => x.FullName, opt => opt.MapFrom(x => x.Customer.FirstName + " " + x.Customer.LastName))
+                .ForMember(x => x.Email, opt => opt.MapFrom(x => x.Customer.Email))
+                .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.Customer.Phone));
         }
     }
 }

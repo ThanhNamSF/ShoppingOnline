@@ -76,7 +76,5 @@ D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInp
 D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.dll
 D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.pdb
-D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.Migrations.GenerateDatabase.resources
+D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.Migrations.v1.resources
 D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.cache
-D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.Migrations.AddPaymentIdIntoOrder.resources
-D:\ShoppingOnline\Shopping\DataAccess\obj\Debug\DataAccess.Migrations.UpdateLength.resources

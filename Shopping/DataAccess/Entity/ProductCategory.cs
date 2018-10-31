@@ -21,6 +21,9 @@ namespace DataAccess.Entity
         [StringLength(250)]
         public string SeoTitle { get; set; }
 
+        [StringLength(300)]
+        public string Description { get; set; }
+
         public DateTime CreatedDateTime { get; set; }
 
         public int CreatedBy { get; set; }

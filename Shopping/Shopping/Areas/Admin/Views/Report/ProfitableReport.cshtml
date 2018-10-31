@@ -1,0 +1,135 @@
+﻿@model Common.SearchConditions.ProfitableSearchConditionReport
+
+@{
+    var defaultGridPageSize = 20;
+    var gridPageSizes = "10,20,50,100,500";
+    <style>
+        .k-combobox .k-input {
+            height: 27.5px !important
+        }
+
+        #reportViewer1 {
+            position: relative;
+            width: 100%;
+            height: 900px;
+        }
+    </style>
+    var typeReportSource = new TypeReportSource() { TypeName = "Shopping.Reports.TopProductProfitableReport,Shopping" };
+    typeReportSource.Parameters.Add("topNumber", Model.TopNumber);
+    typeReportSource.Parameters.Add("createdBy", Model.CreatedBy);
+    <script src="~/ReportViewer/js/telerikReportViewer.kendo-12.2.18.1017.min.js"></script>
+    <script src="~/ReportViewer/js/telerikReportViewer-12.2.18.1017.js"></script>
+}
+
+@Html.AntiForgeryToken()
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Báo cáo lợi nhuận sản phẩm
+    </h1>
+    <div class="pull-right">
+
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Top</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.TopNumber, new { htmlAttributes = new { min = 0 } })
+                                    @Html.ValidationMessageFor(model => model.TopNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button type="button" id="button-search" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                        Xem báo cáo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @(Html.TelerikReporting().ReportViewer()
+                                  // Each report viewer must have an id - it will be used by the initialization script
+                                  // to find the element and initialize the report viewer.
+                                  .Id("reportViewer1")
+                                  // The URL of the service which will serve reports.
+                                  // The URL corresponds to the name of the controller class (ReportsController).
+                                  // For more information on how to configure the service please check http://www.telerik.com/help/reporting/telerik-reporting-rest-conception.html.
+                                  //.ServiceUrl("http://localhost:63298/api/reports")
+                                  .ServiceUrl(Url.Content("~/api/reports"))
+                                  // The URL for the report viewer template. The template can be edited -
+                                  // new functionalities can be added and unneeded ones can be removed.
+                                  // For more information please check http://www.telerik.com/help/reporting/html5-report-viewer-templates.html.
+                                  //
+                                  // Strongly typed ReportSource - TypeReportSource or UriReportSource.
+                                  .ReportSource(typeReportSource)
+                                  //.ReportSource(new UriReportSource()
+                                  //{
+                                  //    Uri = "FieldProfileReport.cs",
+                                  //    Parameters =
+                                  //    {
+                                  //        new Parameter("sessionId",Model.SessionId.ToString()),
+                                  //    }
+                                  //})
+                                  // Specifies whether the viewer is in interactive or print preview mode.
+                                  // PrintPreview - Displays the paginated report as if it is printed on paper. Interactivity is not enabled.
+                                  // Interactive - Displays the report in its original width and height with no paging. Additionally interactivity is enabled.
+                                  .ViewMode(ViewMode.Interactive)
+                                  // Sets the scale mode of the viewer.
+                                  // Three modes exist currently:
+                                  // FitPage - The whole report will fit on the page (will zoom in or out), regardless of its width and height.
+                                  // FitPageWidth - The report will be zoomed in or out so that the width of the screen and the width of the report match.
+                                  // Specific - Uses the scale to zoom in and out the report.
+                                  .ScaleMode(ScaleMode.Specific)
+                                  // Zoom in and out the report using the scale
+                                  // 1.0 is equal to 100%, i.e. the original size of the report
+                                  .Scale(1.0)
+                                  // Sets whether the viewer’s client session to be persisted between the page’s refreshes(ex. postback).
+                                  // The session is stored in the browser’s sessionStorage and is available for the duration of the page session.
+                                  .PersistSession(false)
+                                  // Sets the print mode of the viewer.
+                                  .PrintMode(PrintMode.AutoSelect)
+                    )
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            //search button
+                            $('#button-search').click(function () {
+                                var viewer = $("#reportViewer1").data("telerik_ReportViewer");
+                                viewer.reportSource({
+                                    report: viewer.reportSource().report,
+                                    parameters: {
+                                        topNumber: $('#@Html.IdFor(model => model.TopNumber)').val(),
+                                        createdBy: "@Model.CreatedBy"
+                                    }
+                                });
+                                return false;
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#@Html.IdFor(model => model.TopNumber)").kendoNumericTextBox({
+            format: "#"
+        });
+    });
+</script>
+

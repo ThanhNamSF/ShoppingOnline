@@ -15,5 +15,6 @@ namespace DataAccess.Interfaces
         void UpdateProduct(ProductModel productModel);
         ProductModel GetProductByCode(string code);
         void DescreaseProduct(int id, int quantity);
+        IEnumerable<ProductModel> GetOthersProductByCategoryId(int productId, int categoryId, int number);
     }
 }

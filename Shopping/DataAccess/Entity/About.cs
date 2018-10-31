@@ -11,13 +11,16 @@ namespace DataAccess.Entity
     {
         [Key]
         public int Id { get; set; }
-        [StringLength(250)]
-        public string Title { get; set; }
+
+        [StringLength(255)]
+        public string WelcomeImagePath { get; set; }
 
         public string Description { get; set; }
-
-        public string Detail { get; set; }
-
-        public bool Status { get; set; }
+        [StringLength(255)]
+        public string WhoWeAreImagePath { get; set; }
+        public string Information { get; set; }
+        public string Quality { get; set; }
+        public string Service { get; set; }
+        public string Support { get; set; }
     }
 }

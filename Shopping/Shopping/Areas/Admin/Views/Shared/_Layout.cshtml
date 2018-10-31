@@ -15,6 +15,19 @@
     <link rel="stylesheet" href="~/Content/AdminTLE/bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Content/AdminTLE/dist/css/AdminLTE.min.css">
+    
+    <link rel="stylesheet" href="~/Content/AdminTLE/dist/css/skins/_all-skins.min.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="~/Content/AdminTLE/bower_components/morris.js/morris.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="~/Content/AdminTLE/bower_components/jvectormap/jquery-jvectormap.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="~/Content/AdminTLE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/Content/AdminTLE/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="~/Content/AdminTLE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <!-- Content Header (Page header) -->
 
     <link rel="stylesheet" href="~/Content/KendoUI/styles/kendo.common.min.css" />
     <link rel="stylesheet" href="~/Content/KendoUI/styles/kendo.default.min.css" />
@@ -253,6 +266,8 @@
                         <ul class="treeview-menu">
                             <li><a href="@Html.Raw(Url.Action("ProductInventoryReport","Report"))"><i class="fa fa-plus"></i>Báo cáo tồn kho</a></li>
                             <li><a href="@Html.Raw(Url.Action("RevenueReport","Report"))"><i class="fa fa-money"></i>Báo cáo doanh thu</a></li>
+                            <li><a href="@Html.Raw(Url.Action("ProfitableReport","Report"))"><i class="fa fa-money"></i>Báo cáo top lợi nhuận</a></li>
+                            <li><a href="@Html.Raw(Url.Action("BestSellerReport","Report"))"><i class="fa fa-money"></i>Báo cáo top bán chạy nhất</a></li>
                         </ul>
                     </li>
                     @*<li class="treeview">

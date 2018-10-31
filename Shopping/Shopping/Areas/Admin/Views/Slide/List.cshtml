@@ -1,0 +1,214 @@
+﻿@model Common.SearchConditions.SlideSearchCondition
+
+@{
+    var defaultGridPageSize = 20;
+    var gridPageSizes = "10,20,50,100,500";
+}
+
+@Html.AntiForgeryToken()
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Danh sách sliders
+    </h1>
+    <div class="pull-right">
+        <a href="@Url.Action("Create")" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Thêm
+        </a>
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Tên slide</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Name)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Từ ngày</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.DateFrom)" value="@Model.DateFrom" />
+                                    @Html.ValidationMessageFor(model => model.DateFrom)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Đến ngày</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="datetime" id="@Html.IdFor(model => model.DateTo)" value="@Model.DateTo" />
+                                    @Html.ValidationMessageFor(model => model.DateTo)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button type="button" id="button-search" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                        Tìm kiếm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="main-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        function startChange() {
+            var startDate = start.value(),
+                endDate = end.value();
+
+            if (startDate) {
+                startDate = new Date(startDate);
+                startDate.setDate(startDate.getDate());
+                end.min(startDate);
+            } else if (endDate) {
+                start.max(new Date(endDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        function endChange() {
+            var endDate = end.value(),
+                startDate = start.value();
+
+            if (endDate) {
+                endDate = new Date(endDate);
+                endDate.setDate(endDate.getDate());
+                start.max(endDate);
+            } else if (startDate) {
+                end.min(new Date(startDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        var start = $("#@Html.IdFor(model => model.DateFrom)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss",
+            change: startChange
+        }).data("kendoDatePicker");
+        var end = $("#@Html.IdFor(model => model.DateTo)").kendoDatePicker({
+            culture: "vi-VN",
+            format: "dd-MM-yyyy HH:mm:ss",
+            change: endChange
+        }).data("kendoDatePicker");
+
+        start.max(end.value());
+        end.min(start.value());
+
+        $('#button-search').click(function () {
+            var grid = $('#main-grid').data('kendoGrid');
+            grid.dataSource.page(1); //new search. Set page size to 1
+            return false;
+        });
+
+        function additionalData() {
+            var data = {
+                Name: $('#@Html.IdFor(model => model.Name)').val(),
+                DateFrom: $('#@Html.IdFor(model => model.DateFrom)').val(),
+                DateTo: $('#@Html.IdFor(model => model.DateTo)').val()
+            };
+            addAntiForgeryToken(data);
+            return data;
+        }
+
+
+        $("#main-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("List", "Slide"))",
+                        type: "POST",
+                        dataType: "json",
+                        data: additionalData
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors"
+                },
+                pageSize: @(defaultGridPageSize),
+                serverPaging: true
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: [@(gridPageSizes)],
+                messages: {
+                    itemsPerPage: "Số slider trên trang",
+                    empty: "Không có slider",
+                    display: "{0} - {1} của {2} slider",
+                },
+            },
+            editable: {
+                confirmation: "Delete",
+                mode: "inline"
+            },
+            filterable: false,
+            sortable: false,
+            columns: [{
+                template: '<img src="../../../..#=ImagePath#" width="100px" alt="image" />',
+                width: 120,
+                title: "Hình ảnh"
+            }, {
+                field: "Name",
+                title: "Tên slider"
+            }, {
+                field: "Title",
+                title: "Tiêu đề"
+            }, {
+                field: "CreatedDateTime",
+                title: "Ngày tạo",
+                template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
+            }, {
+                field: "Status",
+                title: "Đã kích hoạt",
+                width: 100,
+                attributes: { style: "text-align:center" },
+                template: "#if(Status){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
+            }, {
+                field: "Id",
+                title: " ",
+                width: 100,
+                headerAttributes: { style: "text-align:center" },
+                attributes: { style: "text-align:center" },
+                template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Chi tiết</a>'
+            }]
+        });
+    });
+</script>
+

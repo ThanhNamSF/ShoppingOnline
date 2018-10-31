@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using AutoMapper;
@@ -99,6 +100,14 @@ namespace DataAccess.Services
                 return;
             product.Quantity -= quantity;
             _shoppingContext.SaveChanges();
+        }
+
+        public IEnumerable<ProductModel> GetOthersProductByCategoryId(int productId, int categoryId, int number)
+        {
+            var otherProducts = _shoppingContext.Products.AsNoTracking()
+                .Where(w => w.Id != productId && w.ProductCategoryId == categoryId).OrderBy(r => Guid.NewGuid())
+                .Take(number).ToList();
+            return Mapper.Map<List<ProductModel>>(otherProducts);
         }
     }
 }

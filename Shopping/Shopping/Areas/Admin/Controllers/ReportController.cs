@@ -33,5 +33,29 @@ namespace Shopping.Areas.Admin.Controllers
             };
             return View(model);
         }
+
+        public ActionResult ProfitableReport()
+        {
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            var model = new ProfitableSearchConditionReport()
+            {
+                TopNumber = 10,
+                CreatedBy = currentUser != null ? currentUser.FirstName + " " + currentUser.LastName : string.Empty
+            };
+            return View(model);
+        }
+
+        public ActionResult BestSellerReport()
+        {
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            var model = new BestSellerSearchCondition()
+            {
+                TopNumber = 10,
+                CreatedBy = currentUser != null ? currentUser.FirstName + " " + currentUser.LastName : string.Empty,
+                DateFrom = DateTime.Now,
+                DateTo = DateTime.Now
+            };
+            return View(model);
+        }
     }
 }

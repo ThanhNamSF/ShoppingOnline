@@ -28,7 +28,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Mã phiếu nhập</label>
+                                    <label class="control-label">Mã phiếu xuất</label>
                                 </div>
                                 <div class="col-md-8">
                                     @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
@@ -327,7 +327,15 @@
         $("#@Html.IdFor(model => model.ApprovedDateTime)").kendoDatePicker({
             culture: "vi-VN",
             format: "dd-MM-yyyy HH:mm:ss"
-        }).data("kendoDatePicker").enable(false);;
+        }).data("kendoDatePicker").enable(false);
+
+        function additionalData() {
+            var data = {
+                DeliveryId: "@Model.Id"
+            };
+            addAntiForgeryToken(data);
+            return data;
+        }
 
 
         $(document).ready(function () {
@@ -338,9 +346,10 @@
                                 autoSync: false,
                                 transport: {
                                     read: {
-                                        url: "@Html.Raw(Url.Action("DeliveryDetailList", "Delivery", new {deliveryId = Model.Id}))", //edit
+                                        url: "@Html.Raw(Url.Action("DeliveryDetailList", "Delivery"))", //edit
                                         type: "POST",
-                                        dataType: "json"
+                                        dataType: "json",
+                                        data: additionalData
                                     },
                                     update: {
                                         url: "@Html.Raw(Url.Action("DeliveryDetailEdit", "Delivery"))",
@@ -353,14 +362,14 @@
                                         type: "POST",
                                         dataType: "json"
                                     },
-                                    parameterMap: function(data, operation) {
-                                        if (operation !== "read") {
-                                            return data;
-                                        } else {
-                                            //for some reasons only such "Filter" data be parsed
-                                            return JSON.stringify(data);
-                                        }
-                                    }
+                                    //parameterMap: function(data, operation) {
+                                    //    if (operation !== "read") {
+                                    //        return data;
+                                    //    } else {
+                                    //        //for some reasons only such "Filter" data be parsed
+                                    //        return JSON.stringify(data);
+                                    //    }
+                                    //}
                                 },
                                 schema: {
                                     data: "Data",

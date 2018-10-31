@@ -28,5 +28,16 @@ namespace DataAccess.Services
         {
             return _reportService.GetRevenueReport(dateFrom, dateTo, createdBy);
         }
+
+        public TopProductProfitableReportModel GetTopProductProfitableReport(int topNumber, string createdBy)
+        {
+            return _reportService.GetTopProductProfitableReportModel(topNumber, createdBy);
+        }
+
+        public TopProductBestSellerReportModel GetTopProductBestSellerReportModel(int topNumber, DateTime dateFrom,
+            DateTime dateTo, string createdBy)
+        {
+            return _reportService.GetTopProductBestSellerReportModel(topNumber, dateFrom, dateTo, createdBy);
+        }
     }
 }
