@@ -62,6 +62,7 @@
     <Compile Include="SearchConditions\ReceiveSearchCondition.cs" />
     <Compile Include="SearchConditions\RevenueSearchConditionReport.cs" />
     <Compile Include="SearchConditions\SlideSearchCondition.cs" />
+    <Compile Include="SendEmailHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,12 +17,13 @@ namespace DataAccess.Entity
         [StringLength(255)]
         public string Title { get; set; }
         public string Content { get; set; }
+        public string ReplyContent { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public DateTime? RepliedDateTime { get; set; }
 
         [ForeignKey("CustomerId")]
-        public User Customer { get; set; }
+        public virtual User Customer { get; set; }
         [ForeignKey("ReplierId")]
-        public User Replier { get; set; }
+        public virtual User Replier { get; set; }
     }
 }

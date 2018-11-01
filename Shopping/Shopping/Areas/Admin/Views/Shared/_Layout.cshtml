@@ -254,6 +254,7 @@
                             <li><a href="@Html.Raw(Url.Action("List","Order"))"><i class="fa fa-first-order"></i>Đặt hàng</a></li>
                             <li><a href="@Html.Raw(Url.Action("List","Delivery"))"><i class="fa fa-sellsy"></i>Xuất hàng</a></li>
                             <li><a href="@Html.Raw(Url.Action("List","Receive"))"><i class="fa fa-car"></i>Nhập hàng</a></li>
+                            <li><a href="@Html.Raw(Url.Action("List","Contact"))"><i class="fa fa-mail-reply-all"></i>Phản hồi</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -266,10 +267,22 @@
                         <ul class="treeview-menu">
                             <li><a href="@Html.Raw(Url.Action("ProductInventoryReport","Report"))"><i class="fa fa-plus"></i>Báo cáo tồn kho</a></li>
                             <li><a href="@Html.Raw(Url.Action("RevenueReport","Report"))"><i class="fa fa-money"></i>Báo cáo doanh thu</a></li>
-                            <li><a href="@Html.Raw(Url.Action("ProfitableReport","Report"))"><i class="fa fa-money"></i>Báo cáo top lợi nhuận</a></li>
-                            <li><a href="@Html.Raw(Url.Action("BestSellerReport","Report"))"><i class="fa fa-money"></i>Báo cáo top bán chạy nhất</a></li>
+                            <li><a href="@Html.Raw(Url.Action("ProfitableReport","Report"))"><i class="fa fa-percent"></i>Báo cáo top lợi nhuận</a></li>
+                            <li><a href="@Html.Raw(Url.Action("BestSellerReport","Report"))"><i class="fa fa-sellsy"></i>Báo cáo top bán chạy nhất</a></li>
                         </ul>
                     </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-adjust"></i> <span>Thiết lập</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="@Html.Raw(Url.Action("Index","AboutUs"))"><i class="fa fa-comment"></i>Thông tin shop</a></li>
+                        <li><a href="@Html.Raw(Url.Action("Index","Slide"))"><i class="fa fa-sliders"></i>Sliders</a></li>
+                    </ul>
+                </li>
                     @*<li class="treeview">
                         <a href="#">
                             <i class="fa fa-files-o"></i>

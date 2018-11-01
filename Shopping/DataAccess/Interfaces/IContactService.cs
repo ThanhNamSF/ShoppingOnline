@@ -14,5 +14,6 @@ namespace DataAccess.Interfaces
         PageList<ContactModel> SearchContacts(ContactSearchCondition condition);
         void DeleteContact(int id);
         void UpdateContact(ContactModel contactModel);
+        ContactModel GetContactById(int id);
     }
 }

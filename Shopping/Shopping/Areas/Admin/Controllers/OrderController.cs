@@ -151,7 +151,7 @@ namespace Shopping.Areas.Admin.Controllers
             if (customer != null)
             {
                 string emailContent = GetBodyOfOrderInformation(order, customer);
-                SendEmailToCustomer(customer, emailContent);
+                SendEmailHelper.SendEmailToCustomer(customer.Email, customer.FirstName + " " + customer.LastName, "Thông tin về đơn hàng", emailContent);
                 string smsContent =
                     "Đơn hàng của bạn đã được xác nhận. Mời bạn kiểm tra email để biết thêm thông tin chi tiết. Xin cảm ơn!!!";
                 SendSmsToCustomer(customer.Phone, smsContent);
@@ -177,7 +177,7 @@ namespace Shopping.Areas.Admin.Controllers
                 if (customer != null)
                 {
                     string emailContent = GetBodyCancelOrder(customer);
-                    SendEmailToCustomer(customer, emailContent);
+                    SendEmailHelper.SendEmailToCustomer(customer.Email, customer.FirstName + " " + customer.LastName, "Thông tin về đơn hàng", emailContent);
                     string smsContent =
                         "Đơn hàng của bạn đã bị hủy. Mời bạn kiểm trả email để biết thêm thông tin chi tiết. Xin cảm ơn!!!";
                     SendSmsToCustomer(customer.Phone, smsContent);
@@ -246,41 +246,6 @@ namespace Shopping.Areas.Admin.Controllers
             body += "<br /><br /> Đơn hàng của quý khách sẽ được giao trong vòng 3 ngày kể từ ngày nhận được thông báo này.";
             body += "<br />Xin chân thành cảm ơn quý khách đã đặt hàng tại cửa hàng chúng tôi.";
             return body;
-        }
-
-        private void SendEmailToCustomer(UserModel customer, string content)
-        {
-            try
-            {
-                var fromAddress = new MailAddress("ShoppingOnlineTNSF@gmail.com", "Shopping Online SF");
-                var toAddress = new MailAddress(customer.Email, customer.FirstName + " " + customer.LastName);
-                const string fromPassword = "thanhnamsf";
-                const string subject = "Thông báo về đơn hàng";
-                string body = content;
-                var smtp = new SmtpClient
-                {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-                };
-                using (var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                })
-                {
-                    smtp.Send(message);
-                }
-            }
-            catch (Exception e)
-            {
-                
-            }
-            
         }
 
         private void SendSmsToCustomer(string phoneNumber, string body)

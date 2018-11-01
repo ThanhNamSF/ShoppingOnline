@@ -14,6 +14,7 @@ namespace Common.SearchConditions
             DateTo = DateTime.Now;
         }
         public string UserName { get; set; }
+        public bool? IsReplied { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public int PageSize { get; set; }

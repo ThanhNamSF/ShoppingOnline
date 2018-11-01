@@ -11005,6 +11005,9 @@
     <Content Include="Areas\Admin\Views\Slide\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AboutUs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AboutUs\_CreateOrUpdate.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\_CreateOrUpdate.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -11047,7 +11050,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Areas\Admin\Views\Contact\" />
     <Folder Include="Areas\Admin\Views\ProductCategory\" />
     <Folder Include="Areas\Admin\Views\User\" />
     <Folder Include="Data\files\" />

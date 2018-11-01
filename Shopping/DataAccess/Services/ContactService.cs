@@ -31,12 +31,25 @@ namespace DataAccess.Services
             }
         }
 
+        public ContactModel GetContactById(int id)
+        {
+            var contact = _shoppingContext.Contacts.Find(id);
+            if (contact != null)
+                return Mapper.Map<ContactModel>(contact);
+            return null;
+        }
+
         public PageList<ContactModel> SearchContacts(ContactSearchCondition condition)
         {
             var query = _shoppingContext.Contacts.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(condition.UserName))
             {
                 query = query.Where(p => p.Customer.UserName.ToLower().Contains(condition.UserName.ToLower()));
+            }
+
+            if (condition.IsReplied.HasValue)
+            {
+                query = query.Where(p => p.ReplierId.HasValue == condition.IsReplied.Value);
             }
 
             var dateTo = condition.DateTo.AddDays(1);
