@@ -259,8 +259,10 @@
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\SlideController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PaypalController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -9103,6 +9105,9 @@
     <Content Include="Content\KendoUI\styles\Uniform\sprite_2x.png" />
     <Content Include="Content\KendoUI\styles\Uniform\sprite_kpi.png" />
     <Content Include="Content\KendoUI\styles\Uniform\sprite_kpi_2x.png" />
+    <Content Include="Content\Login\css\font-awesome.min.css" />
+    <Content Include="Content\Login\css\style.css" />
+    <Content Include="Content\Login\images\1.jpg" />
     <Content Include="Content\MyStyle.css" />
     <Content Include="Content\Resources\Icons\success-icon.png" />
     <Content Include="Content\Resources\Icons\error-icon.png" />
@@ -11008,6 +11013,11 @@
     <Content Include="Areas\Admin\Views\Contact\List.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\_CreateOrUpdate.cshtml" />
+    <Content Include="Content\Login\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Login\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Login\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Login\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Login\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -11046,6 +11056,7 @@
     <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -11054,6 +11065,7 @@
     <Folder Include="Areas\Admin\Views\User\" />
     <Folder Include="Data\files\" />
     <Folder Include="Data\flash\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Reports\" />
   </ItemGroup>
   <ItemGroup>

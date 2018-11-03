@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Common.Constants;
 using DataAccess.Entity;
 using DataAccess.Interfaces;
 using DataAccess.Models;
@@ -19,6 +20,13 @@ namespace DataAccess.Services
             _shoppingContext = shoppingContext;
         }
 
+        public void CreateUser(UserModel userModel)
+        {
+            var user = Mapper.Map<User>(userModel);
+            _shoppingContext.Users.Add(user);
+            _shoppingContext.SaveChanges();
+        }
+
         public IEnumerable<UserModel> GetAllUserByRole(int role)
         {
             var users = _shoppingContext.Users.AsNoTracking().Where(p =>p.Role == role).ToList();
@@ -31,10 +39,10 @@ namespace DataAccess.Services
             return Mapper.Map<UserModel>(user);
         }
 
-        public UserModel GetUserLogin(UserModel user)
+        public UserModel GetUserLogin(UserModel userModel, int role)
         {
             var userLogin = _shoppingContext.Users.AsNoTracking().FirstOrDefault(x =>
-                x.UserName.Equals(user.UserName) && x.Password.Equals(user.Password));
+                x.UserName.Equals(userModel.UserName) && x.Password.Equals(userModel.Password) && x.Role == role);
             return Mapper.Map<UserModel>(userLogin);
         }
     }

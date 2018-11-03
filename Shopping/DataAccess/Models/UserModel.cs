@@ -18,6 +18,9 @@ namespace DataAccess.Models
         [StringLength(16, ErrorMessage = "Password cannot be greater than 16")]
         public string Password { get; set; }
 
+        [StringLength(16, ErrorMessage = "Password cannot be greater than 16")]
+        public string PasswordConfirm { get; set; }
+
         [StringLength(50, ErrorMessage = "FirstName cannot be greater than 50")]
         public string FirstName { get; set; }
 

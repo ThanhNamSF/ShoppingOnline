@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DataAccess.Models.ProductCategoryModel>
+@using Common.Constants;
 @{
     Layout = null;
 }
@@ -32,6 +33,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="~/Content/web//fonts.googleapis.com/css?family=Montserrat:100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
           rel="stylesheet">
     <link href="~/Content/web//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -53,6 +55,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li><a href="#">Team</a></li>
                             <li><a href="@Url.Action("Index","Product")">Shop Now</a></li>
                             <li><a href="#">Contact</a></li>
+                            @if (Session[Values.CUSTOMER_SESSION] != null)
+                            {
+                                <li><a href="@Url.Action("Login","Login")">Log Out</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("Login","Login")">Log In</a></li>
+                            }
                         </ul>
                     </nav>
                 </div>
@@ -377,6 +387,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li><a href="#">Services</a></li>
                             <li><a href="#">Short Codes</a></li>
                             <li><a href="#">Contact</a></li>
+                            @if (Session[Values.CUSTOMER_SESSION] != null)
+                            {
+                                <li><a href="@Url.Action("Login","Login")">Log Out</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("Login","Login")">Log In</a></li>
+                            }
                         </ul>
                     </div>
 
@@ -451,7 +469,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="~/Content/web/js/demo1.js"></script>
     <!-- //nav -->
     <!-- cart-js -->
-    <script src="~/Content/web/js/minicart.js"></script>
+    @*<script src="~/Content/web/js/minicart.js"></script>
     <script>
         shoe.render();
 
@@ -464,7 +482,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 for (i = 0, len = items.length; i < len; i++) { }
             }
         });
-    </script>
+    </script>*@
     <!-- //cart-js -->
     <!--search-bar-->
     <script src="~/Content/web/js/search.js"></script>

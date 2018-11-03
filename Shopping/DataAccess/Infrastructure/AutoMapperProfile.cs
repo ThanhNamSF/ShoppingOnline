@@ -14,6 +14,7 @@ namespace DataAccess.Infrastructure
         public AutoMapperProfile()
         {
             CreateMap<UserModel, User>();
+            CreateMap<User, UserModel>();
             CreateMap<Product, ProductModel>();
             CreateMap<ProductModel, Product>();
             CreateMap<ProductCategory, ProductCategoryModel>();

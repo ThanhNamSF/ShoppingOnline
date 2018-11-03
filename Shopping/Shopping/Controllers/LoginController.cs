@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Common.Constants;
+using DataAccess.Interfaces;
+using DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Common;
-using Common.Constants;
-using DataAccess.Interfaces;
-using DataAccess.Models;
 
-namespace Shopping.Areas.Admin.Controllers
+namespace Shopping.Controllers
 {
     public class LoginController : Controller
     {
@@ -19,8 +18,8 @@ namespace Shopping.Areas.Admin.Controllers
             _userService = userService;
         }
 
-        
-        // GET: Admin/Login
+
+        // GET: Login
         public ActionResult Index()
         {
             return RedirectToAction("Login");
@@ -39,15 +38,26 @@ namespace Shopping.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var userLogin = _userService.GetUserLogin(model, Values.AdminRole);
+            var userLogin = _userService.GetUserLogin(model, Values.CustomerRole);
             if (userLogin != null)
             {
-                Session.Add(Values.USER_SESSION, userLogin);
+                Session.Add(Values.CUSTOMER_SESSION, userLogin);
                 return RedirectToAction("Index", "Home");
             }
-
-            TempData["AlertMessage"] = Messages.LOGIN_FAILED;
             return Login();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(UserModel model)
+        {
+            if (!ModelState.IsValid)
+                return RedirectToAction("Login");
+            model.CreatedDateTime = DateTime.Now;
+            model.Role = Values.CustomerRole;
+            _userService.CreateUser(model);
+            return RedirectToAction("Login");
         }
     }
 }
