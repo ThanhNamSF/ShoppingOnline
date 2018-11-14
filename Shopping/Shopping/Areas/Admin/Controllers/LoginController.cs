@@ -39,7 +39,7 @@ namespace Shopping.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var userLogin = _userService.GetUserLogin(model, Values.AdminRole);
+            var userLogin = _userService.GetUserLogin(model);
             if (userLogin != null)
             {
                 Session.Add(Values.USER_SESSION, userLogin);

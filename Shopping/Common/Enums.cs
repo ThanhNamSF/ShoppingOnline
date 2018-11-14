@@ -24,4 +24,11 @@ namespace Common
         Open,
         Closed
     }
+
+    public enum Trend
+    {
+        All,
+        Hot,
+        New
+    }
 }

@@ -16,7 +16,7 @@ using Configuration = Shopping.Helpers.Configuration;
 
 namespace Shopping.Controllers
 {
-    public class PaypalController : Controller
+    public class PaypalController : BaseController
     {
         private readonly IOrderService _orderService;
         private static ReceiverInformation _receiverInformation;
@@ -335,6 +335,7 @@ namespace Shopping.Controllers
 
         private void InsertOrder()
         {
+            var customer = Session[Values.CUSTOMER_SESSION] as CustomerModel;
             var cart = Session[Values.CartSession] as List<CartItem>;
             if (cart != null && cart.Count > 0)
             {
@@ -346,7 +347,7 @@ namespace Shopping.Controllers
                     CreatedDateTime = DateTime.Now,
                     Amount = cart.Sum(item => item.Product.Price * item.Quantity),
                     Status = false,
-                    UserId = 2, //Edit later
+                    CustomerId = customer.Id, //Edit later
                     Code = DateTime.Now.ToString("yyyyMMddHHmmss"),
                     PaymentId = payment.id
                 };

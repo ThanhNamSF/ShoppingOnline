@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -59,7 +60,7 @@ namespace DataAccess.Services
             var yearTo = dateTo.Year;
             var orders = _shoppingContext.Orders.AsNoTracking().Where(w => (w.CreatedDateTime.Month >= monthFrom && w.CreatedDateTime.Year >= yearFrom) &&
                                                                            (w.CreatedDateTime.Month <= monthTo && w.CreatedDateTime.Year <= yearTo) &&
-                                                                           !w.Canceled).OrderBy(w => w.CreatedDateTime).ToList();
+                                                                           !w.Canceled && !w.IsHasInvoice).OrderBy(w => w.CreatedDateTime).ToList();
 
             var deliveries = _shoppingContext.Deliveries.AsNoTracking().Where(w => w.ApprovedBy.HasValue &&
                                                                                    (w.ApprovedDateTime.Value.Month >= monthFrom && w.ApprovedDateTime.Value.Year >= yearFrom) &&
@@ -106,14 +107,14 @@ namespace DataAccess.Services
                     if (existedItem != null)
                     {
                         existedItem.Quantity += detail.Quantity;
-                        existedItem.Amount += CalculateAmount(detail.UnitPrice, detail.Quantity, detail.DiscountRate, detail.VatRate);
+                        existedItem.Amount += detail.Quantity * detail.UnitPrice;
                     }
                     else
                     {
                         model.Details.Add(new RevenueDetailReportModel()
                         {
                             Quantity = detail.Quantity,
-                            Amount = CalculateAmount(detail.UnitPrice, detail.Quantity, detail.DiscountRate, detail.VatRate),
+                            Amount = detail.Quantity * detail.UnitPrice,
                             CategoryId = detail.Product.ProductCategoryId,
                             CategoryName = detail.Product.ProductCategory.Name,
                             Time = item.CreatedDateTime.ToString("MM/yyyy")
@@ -137,7 +138,7 @@ namespace DataAccess.Services
                     CategoryName = s.Product.ProductCategory.Name,
                     ProductName = s.Product.Name
                 }).ToList();
-            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled && w.Order.CreatedDateTime >= dateFrom && w.Order.CreatedDateTime < addDateTo).Select(s =>
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled && !w.Order.IsHasInvoice && w.Order.CreatedDateTime >= dateFrom && w.Order.CreatedDateTime < addDateTo).Select(s =>
                 new TopProductBestSellerDetailReportModel()
                 {
                     Quantity = s.Quantity,
@@ -166,16 +167,17 @@ namespace DataAccess.Services
 
         public TopProductProfitableReportModel GetTopProductProfitableReportModel(int topNumber, string createdBy)
         {
+
             var deliveryDetails = _shoppingContext.DeliveryDetails.AsNoTracking().Where(w => w.Delivery.ApprovedBy.HasValue).Select(s => new TopProductProfitableDetailReportModel()
             {
                 Quantity = s.Quantity,
-                UnitPrice = CalculateAmount(s.UnitPrice, 1, s.DiscountRate, s.VatRate),
+                UnitPrice = s.UnitPrice,
                 ProductName = s.Product.Name,
                 CategoryName = s.Product.ProductCategory.Name,
                 ProductCode = s.Product.Code
             }).ToList();
 
-            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled).Select(s => new TopProductProfitableDetailReportModel()
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled && !w.Order.IsHasInvoice).Select(s => new TopProductProfitableDetailReportModel()
             {
                 Quantity = s.Quantity,
                 UnitPrice = s.UnitPrice,
@@ -190,7 +192,7 @@ namespace DataAccess.Services
                     ProductCode = s.FirstOrDefault().Product.Code,
                     ProductName = s.FirstOrDefault().Product.Name,
                     CategoryName = s.FirstOrDefault().Product.ProductCategory.Name,
-                    ReceivePriceAverage = s.Average(k => CalculateAmount(k.UnitPrice, 1, k.DiscountRate, k.VatRate))
+                    ReceivePriceAverage = s.Average(k => k.UnitPrice * (1 - k.DiscountRate / 100) * (1 + k.VatRate / 100))
                 });
 
             var mergeProducts = new List<TopProductProfitableDetailReportModel>(deliveryDetails.Count + orderDetails.Count);
@@ -204,7 +206,6 @@ namespace DataAccess.Services
                     Quantity = s.Sum(i => i.Quantity),
                     SellPriceAverage = s.Average(i => i.UnitPrice)
                 });
-
             var details = sellProducts.Join(receiveDetails,
                 sell => sell.ProductCode,
                 receive => receive.ProductCode,

@@ -4,6 +4,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using AutoMapper;
 using Common;
+using Common.Constants;
 using Common.SearchConditions;
 using DataAccess.Entity;
 using DataAccess.Interfaces;
@@ -108,6 +109,119 @@ namespace DataAccess.Services
                 .Where(w => w.Id != productId && w.ProductCategoryId == categoryId).OrderBy(r => Guid.NewGuid())
                 .Take(number).ToList();
             return Mapper.Map<List<ProductModel>>(otherProducts);
+        }
+
+        public PageList<ProductModel> SearchProducts(ProductClientSearchCondition condition)
+        {
+            var query = _shoppingContext.Products.AsNoTracking().Where(w => w.ProductCategoryId == condition.ProductCategoryId);
+            if (!string.IsNullOrEmpty(condition.Top))
+            {
+                if (condition.Top == Trend.Hot.ToString())
+                {
+                    query = GetHotestProducts(query);
+                }
+                else if(condition.Top == Trend.New.ToString())
+                {
+                    query = query.OrderByDescending(p => p.CreatedDateTime);
+                }
+                else
+                {
+                    query = query.OrderByDescending(p => p.Name);
+                }
+            }
+            if (!string.IsNullOrEmpty(condition.Name))
+            {
+                query = query.Where(p => p.Name.ToLower().Contains(condition.Name.ToLower()));
+            }
+
+            if (condition.MinPrice >= 0 && condition.MaxPrice >= 0)
+            {
+                query = query.Where(p => p.Price >= condition.MinPrice * Values.USDRatio && p.Price <= condition.MaxPrice * Values.USDRatio);
+            }
+            if(condition.Discount > 0)
+            {
+                query = query.Where(p => p.Promotion >= condition.Discount);
+            }
+            var products = query.Skip(condition.PageSize * condition.PageNumber).Take(condition.PageSize).ToList();
+            var productModels = Mapper.Map<List<ProductModel>>(products);
+            if (!string.IsNullOrEmpty(condition.Top))
+            {
+                if (condition.Top == Trend.All.ToString())
+                {
+                    var hostesProductIds = GetHostestProducts(Values.BestSellerNumber).Select(s => s.Id);
+                    var minDate = DateTime.Now.AddDays(-3);
+                    foreach (var item in productModels)
+                    {
+                        if (hostesProductIds.Contains(item.Id))
+                        {
+                            item.Trend = Trend.Hot.ToString();
+                        }
+                        else if (item.CreatedDateTime >= minDate)
+                        {
+                            item.Trend = Trend.New.ToString();
+                        }
+                        else
+                        {
+                            item.Trend = Trend.All.ToString();
+                        }
+                    }
+                }
+                else
+                {
+                    productModels.ForEach(x => x.Trend = condition.Top);
+                }
+            }
+            return new PageList<ProductModel>(productModels, query.Count());
+        }
+
+        private IQueryable<Product> GetHotestProducts(IQueryable<Product> query)
+        {
+            var deliveryDetails = _shoppingContext.DeliveryDetails.AsNoTracking().Where(w => w.Delivery.ApprovedBy.HasValue)
+                .Select(s =>
+                    new
+                    {
+                        Quantity = s.Quantity,
+                        Product = s.Product
+                    }).ToList();
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled).Select(s =>
+                new
+                {
+                    Quantity = s.Quantity,
+                    Product = s.Product
+                }).ToList();
+            var details = deliveryDetails.Concat(orderDetails).GroupBy(s => s.Product.Id).Select(s =>
+                new
+                {
+                    Quantity = s.Sum(i => i.Quantity),
+                    Product = s.FirstOrDefault()?.Product
+                }).OrderByDescending(o => o.Quantity);
+            var queryResult = details.Select(s => s.Product).AsQueryable();
+            return queryResult;
+        }
+
+        public IEnumerable<ProductModel> GetHostestProducts(int topNumber)
+        {
+            var deliveryDetails = _shoppingContext.DeliveryDetails.AsNoTracking().Where(w => w.Delivery.ApprovedBy.HasValue)
+                .Select(s =>
+                    new
+                    {
+                        Quantity = s.Quantity,
+                        Product = s.Product
+                    }).ToList();
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled).Select(s =>
+                new
+                {
+                    Quantity = s.Quantity,
+                    Product = s.Product
+                }).ToList();
+            var details = deliveryDetails.Concat(orderDetails).GroupBy(s => s.Product.Id).Select(s =>
+                new
+                {
+                    Quantity = s.Sum(i => i.Quantity),
+                    Product = s.FirstOrDefault()?.Product
+                }).OrderByDescending(o => o.Quantity).Skip(0).Take(topNumber);
+            var result = details.Select(s => s.Product).ToList();
+            return Mapper.Map<IEnumerable<ProductModel>>(result);
         }
     }
 }

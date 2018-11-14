@@ -21,11 +21,13 @@ namespace Shopping.Areas.Admin.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IUserService _userService;
+        private readonly ICustomerService _customerService;
 
-        public OrderController(IOrderService orderService, IUserService userService)
+        public OrderController(IOrderService orderService, IUserService userService, ICustomerService customerService)
         {
             _orderService = orderService;
             _userService = userService;
+            _customerService = customerService;
         }
 
         #region CRUD Order
@@ -140,11 +142,11 @@ namespace Shopping.Areas.Admin.Controllers
                 return RedirectToAction("List");
             }
 
-            var customer = _userService.GetUserById(order.UserId);
+            var customer = _customerService.GetCustomerById(order.CustomerId);
             var currentUser = Session[Values.USER_SESSION] as UserModel;
             if (currentUser != null)
             {
-                order.ApprovedId = currentUser.Id;
+                order.ApproverId = currentUser.Id;
                 order.Status = true;
             }
             _orderService.Approved(order);
@@ -169,7 +171,7 @@ namespace Shopping.Areas.Admin.Controllers
                 return RedirectToAction("List");
             }
 
-            var customer = _userService.GetUserById(order.UserId);
+            var customer = _customerService.GetCustomerById(order.CustomerId);
             if (RefundMoneyFromPaymentId(order.PaymentId))
             {
                 _orderService.Cancel(id);
@@ -218,7 +220,7 @@ namespace Shopping.Areas.Admin.Controllers
             }
         }
 
-        private string GetBodyCancelOrder(UserModel customer)
+        private string GetBodyCancelOrder(CustomerModel customer)
         {
             string body = "Xin chào " + customer.UserName + ",";
             body += "<br /><br /><strong>Đã xảy ra sự cố khi đặt hàng nên đơn hàng của quý khách đã bị hủy.</strong>";
@@ -227,7 +229,7 @@ namespace Shopping.Areas.Admin.Controllers
             return body;
         }
 
-        private string GetBodyOfOrderInformation(OrderModel order, UserModel customer)
+        private string GetBodyOfOrderInformation(OrderModel order, CustomerModel customer)
         {
             var orderDetails = _orderService.GetOrderDetailsByOrderId(order.Id);
             string body = "Xin chào " + customer.UserName + ",";

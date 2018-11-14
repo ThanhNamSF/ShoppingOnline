@@ -1,32 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entity
 {
-    public class FeedBack
+    public class Feedback
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Name { get; set; }
-
-        [Required]
-        [StringLength(12)]
-        public string Phone { get; set; }
-
-        [StringLength(50)]
-        public string Email { get; set; }
-
-        public string Address { get; set; }
-
-        [Required]
+        public int CustomerId { get; set; }
+        [StringLength(255)]
+        public string Title { get; set; }
         public string Content { get; set; }
-
         public DateTime CreatedDateTime { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
+        public virtual ICollection<FeedbackGroup> FeedbackGroups { get; set; }
     }
 }

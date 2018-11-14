@@ -16,12 +16,11 @@ namespace DataAccess
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<About> Abouts { get; set; }
-        public DbSet<Contact> Contacts { get; set; }
-        public DbSet<FeedBack> FeedBacks { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<FeedbackGroup> FeedbackGroups { get; set; }
         public DbSet<Footer> Footers { get; set; }
-        public DbSet<New> News { get; set; }
-        public DbSet<NewCategory> NewCategories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Product> Products { get; set; }

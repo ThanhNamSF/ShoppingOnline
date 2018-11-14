@@ -46,17 +46,18 @@ namespace DataAccess.Entity
         public bool Canceled { get; set; }
 
         public int? UpdatedBy { get; set; }
-        public int UserId { get; set; }
+        public int CustomerId { get; set; }
         
-        public int? ApprovedId { get; set; }
+        public int? ApproverId { get; set; }
         
-        public int? DeliveredId { get; set; }
+        public int? DeliverId { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; }
-        [ForeignKey("ApprovedId")]
+        public bool IsHasInvoice { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
         public virtual User Approver { get; set; }
-        [ForeignKey("DeliveredId")]
+
         public virtual User Deliver { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

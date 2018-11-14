@@ -36,16 +36,6 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Nơi xuất bán</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.DeliveryTo)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-4">
                                     <label class="control-label">Người duyệt</label>
                                 </div>
                                 <div class="col-md-8">
@@ -135,7 +125,6 @@
 
         function additionalData() {
             var data = {
-                DeliveryTo: $('#@Html.IdFor(model => model.DeliveryTo)').val(),
                 Code: $('#@Html.IdFor(model => model.Code)').val(),
                 ApprovedBy: $('#@Html.IdFor(model => model.ApprovedBy)').val() || 0,
                 DateFrom: $('#@Html.IdFor(model => model.DateFrom)').val(),
@@ -187,13 +176,6 @@
                 field: "CreatedDateTime",
                 title: "Ngày tạo phiếu",
                 template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
-            }, {
-                field: "DeliveryTo",
-                title: "Nơi xuất bán",
-                format: "{0:#,#}"
-            }, {
-                field: "Deliver",
-                title: "Người vận chuyển"
             }, {
                 field: "Status",
                 title: "Đã duyệt",

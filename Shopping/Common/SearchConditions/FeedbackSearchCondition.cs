@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Common.SearchConditions
 {
-    public class ContactSearchCondition
+    public class FeedbackSearchCondition
     {
-        public ContactSearchCondition()
+        public FeedbackSearchCondition()
         {
             DateFrom = DateTime.Now;
             DateTo = DateTime.Now;

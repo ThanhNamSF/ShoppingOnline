@@ -8,11 +8,11 @@ using System.Web.Mvc;
 
 namespace DataAccess.Models
 {
-    public class ContactModel
+    public class FeedbackModel
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
-        public int? ReplierId { get; set; }
+        public int ReplierId { get; set; }
         [StringLength(255)]
         [Required]
         public string Title { get; set; }
@@ -29,7 +29,7 @@ namespace DataAccess.Models
         [AllowHtml]
         [Required]
         public string ReplyContent { get; set; }
-        public DateTime? RepliedDateTime { get; set; }
+        public DateTime RepliedDateTime { get; set; }
         public bool ContinueEditing { get; set; }
     }
 }

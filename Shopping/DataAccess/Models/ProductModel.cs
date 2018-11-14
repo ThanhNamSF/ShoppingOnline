@@ -41,5 +41,7 @@ namespace DataAccess.Models
         public bool ContinueEditing { get; set; }
 
         public int ProductCategoryId { get; set; }
+        
+        public string Trend { get; set; }
     }
 }

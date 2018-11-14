@@ -29,7 +29,7 @@ namespace DataAccess.Services
             {
                 return;
             }
-            receive.ApprovedId = orderModel.ApprovedId;
+            receive.ApproverId = orderModel.ApproverId;
             receive.ApprovedDateTime = DateTime.Now;
             receive.Status = orderModel.Status;
             _shoppingContext.SaveChanges();
@@ -113,12 +113,12 @@ namespace DataAccess.Services
 
             if (condition.ApprovedStatus.HasValue)
             {
-                query = query.Where(p => p.ApprovedId.HasValue == condition.ApprovedStatus.Value);
+                query = query.Where(p => p.ApproverId.HasValue == condition.ApprovedStatus.Value);
             }
 
             if (condition.AsignmentStatus.HasValue)
             {
-                query = query.Where(p => p.DeliveredId.HasValue == condition.AsignmentStatus.Value);
+                query = query.Where(p => p.DeliverId.HasValue == condition.AsignmentStatus.Value);
             }
 
             if (condition.DeliveredStatus.HasValue)

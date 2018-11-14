@@ -47,5 +47,7 @@ namespace DataAccess.Entity
 
         public virtual ICollection<Order> Orders { get; set; }
 
+        public virtual ICollection<FeedbackGroup> FeedbackGroups { get; set; }
+
     }
 }

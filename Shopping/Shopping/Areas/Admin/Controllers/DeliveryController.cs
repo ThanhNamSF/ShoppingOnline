@@ -55,7 +55,6 @@ namespace Shopping.Areas.Admin.Controllers
         public ActionResult Create()
         {
             var model = new DeliveryModel();
-            model.DocumentDateTime = DateTime.Now;
             model.CreatedDateTime = DateTime.Now;
             return View(model);
         }
@@ -174,8 +173,6 @@ namespace Shopping.Areas.Admin.Controllers
                         var deliveryDetailModel = new DeliveryDetailModel()
                         {
                             Quantity = 1,
-                            VatRate = 0,
-                            DiscountRate = 0,
                             ProductId = id,
                             DeliveryId = deliveryId,
                             UnitPrice = product.Price
@@ -198,7 +195,7 @@ namespace Shopping.Areas.Admin.Controllers
             condition.PageSize = command.PageSize;
             condition.PageNumber = command.Page - 1;
             var deliveryDetails = _deliveryService.SearchDeliveryDetails(condition);
-            deliveryDetails.DataSource.ForEach(x => CalculateAmount(x));
+            deliveryDetails.DataSource.ForEach(x => x.Amount = x.UnitPrice * x.Quantity);
             var gridModel = new DataSourceResult
             {
                 Data = deliveryDetails.DataSource,
@@ -231,16 +228,6 @@ namespace Shopping.Areas.Admin.Controllers
             model.Quantity = model.Quantity;
             _deliveryService.InsertDeliveryDetail(model);
             return Json(new { });
-        }
-
-        private void CalculateAmount(DeliveryDetailModel deliveryDetailModel)
-        {
-            deliveryDetailModel.SubAmount = deliveryDetailModel.UnitPrice * deliveryDetailModel.Quantity;
-            deliveryDetailModel.DiscountAmount = deliveryDetailModel.SubAmount * deliveryDetailModel.DiscountRate / 100;
-            deliveryDetailModel.VatAmount = (deliveryDetailModel.SubAmount - deliveryDetailModel.DiscountAmount) *
-                                           deliveryDetailModel.VatRate / 100;
-            deliveryDetailModel.Amount = deliveryDetailModel.SubAmount - deliveryDetailModel.DiscountAmount +
-                                        deliveryDetailModel.VatAmount;
         }
 
         [HttpPost]

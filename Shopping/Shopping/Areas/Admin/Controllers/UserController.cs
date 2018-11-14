@@ -19,7 +19,7 @@ namespace Shopping.Areas.Admin.Controllers
 
         public JsonResult GetAllAdminUser()
         {
-            var users = _userService.GetAllUserByRole((int)UserRole.Admin);
+            var users = _userService.GetAllUser();
             return this.Json(users, JsonRequestBehavior.AllowGet);
         }
     }

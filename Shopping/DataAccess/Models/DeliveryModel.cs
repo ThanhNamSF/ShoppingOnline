@@ -16,26 +16,17 @@ namespace DataAccess.Models
         [StringLength(30, ErrorMessage = "Mã phiếu không được vượt quá 30 ký tự")]
         public string Code { get; set; }
 
-        [Required(ErrorMessage = "Nơi xuất bán không được để trống")]
-        [StringLength(250, ErrorMessage = "Nới xuất bán không được vượt quá 250 ký tự")]
-        public string DeliveryTo { get; set; }
+        [StringLength(30, ErrorMessage = "Tên khách hàng không được vượt quá 30 ký tự")]
+        public string CustomerName { get; set; }
 
-        [StringLength(50, ErrorMessage = "Tên người vận chuyển không được vượt quá 50 ký tự")]
-        public string Deliver { get; set; }
+        [StringLength(255, ErrorMessage = "Địa chỉ không được vượt quá 30 ký tự")]
+        public string CustomerAddress { get; set; }
 
-        [StringLength(50, ErrorMessage = "Tên tài xế không được vượt quá 50 ký tự")]
-        public string Driver { get; set; }
-
-        [StringLength(32, ErrorMessage = "Biển số xe không được vượt quá 32 ký tự")]
-        public string CarNumber { get; set; }
+        [StringLength(12, ErrorMessage = "Số điện thoại không được vượt quá 30 ký tự")]
+        public string CustomerPhone { get; set; }
 
         [StringLength(250, ErrorMessage = "Mô tả không được vượt quá 250 ký tự")]
         public string Description { get; set; }
-
-        [StringLength(30, ErrorMessage = "Số hóa đơn không được vượt quá 30 ký tự")]
-        public string InvoiveNo { get; set; }
-
-        public DateTime DocumentDateTime { get; set; }
 
         public int CreatedBy { get; set; }
 
@@ -48,6 +39,8 @@ namespace DataAccess.Models
         public int? ApprovedBy { get; set; }
 
         public DateTime? ApprovedDateTime { get; set; }
+
+        public int? OrderId { get; set; }
 
         public bool Status { get; set; }
 

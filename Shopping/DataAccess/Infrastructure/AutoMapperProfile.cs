@@ -15,6 +15,8 @@ namespace DataAccess.Infrastructure
         {
             CreateMap<UserModel, User>();
             CreateMap<User, UserModel>();
+            CreateMap<CustomerModel, Customer>();
+            CreateMap<Customer, CustomerModel>();
             CreateMap<Product, ProductModel>();
             CreateMap<ProductModel, Product>();
             CreateMap<ProductCategory, ProductCategoryModel>();
@@ -34,13 +36,13 @@ namespace DataAccess.Infrastructure
             CreateMap<Slide, SlideModel>();
             CreateMap<AboutModel, About>();
             CreateMap<About, AboutModel>();
-            CreateMap<ContactModel, Contact>();
-            CreateMap<Contact, ContactModel>()
+            CreateMap<FeedbackModel, Feedback>();
+            CreateMap<Feedback, FeedbackModel>()
                 .ForMember(x => x.FullName, opt => opt.MapFrom(x => x.Customer.FirstName + " " + x.Customer.LastName))
                 .ForMember(x => x.Email, opt => opt.MapFrom(x => x.Customer.Email))
                 .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.Customer.Phone))
-                .ForMember(x => x.CustomerUserName, opt => opt.MapFrom(x => x.Customer.UserName))
-                .ForMember(x => x.ReplierUserName, opt => opt.MapFrom(x => x.Replier.UserName));
+                .ForMember(x => x.CustomerUserName, opt => opt.MapFrom(x => x.Customer.UserName));
+            CreateMap<FeedbackModel, FeedbackGroup>();
         }
     }
 }

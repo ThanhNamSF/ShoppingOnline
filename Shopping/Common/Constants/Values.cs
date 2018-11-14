@@ -16,5 +16,7 @@ namespace Common.Constants
         public const string All = "Tất cả";
         public const int AdminRole = 0;
         public const int CustomerRole = 1;
+        public const int ProductClientPageSize = 9;
+        public const int BestSellerNumber = 5;
     }
 }

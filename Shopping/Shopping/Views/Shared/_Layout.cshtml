@@ -89,11 +89,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <!-- cart details -->
                 <div class="top_nav_right">
                     <div class="shoecart shoecart2 cart cart box_1">
-                        <form action="#" method="post" class="last">
+                        @*<form action="" method="post" class="last">
                             <input type="hidden" name="cmd" value="_cart">
                             <input type="hidden" name="display" value="1">
-                            <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-                        </form>
+                            
+                        </form>*@
+                        <button class="top_shoe_cart" onclick="location.href = '@Url.Action("Index","Cart")'" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>
@@ -257,23 +258,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
         <!-- //footer -->
         <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
-
-        <script>
-            //<![CDATA[
-            $(window).load(function () {
-                $("#slider-range").slider({
-                    range: true,
-                    min: 0,
-                    max: 9000,
-                    values: [50, 6000],
-                    slide: function (event, ui) {
-                        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                    }
-                });
-                $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
-
-            }); //]]>
-        </script>
         <!-- //price range (top products) -->
         <!-- start-smoth-scrolling -->
         <script src="~/Content/web/js/demo1.js"></script>

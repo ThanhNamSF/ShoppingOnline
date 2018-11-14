@@ -138,7 +138,7 @@ namespace DataAccess.Services
             }
             delivery.ApprovedBy = deliveryModel.ApprovedBy;
             delivery.ApprovedDateTime = deliveryModel.ApprovedDateTime;
-            delivery.Status = delivery.Status;
+            delivery.Status = deliveryModel.Status;
             IncreaseQuantityInProduct(delivery);
             _shoppingContext.SaveChanges();
         }
@@ -168,12 +168,6 @@ namespace DataAccess.Services
             {
                 query = query.Where(p => p.Code.ToLower().Contains(condition.Code.ToLower()));
             }
-
-            if (!string.IsNullOrEmpty(condition.DeliveryTo))
-            {
-                query = query.Where(p => p.DeliveryTo.ToLower().Contains(condition.DeliveryTo.ToLower()));
-            }
-
 
             var dateTo = condition.DateTo.AddDays(1);
 

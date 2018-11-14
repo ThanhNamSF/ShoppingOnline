@@ -34,14 +34,7 @@ namespace DataAccess.Entity
 
         public bool Status { get; set; }
 
-        [ForeignKey("Parent")]
-        public int? ParentId { get; set; }
-
-        public virtual ProductCategory Parent { get; set; }
-
         public virtual ICollection<Product> Products { get; set; }
-
-        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
 
         
 

@@ -457,7 +457,7 @@ li.dropdown.act a.w3_icons_act {
 /*-- banner-top --*/
 
 .banner-top {
-	background: url(../images/banner1.jpg) no-repeat 0px 0px;
+	/*background: url(../images/banner1.jpg) no-repeat 0px 0px;*/
 	background-size: cover;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -466,7 +466,7 @@ li.dropdown.act a.w3_icons_act {
 	min-height:750px;
 }
 
-.banner-top1 {
+/*.banner-top1 {
 	background: url(../images/banner2.jpg) no-repeat 0px 0px;
 	background-size: cover;
 	-webkit-background-size: cover;
@@ -494,7 +494,7 @@ li.dropdown.act a.w3_icons_act {
 	-o-background-size: cover;
 	-moz-background-size: cover;
 	min-height:750px;
-}
+}*/
 
 .banner-info-wthree   {
     text-align: center;
@@ -1396,7 +1396,7 @@ p.head_para {
     .banner-info-wthree    h3 {
       font-size: 11em;
     }
-    .banner-top,.banner-top1,.banner-top2,.banner-top3{
+    .banner-top/*,.banner-top1,.banner-top2,.banner-top3*/{
         min-height:700px;
     }
     .callbacks_tabs {
@@ -1447,7 +1447,7 @@ p.head_para {
         font-size: 19px;
         margin-top: 117px;
     }
-    .banner-top, .banner-top1, .banner-top2, .banner-top3 {
+    .banner-top/*, .banner-top1, .banner-top2, .banner-top3*/ {
         min-height: 633px;
     }
     .banner-info-wthree    h3 {
@@ -1624,7 +1624,7 @@ p.head_para {
         top: 47px;
         right: 112px;
     }
-    .banner-top, .banner-top1, .banner-top2, .banner-top3 {
+    .banner-top/*, .banner-top1, .banner-top2, .banner-top3*/ {
         min-height: 564px;
     }
     .callbacks_tabs a:after {
@@ -1711,7 +1711,7 @@ p.head_para {
         top: 47px;
         right: 106px;
     }
-    .banner-top, .banner-top1, .banner-top2, .banner-top3 {
+    .banner-top/*, .banner-top1, .banner-top2, .banner-top3*/ {
         min-height: 515px;
     }
     .callbacks_tabs li {
@@ -1829,7 +1829,7 @@ p.head_para {
 	.banner-info-wthree    h3 {
         font-size: 5em;
     }
-    .banner-top, .banner-top1, .banner-top2, .banner-top3 {
+    .banner-top/*, .banner-top1, .banner-top2, .banner-top3*/ {
         min-height: 461px;
     }
     .banner-info-wthree    {
@@ -1886,7 +1886,7 @@ p.head_para {
         top: 24px;
         right: 57px;
     }
-    .banner-top, .banner-top1, .banner-top2, .banner-top3 {
+    .banner-top/*, .banner-top1, .banner-top2, .banner-top3*/ {
         min-height: 410px;
     }
     .banner-info-wthree    {
@@ -2025,7 +2025,7 @@ p.head_para {
         top: 18px;
         right: 51px;
     }
-    .banner-top, .banner-top1, .banner-top2, .banner-top3 {
+    .banner-top/*, .banner-top1, .banner-top2, .banner-top3*/ {
         min-height: 370px;
     }
     .banner-info-wthree    h3 {
@@ -2072,7 +2072,7 @@ p.head_para {
         right: 18.5%;
         margin-top: 19px;
     }
-    .banner-top, .banner-top1, .banner-top2, .banner-top3 {
+    .banner-top/*, .banner-top1, .banner-top2, .banner-top3*/ {
         min-height: 325px;
     }
     .banner-info-wthree    {
@@ -2135,7 +2135,7 @@ p.head_para {
         right: 23%;
         margin-top: 19px;
     }
-    .banner-top, .banner-top1, .banner-top2, .banner-top3 {
+    .banner-top/*, .banner-top1, .banner-top2, .banner-top3*/ {
         min-height: 289px;
     }
     .banner-info-wthree    h3 {

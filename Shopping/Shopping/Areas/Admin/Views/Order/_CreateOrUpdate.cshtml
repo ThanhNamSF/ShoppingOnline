@@ -7,7 +7,7 @@
 
 @Html.ValidationSummary(true)
 @Html.HiddenFor(model => model.Id)
-@Html.HiddenFor(model => model.UserId)
+@Html.HiddenFor(model => model.CustomerId)
 <div class="content">
     <div class="form-horizontal">
         <div class="panel-group">
@@ -133,7 +133,7 @@
                                     <label class="control-label">Người giao</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input id="@Html.IdFor(model => model.DeliveredId)" name="@Html.IdFor(model => model.DeliveredId)" />
+                                    <input id="@Html.IdFor(model => model.DeliverId)" name="@Html.IdFor(model => model.DeliverId)" />
                                 </div>
                             </div>
                         </div>
@@ -143,8 +143,8 @@
                                     <label class="control-label">Người duyệt</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input id="@Html.IdFor(model => model.ApprovedId)" style="width: 85%" />
-                                    <input type="hidden" name="@Html.IdFor(model => model.ApprovedId)" value="@Html.AttributeEncode(Model.ApprovedId)" />
+                                    <input id="@Html.IdFor(model => model.ApproverId)" style="width: 85%" />
+                                    <input type="hidden" name="@Html.IdFor(model => model.ApproverId)" value="@Html.AttributeEncode(Model.ApproverId)" />
                                 </div>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
             format: "dd-MM-yyyy HH:mm:ss"
         }).data("kendoDatePicker").enable(false);;
 
-        $("#@Html.IdFor(model => model.DeliveredId)").kendoDropDownList({
+        $("#@Html.IdFor(model => model.DeliverId)").kendoDropDownList({
             dataTextField: "UserName",
             dataValueField: "Id",
             dataSource: {
@@ -204,10 +204,10 @@
                     }
                 }
             },
-            value: "@Model.DeliveredId"
+            value: "@Model.DeliverId"
         });
 
-        $("#@Html.IdFor(model => model.ApprovedId)").kendoDropDownList({
+        $("#@Html.IdFor(model => model.ApproverId)").kendoDropDownList({
             dataTextField: "UserName",
             dataValueField: "Id",
             optionLabel: " ",
@@ -222,7 +222,7 @@
                     }
                 }
             },
-            value: "@Model.ApprovedId"
+            value: "@Model.ApproverId"
         });
 
         $(document).ready(function () {

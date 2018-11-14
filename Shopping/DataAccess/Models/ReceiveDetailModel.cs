@@ -17,7 +17,6 @@ namespace DataAccess.Models
         public double DiscountAmount { get; set; }
         public double VatAmount { get; set; }
         public double Amount { get; set; }
-        public DateTime? ExpiryDateTime { get; set; }
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
         public string ProductImagePath { get; set; }

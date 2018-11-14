@@ -12,6 +12,7 @@ namespace DataAccess.Interfaces
     public interface ISlideService
     {
         PageList<SlideModel> SearchSlides(SlideSearchCondition condition);
+        IEnumerable<SlideModel> GetSlideForDisplay();
         void InsertSlide(SlideModel slideModel);
         SlideModel GetSlideById(int id);
         void DeleteSlide(int id);

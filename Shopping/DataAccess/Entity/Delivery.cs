@@ -17,26 +17,17 @@ namespace DataAccess.Entity
         [Index(IsUnique = true)]
         public string Code { get; set; }
 
-        [Required]
-        [StringLength(250)]
-        public string DeliveryTo { get; set; }
+        [StringLength(30)]
+        public string CustomerName { get; set; }
 
-        [StringLength(50)]
-        public string Deliver { get; set; }
+        [StringLength(255)]
+        public string CustomerAddress { get; set; }
 
-        [StringLength(50)]
-        public string Driver { get; set; }
-
-        [StringLength(32)]
-        public string CarNumber { get; set; }
+        [StringLength(12)]
+        public string CustomerPhone { get; set; }
 
         [StringLength(250)]
         public string Description { get; set; }
-
-        [StringLength(30)]
-        public string InvoiveNo { get; set; }
-
-        public DateTime DocumentDateTime { get; set; }
 
         public int CreatedBy { get; set; }
 
@@ -51,10 +42,15 @@ namespace DataAccess.Entity
 
         public DateTime? ApprovedDateTime { get; set; }
 
+        public int? OrderId { get; set; }
+
+        public virtual Order Order { get; set; }
+
         public virtual User Approver { get; set; }
 
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; }
 
         public bool Status { get; set; }
+
     }
 }

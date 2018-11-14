@@ -1,6 +1,6 @@
-﻿@model DataAccess.Models.ContactModel
+﻿@model DataAccess.Models.FeedbackModel
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "receive-edit-form" }))
+@using (Html.BeginForm("Reply", "Feedback", FormMethod.Post, new { enctype = "multipart/form-data", id = "receive-edit-form" }))
 {
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
@@ -9,22 +9,18 @@
         </h1>
         <div class="pull-right">
             <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Quay Lại</a>
-            <button type="submit" name="save" class="btn bg-blue">
-                <i class="fa fa-floppy-o"></i>
-                Lưu
-            </button>
-            <button type="submit" name="ContinueEditing" value="true" class="btn bg-blue">
-                <i class="fa fa-floppy-o"></i>
-                Lưu và chỉnh sửa
+            <button type="submit" name="reply" class="btn bg-green-active">
+                <i class="fa fa-check-circle-o"></i>
+                Trả lời
             </button>
             <span id="button-delete" class="btn bg-red">
                 <i class="fa fa-trash-o"></i>
                 Xóa
             </span>
-            <span id="button-reply" class="btn bg-green-active">
+            @*<span id="button-reply" class="btn bg-green-active">
                 <i class="fa fa-check-circle-o"></i>
                 Trả lời
-            </span>
+            </span>*@
         </div>
     </div>
 
@@ -37,7 +33,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Xác nhận</h4>
             </div>
-            @using (Html.BeginForm("Delete", "Contact", new { id = Model.Id }))
+            @using (Html.BeginForm("Delete", "Feedback", new { id = Model.Id }))
             {
                 <div class="modal-body">
                     <p>Bạn có chắc chắn muốn xóa?</p>
@@ -50,14 +46,14 @@
         </div>
     </div>
 </div>
-<div id="reply-modal" class="modal fade" tabindex="-1" role="dialog">
+@*<div id="reply-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Xác nhận</h4>
             </div>
-            @using (Html.BeginForm("Reply", "Contact", new { Id = Model.Id, ReplyContent = Model.ReplyContent}))
+            @using (Html.BeginForm("Reply", "Feedback", new { Id = Model.Id, ReplyContent = Model.ReplyContent }))
             {
                 <div class="modal-body">
                     <p>Bạn có chắc chắn muốn trả lời phản hồi này?</p>
@@ -69,13 +65,13 @@
             }
         </div>
     </div>
-</div>
+</div>*@
 <script>
     $("#button-delete").click(function() {
         $("#delete-modal").modal("show");
     });
-    $("#button-reply").click(function () {
-        $("#reply-modal").modal("show");
-    });
+    //$("#button-reply").click(function () {
+    //    $("#reply-modal").modal("show");
+    //});
 </script>
 

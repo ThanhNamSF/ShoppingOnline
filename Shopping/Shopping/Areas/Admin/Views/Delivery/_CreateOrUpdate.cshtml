@@ -17,21 +17,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Ngày chứng từ</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="datetime" id="@Html.IdFor(model => model.DocumentDateTime)" name="@Html.IdFor(model => model.DocumentDateTime)" value="@Model.DocumentDateTime" />
-                                    @Html.ValidationMessageFor(model => model.DocumentDateTime)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-4">
                                     <label class="control-label">Mã phiếu xuất</label>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    <input disabled="disabled" type="text" id="@Html.IdFor(model => model.Code)" value="@Model.Code" class="k-textbox" style="width: 80%; background: silver; opacity: 0.7"/>
+                                    <input type="hidden" name="@Html.IdFor(model => model.Code)" value="@Model.Code" />
                                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -39,11 +29,22 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Nơi xuất bán</label>
+                                    <label class="control-label">Khách hàng</label>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.EditorFor(model => model.DeliveryTo, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
-                                    @Html.ValidationMessageFor(model => model.DeliveryTo, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Số điện thoại</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.CustomerPhone, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                    @Html.ValidationMessageFor(model => model.CustomerPhone, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -51,11 +52,11 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="col-md-2">
-                                <label class="control-label">Ghi chú</label>
+                                <label class="control-label">Địa chỉ</label>
                             </div>
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.Description, new { @class = "k-textbox", style = "width: 95%" })
-                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                @Html.TextAreaFor(model => model.CustomerAddress, new { @class = "k-textbox", style = "width: 95%" })
+                                @Html.ValidationMessageFor(model => model.CustomerAddress, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -76,17 +77,6 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label class="control-label">Số hóa đơn</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.InvoiveNo, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
-                                    @Html.ValidationMessageFor(model => model.InvoiveNo, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
@@ -113,17 +103,6 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Tài xế</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.Driver, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
-                                    @Html.ValidationMessageFor(model => model.Driver, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-4">
                                     <label class="control-label">Ngày tạo</label>
                                 </div>
                                 <div class="col-md-8">
@@ -147,26 +126,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label class="control-label">Vận chuyển</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.Deliver, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
-                                    @Html.ValidationMessageFor(model => model.Deliver, "", new { @class = "text-danger" })
-                                </div>
+                        <div class="col-md-8">
+                            <div class="col-md-2">
+                                <label class="control-label">Ghi chú</label>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label class="control-label">Biển số</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CarNumber, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
-                                    @Html.ValidationMessageFor(model => model.CarNumber, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Description, new { @class = "k-textbox", style = "width: 95%" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -268,10 +234,6 @@
 </div>
 <script>
     $(document).ready(function () {
-        $("#@Html.IdFor(model => model.DocumentDateTime)").kendoDatePicker({
-            culture: "vi-VN",
-            format: "dd-MM-yyyy HH:mm:ss"
-        });
         var data = [
             { text: "Mở", value: "False" },
             { text: "Đã duyệt", value: "True" }
@@ -383,11 +345,6 @@
                                             ProductName: { editable: false, type: "string" },
                                             UnitPrice: { editable: true, type: "number" },
                                             Quantity: { editable: true, type: "number" },
-                                            DiscountRate: { editable: true, type: "number" },
-                                            VatRate: { editable: true, type: "number" },
-                                            SubAmount: { editable: false, type: "number" },
-                                            DiscountAmount: { editable: false, type: "number" },
-                                            VatAmount: { editable: false, type: "number" },
                                             Amount: { editable: false, type: "number" }
                                         }
                                     }
@@ -438,28 +395,8 @@
                                     title: "Số Lượng",
                                     format: "{0:#,#}"
                                 }, {
-                                    field: "SubAmount",
-                                    title: "Thành tiền",
-                                    format: "{0:#,#}"
-                                }, {
-                                    field: "DiscountRate",
-                                    title: "%CK",
-                                    format: "{0:#,#}"
-                                }, {
-                                    field: "DiscountAmount",
-                                    title: "Tiền CK",
-                                    format: "{0:#,#}"
-                                }, {
-                                    field: "VatRate",
-                                    title: "%VAT",
-                                    format: "{0:#,#}"
-                                }, {
-                                    field: "VatAmount",
-                                    title: "Tiền VAT",
-                                    format: "{0:#,#}"
-                                }, {
                                     field: "Amount",
-                                    title: "Tổng tiền",
+                                    title: "Thành tiền",
                                     format: "{0:#,#}"
                                 }, {
                                     command: ["edit", "destroy"],

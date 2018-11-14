@@ -16,6 +16,7 @@ namespace DataAccess.Infrastructure
             container.Register<ShoppingContext>(Lifestyle.Scoped);
 
             container.Register<IUserService, UserService>(Lifestyle.Scoped);
+            container.Register<ICustomerService, CustomerService>();
             container.Register<IProductService, ProductService>(Lifestyle.Scoped);
             container.Register<IProductCategoryService, ProductCategoryService>(Lifestyle.Scoped);
             container.Register<IReceiveService, ReceiveService>(Lifestyle.Scoped);
@@ -24,7 +25,7 @@ namespace DataAccess.Infrastructure
             container.Register<IReportService, ReportService>(Lifestyle.Scoped);
             container.Register<ISlideService, SlideService>(Lifestyle.Scoped);
             container.Register<IAboutService, AboutService>(Lifestyle.Scoped);
-            container.Register<IContactService, ContactService>(Lifestyle.Scoped);
+            container.Register<IFeedbackService, FeedbackService>(Lifestyle.Scoped);
         }
     }
 }

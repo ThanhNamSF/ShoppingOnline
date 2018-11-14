@@ -27,9 +27,9 @@ namespace DataAccess.Services
             _shoppingContext.SaveChanges();
         }
 
-        public IEnumerable<UserModel> GetAllUserByRole(int role)
+        public IEnumerable<UserModel> GetAllUser()
         {
-            var users = _shoppingContext.Users.AsNoTracking().Where(p =>p.Role == role).ToList();
+            var users = _shoppingContext.Users.AsNoTracking().ToList();
             return Mapper.Map<List<UserModel>>(users);
         }
 
@@ -39,10 +39,10 @@ namespace DataAccess.Services
             return Mapper.Map<UserModel>(user);
         }
 
-        public UserModel GetUserLogin(UserModel userModel, int role)
+        public UserModel GetUserLogin(UserModel userModel)
         {
             var userLogin = _shoppingContext.Users.AsNoTracking().FirstOrDefault(x =>
-                x.UserName.Equals(userModel.UserName) && x.Password.Equals(userModel.Password) && x.Role == role);
+                x.UserName.Equals(userModel.UserName) && x.Password.Equals(userModel.Password));
             return Mapper.Map<UserModel>(userLogin);
         }
     }

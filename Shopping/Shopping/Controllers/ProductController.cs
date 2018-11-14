@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using Common;
+using Common.Constants;
 using Common.SearchConditions;
 using DataAccess.Interfaces;
 using Shopping.Models;
@@ -25,15 +28,45 @@ namespace Shopping.Controllers
 
         public ActionResult List(int categoryId)
         {
-            var products = _productService.SearchProducts(new ProductSearchCondition()
+            var condition = new ProductClientSearchCondition()
             {
-                CategoryId = categoryId,
-                DateFrom = DateTime.MinValue,
-                DateTo = DateTime.Now,
-                PageSize = 9,
+                ProductCategoryId = categoryId,
+                PageSize = Values.ProductClientPageSize,
                 PageNumber = 0,
-            });
-            return View(products);
+            };
+            var products = _productService.SearchProducts(condition);
+            var bestSellerProduct = _productService.GetHostestProducts(Values.BestSellerNumber);
+            var model = new ProductClientModel()
+            {
+                Products = products,
+                SearchCondition = condition,
+                BestSellerProducts = bestSellerProduct
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult List(ProductClientSearchCondition condition)
+        {
+            var splits = Regex.Split(condition.Range, " - ");
+            condition.MinPrice = GetPrice(splits[0]);
+            condition.MaxPrice = GetPrice(splits[1]);
+            condition.PageSize = Values.ProductClientPageSize;
+            condition.PageNumber = 0;
+            var products = _productService.SearchProducts(condition);
+            var bestSellerProduct = _productService.GetHostestProducts(Values.BestSellerNumber);
+            var model = new ProductClientModel()
+            {
+                Products = products,
+                BestSellerProducts = bestSellerProduct,
+                SearchCondition = condition
+            };
+            return View(model);
+        }
+
+        private double GetPrice(string value)
+        {
+            return Double.Parse(value.Remove(0, 1));
         }
 
         public ActionResult Detail(int productId)

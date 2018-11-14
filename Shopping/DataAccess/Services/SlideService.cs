@@ -40,6 +40,12 @@ namespace DataAccess.Services
             return null;
         }
 
+        public IEnumerable<SlideModel> GetSlideForDisplay()
+        {
+            var slides = _shoppingContext.Slides.AsNoTracking().Where(w => w.Status).ToList();
+            return Mapper.Map<IEnumerable<SlideModel>>(slides);
+        }
+
         public void InsertSlide(SlideModel slideModel)
         {
             var slide = Mapper.Map<Slide>(slideModel);

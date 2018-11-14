@@ -1,4 +1,4 @@
-﻿@model Common.SearchConditions.ContactSearchCondition
+﻿@model Common.SearchConditions.FeedbackSearchCondition
 
 @{
     var defaultGridPageSize = 20;
@@ -8,7 +8,7 @@
 @Html.AntiForgeryToken()
 <div class="content-header clearfix">
     <h1 class="pull-left">
-        Danh sách sliders
+        Danh sách phản hồi
     </h1>
 </div>
 <div class="content">
@@ -169,7 +169,7 @@
                 type: "json",
                 transport: {
                     read: {
-                        url: "@Html.Raw(Url.Action("List", "Contact"))",
+                        url: "@Html.Raw(Url.Action("List", "Feedback"))",
                         type: "POST",
                         dataType: "json",
                         data: additionalData
@@ -216,7 +216,7 @@
                 template: "#if(ReplierId){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
             }, {
                 field: "ReplierUserName",
-                title: "Tài khoản trả lời",               
+                title: "Tài khoản trả lời",
             }, {
                 field: "Id",
                 title: " ",

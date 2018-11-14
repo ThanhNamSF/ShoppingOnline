@@ -13,9 +13,6 @@ namespace DataAccess.Entity
         public int Id { get; set; }
         public double UnitPrice { get; set; }
         public int Quantity { get; set; }
-        public float DiscountRate { get; set; }
-        public float VatRate { get; set; }
-        public DateTime? ExpiryDateTime { get; set; }
         public int DeliveryId { get; set; }
         public int ProductId { get; set; }
         public virtual Delivery Delivery { get; set; }

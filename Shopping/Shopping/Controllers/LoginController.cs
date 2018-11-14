@@ -11,11 +11,11 @@ namespace Shopping.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly ICustomerService _customerService;
 
-        public LoginController(IUserService userService)
+        public LoginController(ICustomerService customerService)
         {
-            _userService = userService;
+            _customerService = customerService;
         }
 
 
@@ -27,21 +27,21 @@ namespace Shopping.Controllers
 
         public ActionResult Login()
         {
-            var model = new UserModel();
+            var model = new CustomerModel();
             return View(model);
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(UserModel model)
+        public ActionResult Login(CustomerModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var userLogin = _userService.GetUserLogin(model, Values.CustomerRole);
-            if (userLogin != null)
+            var customerLogin = _customerService.GetCustomerLogin(model);
+            if (customerLogin != null)
             {
-                Session.Add(Values.CUSTOMER_SESSION, userLogin);
+                Session.Add(Values.CUSTOMER_SESSION, customerLogin);
                 return RedirectToAction("Index", "Home");
             }
             return Login();
@@ -50,13 +50,12 @@ namespace Shopping.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(UserModel model)
+        public ActionResult Register(CustomerModel model)
         {
             if (!ModelState.IsValid)
                 return RedirectToAction("Login");
             model.CreatedDateTime = DateTime.Now;
-            model.Role = Values.CustomerRole;
-            _userService.CreateUser(model);
+            _customerService.CreateCustomer(model);
             return RedirectToAction("Login");
         }
     }

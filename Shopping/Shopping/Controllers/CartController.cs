@@ -11,7 +11,7 @@ using Shopping.Models;
 
 namespace Shopping.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         private readonly IProductService _productService;
 

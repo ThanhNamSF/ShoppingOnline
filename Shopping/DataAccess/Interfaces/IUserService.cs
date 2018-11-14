@@ -10,8 +10,8 @@ namespace DataAccess.Interfaces
 {
     public interface IUserService
     {
-        UserModel GetUserLogin(UserModel userModel, int role);
-        IEnumerable<UserModel> GetAllUserByRole(int role);
+        UserModel GetUserLogin(UserModel userModel);
+        IEnumerable<UserModel> GetAllUser();
         UserModel GetUserById(int id);
         void CreateUser(UserModel userModel);
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataAccess.Models.ProductCategoryModel>
+﻿@model Shopping.Models.HomeModel
 @using Common.Constants;
 @{
     Layout = null;
@@ -102,47 +102,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="slider">
                 <div class="callbacks_container">
                     <ul class="rslides callbacks callbacks1" id="slider4">
+                        @foreach (var item in Model.Slides)
+                        {
+                            <li>
+                                <div class="banner-top" style="background: url(../@item.ImagePath) no-repeat 0px 0px;">
+                                    <div class="banner-info-wthree">
+                                        <h3>@item.Name</h3>
+                                        <p>@item.Title</p>
 
-                        <li>
-                            <div class="banner-top2">
-                                <div class="banner-info-wthree">
-                                    <h3>Nike</h3>
-                                    <p>See how good they feel.</p>
-
-                                </div>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="banner-top3">
-                                <div class="banner-info-wthree">
-                                    <h3>Heels</h3>
-                                    <p>For All Walks of Life.</p>
+                                    </div>
 
                                 </div>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="banner-top">
-                                <div class="banner-info-wthree">
-                                    <h3>Sneakers</h3>
-                                    <p>See how good they feel.</p>
-
-                                </div>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="banner-top1">
-                                <div class="banner-info-wthree">
-                                    <h3>Adidas</h3>
-                                    <p>For All Walks of Life.</p>
-
-                                </div>
-
-                            </div>
-                        </li>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -168,12 +140,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="col-md-6 style-grid style-grid-2">
             <div class="style-image-1_info">
                 <div class="style-grid-2-text_info">
-                    <h3>@Model.ElementAt(0).Name</h3>
+                    <h3>@Model.ProductCategories.ElementAt(0).Name</h3>
                     <p>
-                        @Model.ElementAt(0).Description
+                        @Model.ProductCategories.ElementAt(0).Description
                     </p>
                     <div class="shop-button">
-                        <a href="@Url.Action("List","Product", new {categoryId = @Model.ElementAt(0).Id})">Shop Now</a>
+                        <a href="@Url.Action("List","Product", new {categoryId = @Model.ProductCategories.ElementAt(0).Id})">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -193,12 +165,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="col-md-6 grids_sec_2_left">
                 <div class="grid_sec_info">
                     <div class="style-grid-2-text_info">
-                        <h3>@Model.ElementAt(1).Name</h3>
+                        <h3>@Model.ProductCategories.ElementAt(1).Name</h3>
                         <p>
-                            @Model.ElementAt(1).Description
+                            @Model.ProductCategories.ElementAt(1).Description
                         </p>
                         <div class="shop-button">
-                            <a href="@Url.Action("List","Product", new {categoryId = @Model.ElementAt(1).Id})">Shop Now</a>
+                            <a href="@Url.Action("List","Product", new {categoryId = @Model.ProductCategories.ElementAt(1).Id})">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -219,12 +191,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
                 <div class="grid_sec_info last">
                     <div class="style-grid-2-text_info">
-                        <h3>@Model.ElementAt(1).Name</h3>
+                        <h3>@Model.ProductCategories.ElementAt(1).Name</h3>
                         <p>
-                            @Model.ElementAt(1).Description
+                            @Model.ProductCategories.ElementAt(1).Description
                         </p>
                         <div class="shop-button two">
-                            <a href="@Url.Action("List","Product", new {categoryId = @Model.ElementAt(1).Id})">Shop Now</a>
+                            <a href="@Url.Action("List","Product", new {categoryId = @Model.ProductCategories.ElementAt(1).Id})">Shop Now</a>
                         </div>
                     </div>
                 </div>
