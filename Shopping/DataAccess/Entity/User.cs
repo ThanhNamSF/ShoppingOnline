@@ -35,7 +35,7 @@ namespace DataAccess.Entity
         [StringLength(12)]
         public string Phone { get; set; }
 
-        public int Role { get; set; }
+        public int GroupUserId { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 
@@ -44,6 +44,10 @@ namespace DataAccess.Entity
         public DateTime? UpdatedDateTime { get; set; }
 
         public  int? UpdatedBy { get; set; }
+
+        public bool Status { get; set; }
+
+        public virtual GroupUser GroupUser { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
 

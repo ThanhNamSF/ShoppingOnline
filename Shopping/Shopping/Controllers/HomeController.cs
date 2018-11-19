@@ -12,11 +12,13 @@ namespace Shopping.Controllers
     {
         private readonly IProductCategoryService _productCategoryService;
         private readonly ISlideService _slideService;
+        private readonly IAboutService _aboutService;
 
-        public HomeController(IProductCategoryService productCategoryService, ISlideService slideService)
+        public HomeController(IProductCategoryService productCategoryService, ISlideService slideService, IAboutService aboutService)
         {
             _productCategoryService = productCategoryService;
             _slideService = slideService;
+            _aboutService = aboutService;
         }
         public ActionResult Index()
         {
@@ -32,16 +34,8 @@ namespace Shopping.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var model = _aboutService.GetAboutUs();
+            return View(model);
         }
 
 

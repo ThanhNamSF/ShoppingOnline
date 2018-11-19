@@ -26,6 +26,7 @@ namespace DataAccess.Infrastructure
             container.Register<ISlideService, SlideService>(Lifestyle.Scoped);
             container.Register<IAboutService, AboutService>(Lifestyle.Scoped);
             container.Register<IFeedbackService, FeedbackService>(Lifestyle.Scoped);
+            container.Register<IGroupUserService, GroupUserService>(Lifestyle.Scoped);
         }
     }
 }

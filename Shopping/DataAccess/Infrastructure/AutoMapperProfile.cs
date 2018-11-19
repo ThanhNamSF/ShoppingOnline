@@ -38,11 +38,12 @@ namespace DataAccess.Infrastructure
             CreateMap<About, AboutModel>();
             CreateMap<FeedbackModel, Feedback>();
             CreateMap<Feedback, FeedbackModel>()
-                .ForMember(x => x.FullName, opt => opt.MapFrom(x => x.Customer.FirstName + " " + x.Customer.LastName))
+                .ForMember(x => x.FullName, opt => opt.MapFrom(x => x.Customer.LastName + " " + x.Customer.FirstName))
                 .ForMember(x => x.Email, opt => opt.MapFrom(x => x.Customer.Email))
                 .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.Customer.Phone))
                 .ForMember(x => x.CustomerUserName, opt => opt.MapFrom(x => x.Customer.UserName));
             CreateMap<FeedbackModel, FeedbackGroup>();
+            CreateMap<GroupUser, GroupUserModel>();
         }
     }
 }

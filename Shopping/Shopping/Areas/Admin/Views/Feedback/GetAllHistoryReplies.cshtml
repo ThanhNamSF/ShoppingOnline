@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DataAccess.Models.FeedbackModel>
+
+@{
+    Layout = null;
+}
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @foreach (var item in Model)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="col-md-1">
+                                        <label>Ngày trả lời:</label>
+                                    </div>
+                                    <div class="col-md-5 pull-left">
+                                        <strong>@item.RepliedDateTime</strong>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-1">
+                                        <label>Người trả lời:</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <strong>@item.ReplierUserName</strong>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-1">
+                                        <label class="control-label">Nội dung:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.Raw(item.ReplyContent)
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

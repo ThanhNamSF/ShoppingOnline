@@ -87,6 +87,7 @@
     <Compile Include="Entity\Delivery.cs" />
     <Compile Include="Entity\DeliveryDetail.cs" />
     <Compile Include="Entity\Footer.cs" />
+    <Compile Include="Entity\GroupUser.cs" />
     <Compile Include="Entity\Order.cs" />
     <Compile Include="Entity\OrderDetail.cs" />
     <Compile Include="Entity\Product.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IFeedbackService.cs" />
     <Compile Include="Interfaces\IDeliveryService.cs" />
+    <Compile Include="Interfaces\IGroupUserService.cs" />
     <Compile Include="Interfaces\IOrderService.cs" />
     <Compile Include="Interfaces\IProductCategoryService.cs" />
     <Compile Include="Interfaces\IProductService.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Models\FeedbackModel.cs" />
     <Compile Include="Models\DeliveryDetailModel.cs" />
     <Compile Include="Models\DeliveryModel.cs" />
+    <Compile Include="Models\GroupUserModel.cs" />
     <Compile Include="Models\OrderDetailModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductCategoryDetailReportModel.cs" />
@@ -135,6 +138,7 @@
     <Compile Include="Services\FeedbackService.cs" />
     <Compile Include="Services\DataAccessLayer.cs" />
     <Compile Include="Services\DeliveryService.cs" />
+    <Compile Include="Services\GroupUserService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductCategoryService.cs" />
     <Compile Include="Services\ProductService.cs" />

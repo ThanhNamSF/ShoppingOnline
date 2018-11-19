@@ -261,6 +261,7 @@
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PaypalController.cs" />
@@ -11020,6 +11021,11 @@
     <Content Include="Areas\Admin\Views\Feedback\List.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\_CreateOrUpdate.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\GetAllHistoryReplies.cshtml" />
+    <Content Include="Areas\Admin\Views\User\List.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_CreateOrUpdate.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -11048,8 +11054,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\PayPal\Index.cshtml" />
     <Content Include="Views\PayPal\FailureView.cshtml" />
@@ -11058,12 +11062,13 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Feedback\Create.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Areas\Admin\Views\ProductCategory\" />
-    <Folder Include="Areas\Admin\Views\User\" />
     <Folder Include="Data\files\" />
     <Folder Include="Data\flash\" />
     <Folder Include="Views\Base\" />

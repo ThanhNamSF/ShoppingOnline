@@ -153,7 +153,7 @@ namespace Shopping.Areas.Admin.Controllers
             if (customer != null)
             {
                 string emailContent = GetBodyOfOrderInformation(order, customer);
-                SendEmailHelper.SendEmailToCustomer(customer.Email, customer.FirstName + " " + customer.LastName, "Thông tin về đơn hàng", emailContent);
+                SendEmailHelper.SendEmailToCustomer(customer.Email, customer.LastName + " " + customer.FirstName, "Thông tin về đơn hàng", emailContent);
                 string smsContent =
                     "Đơn hàng của bạn đã được xác nhận. Mời bạn kiểm tra email để biết thêm thông tin chi tiết. Xin cảm ơn!!!";
                 SendSmsToCustomer(customer.Phone, smsContent);
@@ -179,7 +179,7 @@ namespace Shopping.Areas.Admin.Controllers
                 if (customer != null)
                 {
                     string emailContent = GetBodyCancelOrder(customer);
-                    SendEmailHelper.SendEmailToCustomer(customer.Email, customer.FirstName + " " + customer.LastName, "Thông tin về đơn hàng", emailContent);
+                    SendEmailHelper.SendEmailToCustomer(customer.Email, customer.LastName + " " + customer.FirstName, "Thông tin về đơn hàng", emailContent);
                     string smsContent =
                         "Đơn hàng của bạn đã bị hủy. Mời bạn kiểm trả email để biết thêm thông tin chi tiết. Xin cảm ơn!!!";
                     SendSmsToCustomer(customer.Phone, smsContent);

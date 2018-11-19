@@ -72,6 +72,12 @@ namespace Shopping.Areas.Admin.Controllers
             }
         }
 
+        public ActionResult GetAllHistoryReplies(int feedbackId)
+        {
+            var model = _feedbackService.GetAllFeedbackByFeedbackId(feedbackId);
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult Reply(FeedbackModel model)
         {

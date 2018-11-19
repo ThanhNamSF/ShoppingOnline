@@ -1,0 +1,26 @@
+﻿@model DataAccess.Models.UserModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Cập nhật thông tin user
+        </h1>
+        <div class="pull-right">
+            <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Quay Lại</a>
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu
+            </button>
+            <button type="submit" name="ContinueEditing" value="true" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu và chỉnh sửa
+            </button>
+        </div>
+    </div>
+
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+
+

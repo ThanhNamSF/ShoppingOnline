@@ -51,10 +51,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <nav>
                         <ul>
                             <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
-                            <li><a href="#">About</a></li>
+                            <li><a href="@Url.Action("About","Home")">About</a></li>
                             <li><a href="#">Team</a></li>
                             <li><a href="@Url.Action("Index","Product")">Shop Now</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="@Url.Action("Create","Feedback")">Contact</a></li>
                             @if (Session[Values.CUSTOMER_SESSION] != null)
                             {
                                 <li><a href="@Url.Action("Login","Login")">Log Out</a></li>
@@ -354,11 +354,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="col-md-4 sign-gd">
                         <h4>Our <span>Information</span> </h4>
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Short Codes</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
+                            <li><a href="@Url.Action("About","Home")">About</a></li>
+                            <li><a href="#">Team</a></li>
+                            <li><a href="@Url.Action("Index","Product")">Shop Now</a></li>
+                            <li><a href="@Url.Action("Create","Feedback")">Contact</a></li>
                             @if (Session[Values.CUSTOMER_SESSION] != null)
                             {
                                 <li><a href="@Url.Action("Login","Login")">Log Out</a></li>

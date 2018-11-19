@@ -30,6 +30,7 @@ namespace DataAccess
         public DbSet<ReceiveDetail> ReceiveDetails { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<DeliveryDetail> DeliveryDetails { get; set; }
+        public DbSet<GroupUser> GroupUsers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

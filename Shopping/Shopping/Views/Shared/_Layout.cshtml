@@ -20,6 +20,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </script>
     <!-- //custom-theme -->
     <link href="~/Content/web/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/Content/web/css/about.css" type="text/css" media="screen" property="" />
     <link rel="stylesheet" href="~/Content/web/css/shop.css" type="text/css" media="screen" property="" />
     <link href="~/Content/web/css/style7.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="~/Content/web/css/flexslider.css" type="text/css" media="screen" />
@@ -27,6 +28,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- Owl-carousel-CSS -->
     <link rel="stylesheet" type="text/css" href="~/Content/web/css/jquery-ui1.css">
     <link rel="stylesheet" type="text/css" href="~/Content/web/css/checkout.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/web/css/contact.css">
     <link href="~/Content/web/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- font-awesome-icons -->
     <link href="~/Content/web/css/font-awesome.css" rel="stylesheet">
@@ -67,11 +69,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                     <nav>
                         <ul>
-                            <li><a href="#" class="active">Home</a></li>
-                            <li><a href="#">About</a></li>
+                            <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
+                            <li><a href="@Url.Action("About","Home")">About</a></li>
                             <li><a href="#">Team</a></li>
-                            <li><a href="#">Shop Now</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="@Url.Action("Index","Product")">Shop Now</a></li>
+                            <li><a href="@Url.Action("Create","Feedback")">Contact</a></li>
                             @if (Session[Values.CUSTOMER_SESSION] != null)
                             {
                                 <li><a href="@Url.Action("Login","Login")">Log Out</a></li>
@@ -180,11 +182,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="col-md-4 sign-gd">
                         <h4>Our <span>Information</span> </h4>
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Short Codes</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
+                            <li><a href="@Url.Action("About","Home")">About</a></li>
+                            <li><a href="#">Team</a></li>
+                            <li><a href="@Url.Action("Index","Product")">Shop Now</a></li>
+                            <li><a href="@Url.Action("Create","Feedback")">Contact</a></li>
                             @if (Session[Values.CUSTOMER_SESSION] != null)
                             {
                                 <li><a href="@Url.Action("Login","Login")">Log Out</a></li>

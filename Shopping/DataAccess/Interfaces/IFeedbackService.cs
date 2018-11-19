@@ -15,5 +15,7 @@ namespace DataAccess.Interfaces
         void DeleteFeedback(int id);
         FeedbackModel GetFeedbackById(int id);
         void AddReply(FeedbackModel feedbackModel);
+        IEnumerable<FeedbackModel> GetAllFeedbackByFeedbackId(int feedbackId);
+        void InsertFeedback(FeedbackModel feedbackModel);
     }
 }

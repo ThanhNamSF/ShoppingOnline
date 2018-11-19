@@ -18,8 +18,7 @@ namespace DataAccess.Models
         [StringLength(16, ErrorMessage = "Password cannot be greater than 16")]
         public string Password { get; set; }
 
-        [StringLength(16, ErrorMessage = "Password cannot be greater than 16")]
-        public string PasswordConfirm { get; set; }
+        public bool UserNameIsExisted { get; set; }
 
         [StringLength(50, ErrorMessage = "FirstName cannot be greater than 50")]
         public string FirstName { get; set; }
@@ -35,7 +34,10 @@ namespace DataAccess.Models
         [StringLength(12, ErrorMessage = "Phone cannot be greater than 50")]
         public string Phone { get; set; }
 
-        public int Role { get; set; }
+        public int GroupUserId { get; set; }
+        public string GroupUserName { get; set; }
+
+        public bool Status { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 
@@ -44,5 +46,7 @@ namespace DataAccess.Models
         public DateTime? UpdatedDateTime { get; set; }
 
         public int? UpdatedBy { get; set; }
+        
+        public bool ContinueEditing { get; set; }
     }
 }

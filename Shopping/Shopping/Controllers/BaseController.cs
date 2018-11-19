@@ -13,7 +13,7 @@ namespace Shopping.Controllers
     {
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var session = Session[Values.CUSTOMER_SESSION] as UserModel;
+            var session = Session[Values.CUSTOMER_SESSION] as CustomerModel;
             if (session == null)
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Login", action = "Index"}));

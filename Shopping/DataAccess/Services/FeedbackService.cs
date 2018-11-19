@@ -48,12 +48,32 @@ namespace DataAccess.Services
             }
         }
 
+        public IEnumerable<FeedbackModel> GetAllFeedbackByFeedbackId(int feedbackId)
+        {
+            var feedbacks = _shoppingContext.FeedbackGroups.AsNoTracking().Where(w => w.FeedbackId == feedbackId)
+                .Select(s => new FeedbackModel()
+                {
+                    ReplyContent = s.ReplyContent,
+                    RepliedDateTime = s.RepliedDateTime,
+                    ReplierUserName = s.User.LastName + " " + s.User.FirstName
+                });
+            return feedbacks;
+        }
+
         public FeedbackModel GetFeedbackById(int id)
         {
             var feedback = _shoppingContext.Feedbacks.Find(id);
             if (feedback != null)
                 return Mapper.Map<FeedbackModel>(feedback);
             return null;
+        }
+
+        public void InsertFeedback(FeedbackModel feedbackModel)
+        {
+            var feedback = Mapper.Map<Feedback>(feedbackModel);
+            _shoppingContext.Feedbacks.Add(feedback);
+            _shoppingContext.SaveChanges();
+            feedbackModel.Id = feedback.Id;
         }
 
         public PageList<FeedbackModel> SearchFeedbacks(FeedbackSearchCondition condition)
