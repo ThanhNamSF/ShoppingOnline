@@ -42,6 +42,21 @@ namespace DataAccess.Services
             {
                 orderCancel.ReceivedDateTime = null;
                 orderCancel.Canceled = true;
+                foreach (var item in orderCancel.OrderDetails)
+                {
+                    var product = _shoppingContext.Products.FirstOrDefault(x => x.Id == item.ProductId);
+                    product.Quantity += item.Quantity;
+                }
+                _shoppingContext.SaveChanges();
+            }
+        }
+
+        public void CreateInvoice(int orderId)
+        {
+            var order = _shoppingContext.Orders.FirstOrDefault(x => x.Id == orderId);
+            if (order != null)
+            {
+                order.IsHasInvoice = true;
                 _shoppingContext.SaveChanges();
             }
         }

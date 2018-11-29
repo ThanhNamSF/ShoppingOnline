@@ -54,17 +54,12 @@ namespace DataAccess.Services
 
         public RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo, string createdBy)
         {
-            var monthFrom = dateFrom.Month;
-            var yearFrom = dateFrom.Year;
-            var monthTo = dateTo.Month;
-            var yearTo = dateTo.Year;
-            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => (w.CreatedDateTime.Month >= monthFrom && w.CreatedDateTime.Year >= yearFrom) &&
-                                                                           (w.CreatedDateTime.Month <= monthTo && w.CreatedDateTime.Year <= yearTo) &&
-                                                                           !w.Canceled && !w.IsHasInvoice).OrderBy(w => w.CreatedDateTime).ToList();
+            var addDate = dateTo.AddMonths(1);
+            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => (w.CreatedDateTime >= dateFrom && w.CreatedDateTime <= addDate) &&
+                                                                           !w.Canceled).OrderBy(w => w.CreatedDateTime).ToList();
 
-            var deliveries = _shoppingContext.Deliveries.AsNoTracking().Where(w => w.ApprovedBy.HasValue &&
-                                                                                   (w.ApprovedDateTime.Value.Month >= monthFrom && w.ApprovedDateTime.Value.Year >= yearFrom) &&
-                                                                                   (w.ApprovedDateTime.Value.Month <= monthTo && w.ApprovedDateTime.Value.Year <= yearTo))
+            var invoices = _shoppingContext.Invoices.AsNoTracking().Where(w => w.ApprovedBy.HasValue && !w.OrderId.HasValue &&
+                                                                               (w.ApprovedDateTime >= dateFrom && w.ApprovedDateTime <= addDate))
                                                                                     .OrderBy(w => w.CreatedDateTime).ToList();
 
             var model = new RevenueReportModel()
@@ -98,9 +93,9 @@ namespace DataAccess.Services
                 }
             }
 
-            foreach (var item in deliveries)
+            foreach (var item in invoices)
             {
-                foreach (var detail in item.DeliveryDetails)
+                foreach (var detail in item.InvoiceDetails)
                 {
                     var existedItem =
                         model.Details.FirstOrDefault(w => item.CreatedDateTime.ToString("MM/yyyy").Equals(w.Time, StringComparison.OrdinalIgnoreCase));
@@ -129,7 +124,7 @@ namespace DataAccess.Services
         public TopProductBestSellerReportModel GetTopProductBestSellerReportModel(int topNumber, DateTime dateFrom, DateTime dateTo, string createdBy)
         {
             var addDateTo = dateTo.AddDays(1);
-            var deliveryDetails = _shoppingContext.DeliveryDetails.AsNoTracking().Where(w => w.Delivery.ApprovedBy.HasValue && w.Delivery.CreatedDateTime >= dateFrom && w.Delivery.CreatedDateTime < addDateTo)
+            var invoiceDetails = _shoppingContext.InvoiceDetails.AsNoTracking().Where(w => w.Invoice.ApprovedBy.HasValue && !w.Invoice.OrderId.HasValue && w.Invoice.CreatedDateTime >= dateFrom && w.Invoice.CreatedDateTime < addDateTo)
                 .Select(s =>
                 new TopProductBestSellerDetailReportModel()
                 {
@@ -138,7 +133,7 @@ namespace DataAccess.Services
                     CategoryName = s.Product.ProductCategory.Name,
                     ProductName = s.Product.Name
                 }).ToList();
-            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled && !w.Order.IsHasInvoice && w.Order.CreatedDateTime >= dateFrom && w.Order.CreatedDateTime < addDateTo).Select(s =>
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled && w.Order.CreatedDateTime >= dateFrom && w.Order.CreatedDateTime < addDateTo).Select(s =>
                 new TopProductBestSellerDetailReportModel()
                 {
                     Quantity = s.Quantity,
@@ -146,7 +141,7 @@ namespace DataAccess.Services
                     CategoryName = s.Product.ProductCategory.Name,
                     ProductName = s.Product.Name
                 }).ToList();
-            var details = deliveryDetails.Concat(orderDetails).GroupBy(s => s.ProductCode).Select(s =>
+            var details = invoiceDetails.Concat(orderDetails).GroupBy(s => s.ProductCode).Select(s =>
                 new TopProductBestSellerDetailReportModel()
                 {
                     Quantity = s.Sum(i => i.Quantity),
@@ -168,7 +163,7 @@ namespace DataAccess.Services
         public TopProductProfitableReportModel GetTopProductProfitableReportModel(int topNumber, string createdBy)
         {
 
-            var deliveryDetails = _shoppingContext.DeliveryDetails.AsNoTracking().Where(w => w.Delivery.ApprovedBy.HasValue).Select(s => new TopProductProfitableDetailReportModel()
+            var invoiceDetails = _shoppingContext.InvoiceDetails.AsNoTracking().Where(w => w.Invoice.ApprovedBy.HasValue && !w.Invoice.OrderId.HasValue).Select(s => new TopProductProfitableDetailReportModel()
             {
                 Quantity = s.Quantity,
                 UnitPrice = s.UnitPrice,
@@ -195,8 +190,8 @@ namespace DataAccess.Services
                     ReceivePriceAverage = s.Average(k => k.UnitPrice * (1 - k.DiscountRate / 100) * (1 + k.VatRate / 100))
                 });
 
-            var mergeProducts = new List<TopProductProfitableDetailReportModel>(deliveryDetails.Count + orderDetails.Count);
-            mergeProducts.AddRange(deliveryDetails);
+            var mergeProducts = new List<TopProductProfitableDetailReportModel>(invoiceDetails.Count + orderDetails.Count);
+            mergeProducts.AddRange(invoiceDetails);
             mergeProducts.AddRange(orderDetails);
 
             var sellProducts = mergeProducts.GroupBy(s => s.ProductCode).Select(s =>

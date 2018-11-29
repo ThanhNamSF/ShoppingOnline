@@ -19,23 +19,37 @@
                 <i class="fa fa-floppy-o"></i>
                 Lưu và chỉnh sửa
             </button>
+            if (!Model.ApproverId.HasValue)
+            {
+                <span id="button-approve" class="btn bg-green-active">
+                    <i class="fa fa-check-circle-o"></i>
+                    Duyệt
+                </span>
+                <span id="button-cancel" class="btn bg-orange">
+                    <i class="fa fa-trash-o"></i>
+                    Hủy
+                </span>
+            }
+            else if (!Model.IsHasInvoice)
+            {
+                <span id="button-invoice" class="btn bg-green-active">
+                    <i class="fa fa-address-book"></i>
+                    Lập hóa đơn
+                </span>
+                <span id="button-cancel" class="btn bg-orange">
+                    <i class="fa fa-trash-o"></i>
+                    Hủy
+                </span>
+            }
+        }
+        else
+        {
             <span id="button-delete" class="btn bg-red">
                 <i class="fa fa-trash-o"></i>
                 Xóa
             </span>
-            <span id="button-cancel" class="btn bg-orange">
-                <i class="fa fa-trash-o"></i>
-                Hủy
-            </span>
-             if (!Model.ApprovedId.HasValue)
-             {
-                 <span id="button-approve" class="btn bg-green-active">
-                     <i class="fa fa-check-circle-o"></i>
-                     Duyệt
-                 </span>
-             }
         }
-        
+
     </div>
 </div>
 
@@ -101,6 +115,26 @@
         </div>
     </div>
 </div>
+<div id="invoice-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Xác nhận</h4>
+            </div>
+            @using (Html.BeginForm("CreateInvoice", "Order", new { id = Model.Id }))
+            {
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn lập hóa đơn cho đơn hàng này?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Không! cảm ơn.</button>
+                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 <script>
     $("#button-delete").click(function() {
         $("#delete-modal").modal("show");
@@ -110,6 +144,9 @@
     });
     $("#button-cancel").click(function () {
         $("#cancel-modal").modal("show");
+    });
+    $("#button-invoice").click(function () {
+        $("#invoice-modal").modal("show");
     });
 </script>
 

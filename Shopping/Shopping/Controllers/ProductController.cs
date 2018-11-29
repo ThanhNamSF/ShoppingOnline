@@ -82,5 +82,11 @@ namespace Shopping.Controllers
             };
             return View(model);
         }
+
+        public ActionResult SweetAlert()
+        {
+            TempData[Values.PaypalNotification] = NotificationType.Success;
+            return View();
+        }
     }
 }

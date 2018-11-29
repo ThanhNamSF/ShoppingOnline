@@ -144,11 +144,15 @@
     $(document).ready(function () {
         $("#@Html.IdFor(model => model.DateFrom)").kendoDatePicker({
             culture: "vi-VN",
-            format: "MM-yyyy"
+            format: "MM-yyyy",
+            start: "year",
+            depth: "year"
         });
         $("#@Html.IdFor(model => model.DateTo)").kendoDatePicker({
             culture: "vi-VN",
-            format: "MM-yyyy"
+            format: "MM-yyyy",
+            start: "year",
+            depth: "year"
         });
     });
 </script>

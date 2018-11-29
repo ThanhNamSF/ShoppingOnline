@@ -54,9 +54,8 @@ namespace Shopping.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            var model = new ReceiveModel();
-            model.DocumentDateTime = DateTime.Now;
-            model.CreatedDateTime = DateTime.Now;
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            var model = _receiveService.CreateNewReceive(currentUser.Id);
             return View(model);
         }
 
@@ -65,11 +64,13 @@ namespace Shopping.Areas.Admin.Controllers
         {
             try
             {
-                var currentUser = Session[Values.USER_SESSION] as UserModel;
-                model.CreatedBy = currentUser.Id;
-                model.CreatedDateTime = DateTime.Now;
                 if (!ModelState.IsValid)
                     return View(model);
+                if (_receiveService.IsReceiveCodeExisted(model.Code))
+                {
+                    ErrorNotification("Thêm mới phiếu nhập thất bại. Mã phiếu đã tồn tại");
+                    return View(model);
+                }
                 _receiveService.InsertReceive(model);
                 SuccessNotification("Thêm mới phiếu nhập thành công");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");

@@ -13,6 +13,7 @@ using Twilio.Types;
 using Twilio;
 using Twilio.AspNet.Mvc;
 using Configuration = Shopping.Helpers.Configuration;
+using Common;
 
 namespace Shopping.Controllers
 {
@@ -21,11 +22,13 @@ namespace Shopping.Controllers
         private readonly IOrderService _orderService;
         private static ReceiverInformation _receiverInformation;
         private readonly IProductService _productService;
+        private readonly ICodeGeneratingService _codeGeneratingService;
 
-        public PaypalController(IOrderService orderService, IProductService productService)
+        public PaypalController(IOrderService orderService, IProductService productService, ICodeGeneratingService codeGeneratingService)
         {
             _orderService = orderService;
             _productService = productService;
+            _codeGeneratingService = codeGeneratingService;
         }
         // GET: Paypal
         public ActionResult Index()
@@ -59,11 +62,11 @@ namespace Shopping.Controllers
                 {
                     name = item.Product.Name,
                     currency = "USD",
-                    price = string.Format("{0:n}" ,item.Product.Price / Values.USDRatio),
+                    price = string.Format("{0:n}" , Math.Round(item.Product.Price / Values.USDRatio, 2)),
                     quantity = item.Quantity.ToString(),
                     sku = item.Product.Code
                 });
-                subAmount += (item.Product.Price / Values.USDRatio) * item.Quantity;
+                subAmount += Math.Round(item.Product.Price / Values.USDRatio, 2) * item.Quantity;
             }
             //itemList.items.Add(new Item()
             //{
@@ -320,17 +323,20 @@ namespace Shopping.Controllers
 
                     if (executedPayment.state.ToLower() != "approved")
                     {
-                        return View("FailureView");
+                        TempData[Values.PaypalNotification] = NotificationType.Error;
+                        return RedirectToAction("Index", "Cart");
                     }
                 }
             }
             catch (Exception ex)
             {
-                return View("FailureView");
+                TempData[Values.PaypalNotification] = NotificationType.Error;
+                return RedirectToAction("Index", "Cart");
             }
 
             InsertOrder();
-            return RedirectToAction("List", "Product", new {categoryId = 1});
+            TempData[Values.PaypalNotification] = NotificationType.Success;
+            return RedirectToAction("Index", "Cart");
         }
 
         private void InsertOrder()
@@ -348,7 +354,7 @@ namespace Shopping.Controllers
                     Amount = cart.Sum(item => item.Product.Price * item.Quantity),
                     Status = false,
                     CustomerId = customer.Id, //Edit later
-                    Code = DateTime.Now.ToString("yyyyMMddHHmmss"),
+                    Code = _codeGeneratingService.GenerateCode(Values.OrderPrefix),
                     PaymentId = payment.id
                 };
                 _orderService.InsertOrder(order);

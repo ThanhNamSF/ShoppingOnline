@@ -1,0 +1,58 @@
+﻿@using Common
+@using Common.Constants;
+@{
+    Layout = null;
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<!-- js -->
+<script type="text/javascript" src="~/Content/web/js/jquery-2.1.4.min.js"></script>
+<link href="~/Content/sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="~/Content/sweetalert/sweetalert.min.js"></script>
+
+<div class="wrapper panel panel-primary">
+    <div class="panel-heading">Sweet Alert Demonstration</div>
+    <div class="panel-body">
+        <p>It makes sweet alerts!</p>
+        <p>Default icons got a little goofy, but whatever....</p>
+        <p>
+            <button id="test-1" class="btn btn-info btn-lg">Basic</button>
+            <button id="test-2" class="btn btn-success btn-lg">Success</button>
+            <button id="test-3" class="btn btn-primary btn-lg">Fancy</button>
+            <button id="test-4" class="btn btn-danger btn-lg">Error</button>
+        <p><a class="btn btn-link" href="http://www.mitechdev.com" target="blank">http://www.mitechdev.com</a>
+
+        <p>&nbsp;</p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var message = '@TempData[Values.PaypalNotification]';
+        if (message == '@NotificationType.Success') {
+            alert(message);
+        }
+    });
+</script>
+<script>
+
+    document.querySelector('#test-1').onclick = function () {
+        swal("Here's a message!");
+    };
+    $('#test-2').on('click',
+        function () {
+            swal("Thành công!", "Giao dịch hoàn tất", "success")
+        });
+    //$('#test-2').onclick = function () {
+    //    swal("Good job!", "You clicked the button!", "success")
+    //};
+    document.querySelector('button#test-3').onclick = function () {
+        swal({
+            title: "Are you sure?",
+            text: "Your will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, delete it!"
+        });
+    };
+    document.querySelector('button#test-4').onclick = function () {
+        swal("Thất bại!", "Giao dịch không thành công!", "error");
+    };
+</script>

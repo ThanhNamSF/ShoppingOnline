@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Shopping.Models.CartItem>
+@using Common
+@using Common.Constants;
 @{
     ViewBag.Title = "Checkout";
 }
@@ -12,42 +14,42 @@
                 <h4>Your shopping cart contains: <span id="totalProduct">@Model.Count() Products</span></h4>
                 <table class="timetable_sub">
                     <thead>
-                    <tr>
-                        <th>SL No.</th>
-                        <th>Product</th>
-                        <th>Quality</th>
-                        <th>Product Name</th>
+                        <tr>
+                            <th>SL No.</th>
+                            <th>Product</th>
+                            <th>Quality</th>
+                            <th>Product Name</th>
 
-                        <th>Price</th>
-                        <th>Remove</th>
-                    </tr>
+                            <th>Price</th>
+                            <th>Remove</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @for (int i = 0; i < Model.Count(); i++)
-                    {
-                        <tr class="rem@(Model.ElementAt(i).Product.Id)">
-                            <td class="invert">@(i + 1)</td>
-                            <td class="invert-image"><a href="#"><img src="../@Model.ElementAt(i).Product.ImagePath" alt=" " class="img-responsive"></a></td>
-                            <td class="invert">
-                                <div class="quantity">
-                                    <div class="quantity-select">
-                                        <div class="entry value-minus">&nbsp;</div>
-                                        <div id="@Model.ElementAt(i).Product.Id" class="entry value"><span>@Model.ElementAt(i).Quantity</span></div>
-                                        <div class="entry value-plus active">&nbsp;</div>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr class="rem@(Model.ElementAt(i).Product.Id)">
+                                <td class="invert">@(i + 1)</td>
+                                <td class="invert-image"><a href="#"><img src="../@Model.ElementAt(i).Product.ImagePath" alt=" " class="img-responsive"></a></td>
+                                <td class="invert">
+                                    <div class="quantity">
+                                        <div class="quantity-select">
+                                            <div class="entry value-minus">&nbsp;</div>
+                                            <div id="@Model.ElementAt(i).Product.Id" class="entry value"><span>@Model.ElementAt(i).Quantity</span></div>
+                                            <div class="entry value-plus active">&nbsp;</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="invert">@Model.ElementAt(i).Product.Name</td>
+                                </td>
+                                <td class="invert">@Model.ElementAt(i).Product.Name</td>
 
-                            <td class="invert">@string.Format("{0:#,#}", Model.ElementAt(i).Product.Price * (1 - Model.ElementAt(i).Product.Promotion) * Model.ElementAt(i).Quantity) VND</td>
-                            <td class="invert">
-                                <div class="rem">
-                                    <div title="@(Model.ElementAt(i).Product.Id)" class="close1"> </div>
-                                </div>
+                                <td class="invert">@string.Format("{0:#,#}", Model.ElementAt(i).Product.Price * (1 - Model.ElementAt(i).Product.Promotion) * Model.ElementAt(i).Quantity) VND</td>
+                                <td class="invert">
+                                    <div class="rem">
+                                        <div title="@(Model.ElementAt(i).Product.Id)" class="close1"> </div>
+                                    </div>
 
-                            </td>
-                        </tr>
-                    }
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -97,7 +99,7 @@
                         </section>
                     </form>
                     <div class="checkout-right-basket">
-                        
+
                     </div>
                 </div>
 
@@ -204,6 +206,19 @@
         <div class="clearfix"> </div>
     </div>
 </div>
+<!--Alert-->
+<script>
+    $(function() {
+        var message = '@TempData[Values.PaypalNotification]';
+        if (message == '@NotificationType.Success') {
+            swal("Thành công!", "Giao dịch hoàn tất", "success")
+        }
+        else if (message == '@NotificationType.Error') {
+            swal("Thất bại!", "Giao dịch không thành công!", "error");
+        }
+    });
+</script>
+<!--Alert-->
 <!--quantity-->
 <script>
     $('.value-plus').on('click', function () {
@@ -217,7 +232,7 @@
                     $("#totalItem" + productId).text(returnedData.amount + "VND");
                     $("#total").text(returnedData.amountTotal + "VND");
                 }
-                
+
             });
     });
     $('.value-minus').on('click', function () {
@@ -239,7 +254,7 @@
     $(document).ready(function (c) {
         $('.close1').on('click', function (c) {
             var productId = $(this).attr('title');
-            $.post('/Cart/DeleteProduct', { productId: productId},
+            $.post('/Cart/DeleteProduct', { productId: productId },
                 function (returnedData) {
                     if (returnedData.status == true) {
                         $("#item" + productId).remove();

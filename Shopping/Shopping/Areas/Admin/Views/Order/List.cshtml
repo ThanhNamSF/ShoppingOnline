@@ -10,12 +10,6 @@
     <h1 class="pull-left">
         Danh sách đơn hàng
     </h1>
-    <div class="pull-right">
-        <a href="@Url.Action("Create")" class="btn bg-blue">
-            <i class="fa fa-plus-square"></i>
-            Thêm
-        </a>
-    </div>
 </div>
 <div class="content">
     <div class="form-horizontal">
@@ -253,19 +247,19 @@
                 title: "Ngày đặt hàng",
                 template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
             }, {
-                field: "DeliveredId",
+                field: "DeliverId",
                 title: "Đã phân công",
                 width: 100,
                 attributes: { style: "text-align:center" },
                 headerAttributes: { style: "text-align:center" },
-                template: "#if(DeliveredId){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
+                template: "#if(DeliverId){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
             }, {
-                field: "ApprovedId",
+                field: "ApproverId",
                 title: "Đã duyệt",
                 width: 100,
                 attributes: { style: "text-align:center" },
                 headerAttributes: { style: "text-align:center" },
-                template: "#if(ApprovedId){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
+                template: "#if(ApproverId){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
             }, {
                 field: "ReceivedDateTime",
                 title: "Đã giao hàng",

@@ -51,8 +51,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchConditions\BestSellerSearchCondition.cs" />
     <Compile Include="SearchConditions\FeedbackSearchCondition.cs" />
-    <Compile Include="SearchConditions\DeliveryDetailSearchCondition.cs" />
-    <Compile Include="SearchConditions\DeliverySearchCondition.cs" />
+    <Compile Include="SearchConditions\InvoiceDetailSearchCondition.cs" />
+    <Compile Include="SearchConditions\InvoiceSearchCondition.cs" />
     <Compile Include="SearchConditions\InventorySearchConditionReport.cs" />
     <Compile Include="SearchConditions\OrderDetailSearchCondition.cs" />
     <Compile Include="SearchConditions\OrderSearchCondition.cs" />

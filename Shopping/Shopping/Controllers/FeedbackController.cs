@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Common;
 using Common.Constants;
 using DataAccess.Interfaces;
 using DataAccess.Models;
@@ -41,10 +42,12 @@ namespace Shopping.Controllers
                 model.CustomerId = currentUser.Id;
                 model.CreatedDateTime = DateTime.Now;
                 _feedbackService.InsertFeedback(model);
+                TempData[Values.FeedbackNotification] = NotificationType.Success;
                 return View(new FeedbackModel());
             }
             catch (Exception e)
             {
+                TempData[Values.FeedbackNotification] = NotificationType.Error;
                 return View(model);
             }
         }

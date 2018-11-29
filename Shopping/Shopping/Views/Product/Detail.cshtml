@@ -13,8 +13,14 @@
                 <div class="flexslider">
 
                     <ul class="slides">
-                        <li data-thumb="images/d2.jpg">
+                        <li data-thumb="../@Model.Product.FrontImagePath">
+                            <div class="thumb-image"> <img src="../@Model.Product.FrontImagePath" data-imagezoom="true" class="img-responsive"> </div>
+                        </li>
+                        <li data-thumb="../@Model.Product.ImagePath">
                             <div class="thumb-image"> <img src="../@Model.Product.ImagePath" data-imagezoom="true" class="img-responsive"> </div>
+                        </li>
+                        <li data-thumb="../@Model.Product.BackImagePath">
+                            <div class="thumb-image"> <img src="../@Model.Product.BackImagePath" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -25,7 +31,10 @@
             <h3>@Model.Product.Title</h3>
             <p>
                 <span class="item_price">@string.Format("{0:#,#}", (1 - Model.Product.Promotion) * Model.Product.Price) VND</span>
-                <del>@string.Format("{0:#,#}", Model.Product.Price) VND</del>
+                @if (Model.Product.Promotion > 0)
+                {
+                    <del>@string.Format("{0:#,#}", Model.Product.Price) VND</del>
+                }
             </p>
             <div class="rating1">
                 <ul class="stars">
@@ -170,7 +179,7 @@
                                 <img src="../@product.ImagePath" alt="">
                                 <div class="men-cart-pro">
                                     <div class="inner-men-cart-pro">
-                                        <a href="single.html" class="link-product-add-cart">Quick View</a>
+                                        <a href="@Url.Action("Detail","Product", new {productId = product.Id})" class="link-product-add-cart">Quick View</a>
                                     </div>
                                 </div>
                                 <span class="product-new-top">New</span>
@@ -183,7 +192,7 @@
                                     <div class="grid_meta">
                                         <div class="product_price">
                                             <div class="grid-price ">
-                                                <span class="money ">@product.Price VND</span>
+                                                <span class="money ">@string.Format("{0:#,#}", product.Price) VND</span>
                                             </div>
                                         </div>
                                         <ul class="stars">

@@ -36,7 +36,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="~/Content/web//fonts.googleapis.com/css?family=Montserrat:100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
           rel="stylesheet">
     <link href="~/Content/web//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
-
+    <!--Sweet Alert-->
+    <link href="~/Content/sweetalert/sweetalert.css" rel="stylesheet" />
+    <script src="~/Content/sweetalert/sweetalert.min.js"></script>
+    <!--Sweet Alert-->
     <!-- js -->
     <script type="text/javascript" src="~/Content/web/js/jquery-2.1.4.min.js"></script>
     <!-- //cart-js -->
@@ -122,7 +125,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="inner_breadcrumb_agileits_w3">
 
                 <ul class="short">
-                    <li><a href="#">Home</a><i>|</i></li>
+                    <li><a href="@Url.Action("Index","Home")">Home</a><i>|</i></li>
                     <li>@ViewBag.Title</li>
                 </ul>
             </div>

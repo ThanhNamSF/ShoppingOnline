@@ -26,5 +26,7 @@ namespace DataAccess.Interfaces
         bool CheckQuantityInReceiveDetail(int receiveId);
         void Approved(ReceiveModel receiveModel);
         bool Open(ReceiveModel receiveModel);
+        ReceiveModel CreateNewReceive(int currentUserId);
+        bool IsReceiveCodeExisted(string receiveCode);
     }
 }

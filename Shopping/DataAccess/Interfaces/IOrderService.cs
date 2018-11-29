@@ -17,5 +17,6 @@ namespace DataAccess.Interfaces
         void Approved(OrderModel orderModel);
         void Cancel(int orderId);
         IEnumerable<OrderDetailModel> GetOrderDetailsByOrderId(int orderId);
+        void CreateInvoice(int orderId);
     }
 }

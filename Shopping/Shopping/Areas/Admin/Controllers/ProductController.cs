@@ -59,6 +59,11 @@ namespace Shopping.Areas.Admin.Controllers
             {
                 if (!ModelState.IsValid)
                     return View(model);
+                if (_productService.IsProductCodeExisted(model.Code))
+                {
+                    ErrorNotification("Thêm sản phẩm mới thất bại.Mã sản phẩm đã tồn tại.");
+                    return View(model);
+                }
                 var currentUser = Session[Values.USER_SESSION] as UserModel;
                 model.CreatedBy = currentUser.Id;
                 model.CreatedDateTime = DateTime.Now;
@@ -112,6 +117,11 @@ namespace Shopping.Areas.Admin.Controllers
                 var product = _productService.GetProductById(id);
                 if (product == null)
                     return RedirectToAction("List");
+                if (_productService.IsProductExistedInOrderInvoiceReceive(product.Id))
+                {
+                    ErrorNotification("Xóa sản phẩm thất bại. Sản phẩm này đã tồn tại trong đơn đặt hàng hoặc hóa đơn hoặc phiếu nhập.");
+                    return RedirectToAction("List");
+                }
                 _productService.DeleteProduct(id);
                 SuccessNotification("Xóa sản phẩm thành công.");
                 return RedirectToAction("List");

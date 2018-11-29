@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Common.SearchConditions
 {
-    public class DeliverySearchCondition
+    public class InvoiceSearchCondition
     {
-        public DeliverySearchCondition()
+        public InvoiceSearchCondition()
         {
             DateFrom = DateTime.Now;
             DateTo = DateTime.Now;

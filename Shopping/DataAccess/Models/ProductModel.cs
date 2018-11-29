@@ -8,7 +8,7 @@ namespace DataAccess.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Mã sản phẩm không được bỏ trống")]
-        [StringLength(30, ErrorMessage = "Mã sản phẩm không vượt quá 30 ký tự")]
+        [StringLength(12, ErrorMessage = "Mã sản phẩm không vượt quá 12 ký tự")]
         public string Code { get; set; }
 
         [StringLength(250, ErrorMessage = "Tên sản phẩm không vượt quá 250 ký tự")]
@@ -29,6 +29,10 @@ namespace DataAccess.Models
         public string Detail { get; set; }
 
         public string ImagePath { get; set; }
+
+        public string FrontImagePath { get; set; }
+
+        public string BackImagePath { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
         public int CreatedBy { get; set; }

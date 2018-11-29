@@ -20,13 +20,14 @@ namespace DataAccess.Infrastructure
             container.Register<IProductService, ProductService>(Lifestyle.Scoped);
             container.Register<IProductCategoryService, ProductCategoryService>(Lifestyle.Scoped);
             container.Register<IReceiveService, ReceiveService>(Lifestyle.Scoped);
-            container.Register<IDeliveryService, DeliveryService>(Lifestyle.Scoped);
+            container.Register<IInvoiceService, InvoiceService>(Lifestyle.Scoped);
             container.Register<IOrderService, OrderService>(Lifestyle.Scoped);
             container.Register<IReportService, ReportService>(Lifestyle.Scoped);
             container.Register<ISlideService, SlideService>(Lifestyle.Scoped);
             container.Register<IAboutService, AboutService>(Lifestyle.Scoped);
             container.Register<IFeedbackService, FeedbackService>(Lifestyle.Scoped);
             container.Register<IGroupUserService, GroupUserService>(Lifestyle.Scoped);
+            container.Register<ICodeGeneratingService, CodeGeneratingService>(Lifestyle.Scoped);
         }
     }
 }

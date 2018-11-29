@@ -1,4 +1,4 @@
-﻿@model Common.SearchConditions.DeliverySearchCondition
+﻿@model Common.SearchConditions.InvoiceSearchCondition
 
 @{
     var defaultGridPageSize = 20;
@@ -8,7 +8,7 @@
 @Html.AntiForgeryToken()
 <div class="content-header clearfix">
     <h1 class="pull-left">
-        Danh sách phiếu xuất
+        Danh sách hóa đơn
     </h1>
     <div class="pull-right">
         <a href="@Url.Action("Create")" class="btn bg-blue">
@@ -26,7 +26,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Mã sản phẩm</label>
+                                    <label class="control-label">Mã hóa đơn</label>
                                 </div>
                                 <div class="col-md-8">
                                     @Html.EditorFor(model => model.Code)
@@ -140,7 +140,7 @@
                 type: "json",
                 transport: {
                     read: {
-                        url: "@Html.Raw(Url.Action("List", "Delivery"))",
+                        url: "@Html.Raw(Url.Action("List", "Invoice"))",
                         type: "POST",
                         dataType: "json",
                         data: additionalData

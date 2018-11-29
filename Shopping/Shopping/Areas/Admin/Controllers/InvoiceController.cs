@@ -13,63 +13,62 @@ using Shopping.Helpers;
 
 namespace Shopping.Areas.Admin.Controllers
 {
-    public class DeliveryController : BaseController
+    public class InvoiceController : BaseController
     {
-        private readonly IDeliveryService _deliveryService;
+        private readonly IInvoiceService _invoiceService;
         private readonly IProductService _productService;
+        private readonly ICodeGeneratingService _codeGeneratingService;
 
-        public DeliveryController(IDeliveryService deliveryService, IProductService productService)
+        public InvoiceController(IInvoiceService invoiceService, IProductService productService, ICodeGeneratingService codeGeneratingService)
         {
-            _deliveryService = deliveryService;
+            _invoiceService = invoiceService;
             _productService = productService;
+            _codeGeneratingService = codeGeneratingService;
         }
-        // GET: Admin/delivery
+        // GET: Admin/invoice
         public ActionResult Index()
         {
             return RedirectToAction("List");
         }
 
-        #region delivery CRUD
+        #region invoice CRUD
 
         public ActionResult List()
         {
-            var model = new DeliverySearchCondition();
+            var model = new InvoiceSearchCondition();
             return View(model);
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult List(DataSourceRequest command, DeliverySearchCondition condition)
+        public ActionResult List(DataSourceRequest command, InvoiceSearchCondition condition)
         {
             condition.PageSize = command.PageSize;
             condition.PageNumber = command.Page - 1;
 
-            var deliveries = _deliveryService.SearchDeliveries(condition);
+            var invoices = _invoiceService.SearchInvoices(condition);
             var gridModel = new DataSourceResult()
             {
-                Data = deliveries.DataSource,
-                Total = deliveries.TotalItems
+                Data = invoices.DataSource,
+                Total = invoices.TotalItems
             };
             return Json(gridModel);
         }
 
         public ActionResult Create()
         {
-            var model = new DeliveryModel();
-            model.CreatedDateTime = DateTime.Now;
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            var model = _invoiceService.CreateNewInvoice(currentUser.Id);
             return View(model);
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult Create(DeliveryModel model)
+        public ActionResult Create(InvoiceModel model)
         {
             try
             {
-                var currentUser = Session[Values.USER_SESSION] as UserModel;
-                model.CreatedBy = currentUser.Id;
-                model.CreatedDateTime = DateTime.Now;
                 if (!ModelState.IsValid)
                     return View(model);
-                _deliveryService.InsertDelivery(model);
+                _invoiceService.InsertInvoice(model);
                 SuccessNotification("Thêm mới phiếu xuất thành công");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
@@ -82,26 +81,26 @@ namespace Shopping.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            var delivery = _deliveryService.GetDeliveryById(id);
-            if (delivery == null)
+            var invoice = _invoiceService.GetInvoiceById(id);
+            if (invoice == null)
                 return RedirectToAction("List");
-            return View(delivery);
+            return View(invoice);
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult Edit(DeliveryModel model)
+        public ActionResult Edit(InvoiceModel model)
         {
             try
             {
-                var delivery = _deliveryService.GetDeliveryById(model.Id);
-                if (delivery == null)
+                var invoice = _invoiceService.GetInvoiceById(model.Id);
+                if (invoice == null)
                     return RedirectToAction("List");
                 if (!ModelState.IsValid)
                     return View(model);
                 var currentUser = Session[Values.USER_SESSION] as UserModel;
                 model.UpdatedBy = currentUser.Id;
                 model.UpdatedDateTime = DateTime.Now;
-                _deliveryService.UpdateDelivery(model);
+                _invoiceService.UpdateInvoice(model);
                 SuccessNotification("Chỉnh sửa thông tin phiếu xuất thành công");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
@@ -116,10 +115,10 @@ namespace Shopping.Areas.Admin.Controllers
         {
             try
             {
-                var delivery = _deliveryService.GetDeliveryById(id);
-                if (delivery == null)
+                var invoice = _invoiceService.GetInvoiceById(id);
+                if (invoice == null)
                     return RedirectToAction("List");
-                _deliveryService.DeleteDelivery(id);
+                _invoiceService.DeleteInvoice(id);
                 SuccessNotification("Xóa phiếu xuất thành công");
                 return RedirectToAction("List");
             }
@@ -149,14 +148,14 @@ namespace Shopping.Areas.Admin.Controllers
             return Json(gridModel);
         }
 
-        public ActionResult ProductAddPopup(int deliveryId)
+        public ActionResult ProductAddPopup(int invoiceId)
         {
             var model = new ProductSearchCondition();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult ProductAddPopup(string btnId, string formId, int deliveryId, ProductListSelected request)
+        public ActionResult ProductAddPopup(string btnId, string formId, int invoiceId, ProductListSelected request)
         {
             if (request.ProductIds != null)
             {
@@ -166,46 +165,57 @@ namespace Shopping.Areas.Admin.Controllers
                     foreach (var productId in productIds)
                     {
                         var id = Int32.Parse(productId);
-                        var isExisted = _deliveryService.CheckProductExistedInDelivery(deliveryId, id);
+                        var isExisted = _invoiceService.CheckProductExistedInInvoice(invoiceId, id);
                         if (isExisted)
                             continue;
                         var product = _productService.GetProductById(id);
-                        var deliveryDetailModel = new DeliveryDetailModel()
+                        var invoiceDetailModel = new InvoiceDetailModel()
                         {
                             Quantity = 1,
                             ProductId = id,
-                            DeliveryId = deliveryId,
+                            InvoiceId = invoiceId,
                             UnitPrice = product.Price
                         };
-                        _deliveryService.InsertDeliveryDetail(deliveryDetailModel);
+                        _invoiceService.InsertInvoiceDetail(invoiceDetailModel);
                     }
                 }
 
             }
 
-            return RedirectToAction("Edit", new { id = deliveryId });
+            return RedirectToAction("Edit", new { id = invoiceId });
         }
         #endregion
 
-        #region deliveryDetail
+        #region invoiceDetail
 
         [HttpPost]
-        public ActionResult DeliveryDetailList(DataSourceRequest command, DeliveryDetailSearchCondition condition)
+        public ActionResult invoiceDetailList(DataSourceRequest command, InvoiceDetailSearchCondition condition)
         {
             condition.PageSize = command.PageSize;
             condition.PageNumber = command.Page - 1;
-            var deliveryDetails = _deliveryService.SearchDeliveryDetails(condition);
-            deliveryDetails.DataSource.ForEach(x => x.Amount = x.UnitPrice * x.Quantity);
+            var invoice = _invoiceService.GetInvoiceById(condition.InvoiceId);
+            PageList<InvoiceDetailModel> invoiceDetails;
+            if (invoice.OrderId.HasValue)
+            {
+                condition.OrderId = invoice.OrderId.Value;
+                invoiceDetails = _invoiceService.GetInvoiceDetailsByOrderId(condition);
+            }
+            else
+            {
+                invoiceDetails = _invoiceService.SearchInvoiceDetails(condition);
+            }
+            //invoiceDetails = _invoiceService.SearchInvoiceDetails(condition);
+            invoiceDetails.DataSource.ForEach(x => x.Amount = x.UnitPrice * x.Quantity);
             var gridModel = new DataSourceResult
             {
-                Data = deliveryDetails.DataSource,
-                Total = deliveryDetails.TotalItems
+                Data = invoiceDetails.DataSource,
+                Total = invoiceDetails.TotalItems
             };
             return Json(gridModel);
         }
 
         [HttpPost]
-        public ActionResult AddDeliveryDetail(DeliveryDetailModel model)
+        public ActionResult AddinvoiceDetail(InvoiceDetailModel model)
         {
             var productModel = _productService.GetProductByCode(model.ProductCode);
             if (productModel == null)
@@ -216,7 +226,7 @@ namespace Shopping.Areas.Admin.Controllers
                 });
             }
 
-            if (_deliveryService.CheckProductExistedInDelivery(model.DeliveryId, productModel.Id))
+            if (_invoiceService.CheckProductExistedInInvoice(model.InvoiceId, productModel.Id))
             {
                 return Json(new
                 {
@@ -226,31 +236,31 @@ namespace Shopping.Areas.Admin.Controllers
 
             model.ProductId = productModel.Id;
             model.Quantity = model.Quantity;
-            _deliveryService.InsertDeliveryDetail(model);
+            _invoiceService.InsertInvoiceDetail(model);
             return Json(new { });
         }
 
         [HttpPost]
-        public ActionResult DeliveryDetailEdit(DeliveryDetailModel model)
+        public ActionResult invoiceDetailEdit(InvoiceDetailModel model)
         {
-            var detail = _deliveryService.GetDeliveryDetailById(model.Id);
+            var detail = _invoiceService.GetInvoiceDetailById(model.Id);
             if (detail == null)
                 return Json(new DataSourceResult { Errors = "Sản phẩm không tồn tại" });
             if (!ModelState.IsValid)
                 return Json(new DataSourceResult { Errors = ModelState.SerializeErrors() });
-            _deliveryService.UpdateDeliveryDetail(model);
+            _invoiceService.UpdateInvoiceDetail(model);
 
             return new NullJsonResult();
         }
 
         [HttpPost]
-        public ActionResult DeliveryDetailDelete(int id)
+        public ActionResult invoiceDetailDelete(int id)
         {
-            var deliveryDetail = _deliveryService.GetDeliveryDetailById(id);
-            if (deliveryDetail == null)
+            var invoiceDetail = _invoiceService.GetInvoiceDetailById(id);
+            if (invoiceDetail == null)
                 return Json(null);
 
-            _deliveryService.DeleteDeliveryDetail(id);
+            _invoiceService.DeleteInvoiceDetail(id);
             return Json(null);
         }
 
@@ -262,27 +272,27 @@ namespace Shopping.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Approve(int id)
         {
-            var delivery = _deliveryService.GetDeliveryById(id);
-            if (delivery == null)
+            var invoice = _invoiceService.GetInvoiceById(id);
+            if (invoice == null)
             {
                 return RedirectToAction("Create");
             }
 
-            if (!_deliveryService.HasDeliveryDetail(delivery.Id))
+            if (!_invoiceService.HasInvoiceDetail(invoice.Id))
             {
                 ErrorNotification("Phiếu xuất chưa có chi tiết. Vui lòng thêm sản phẩm vào chi tiết phiếu xuất trước khi duyệt !");
-                return RedirectToAction("Edit", new { delivery.Id });
+                return RedirectToAction("Edit", new { invoice.Id });
             }
 
-            if (_deliveryService.CheckQuantityInDeliveryDetail(delivery.Id))
+            if (_invoiceService.CheckQuantityInInvoiceDetail(invoice.Id))
             {
                 ErrorNotification("Chi tiết sản phẩm không hợp lệ. Vui lòng kiểm tra lại!");
-                return RedirectToAction("Edit", new { delivery.Id });
+                return RedirectToAction("Edit", new { invoice.Id });
             }
             var currentUser = Session[Values.USER_SESSION] as UserModel;
-            delivery.ApprovedBy = currentUser.Id;
-            delivery.Status = true;
-            if (_deliveryService.Approved(delivery))
+            invoice.ApprovedBy = currentUser.Id;
+            invoice.Status = true;
+            if (_invoiceService.Approved(invoice))
             {
                 SuccessNotification("Duyệt phiếu xuất thành công.");
             }
@@ -291,34 +301,34 @@ namespace Shopping.Areas.Admin.Controllers
                 ErrorNotification("Duyệt phiếu xuất thất bại!");
             }
             
-            return RedirectToAction("Edit", new { delivery.Id });
+            return RedirectToAction("Edit", new { invoice.Id });
         }
 
         [HttpPost]
         public ActionResult Open(int id)
         {
-            var delivery = _deliveryService.GetDeliveryById(id);
-            if (delivery == null)
+            var invoice = _invoiceService.GetInvoiceById(id);
+            if (invoice == null)
             {
                 return RedirectToAction("Create");
             }
-            if (!_deliveryService.HasDeliveryDetail(delivery.Id))
+            if (!_invoiceService.HasInvoiceDetail(invoice.Id))
             {
                 ErrorNotification("Phiếu xuất chưa có chi tiết. Vui lòng thêm sản phẩm vào chi tiết phiếu xuất trước khi duyệt !");
-                return RedirectToAction("Edit", new { delivery.Id });
+                return RedirectToAction("Edit", new { invoice.Id });
             }
-            if (_deliveryService.CheckQuantityInDeliveryDetail(delivery.Id))
+            if (_invoiceService.CheckQuantityInInvoiceDetail(invoice.Id))
             {
                 ErrorNotification("Chi tiết sản phẩm không hợp lệ. Vui lòng kiểm tra lại!");
-                return RedirectToAction("Edit", new { delivery.Id });
+                return RedirectToAction("Edit", new { invoice.Id });
             }
 
-            delivery.ApprovedBy = null;
-            delivery.ApprovedDateTime = null;
-            delivery.Status = false;
-            _deliveryService.Open(delivery);
+            invoice.ApprovedBy = null;
+            invoice.ApprovedDateTime = null;
+            invoice.Status = false;
+            _invoiceService.Open(invoice);
             SuccessNotification("Mở phiếu xuất thành công.");
-            return RedirectToAction("Edit", new { delivery.Id });
+            return RedirectToAction("Edit", new { invoice.Id });
         }
 
         #endregion

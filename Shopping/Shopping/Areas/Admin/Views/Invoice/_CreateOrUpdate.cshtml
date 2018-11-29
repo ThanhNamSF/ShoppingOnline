@@ -1,4 +1,4 @@
-﻿@model DataAccess.Models.DeliveryModel
+﻿@model DataAccess.Models.InvoiceModel
 
 @{
     var defaultGridPageSize = 20;
@@ -13,16 +13,32 @@
             <strong style="font-size: 16px">Thông tin chính</strong>
             <div class="panel panel-default">
                 <div class="panel-body">
+                    @if (Model.OrderId.HasValue)
+                    {
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Mã đơn hàng</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input disabled="disabled" type="text" id="@Html.IdFor(model => model.OrderCode)" value="@Model.OrderCode" class="k-textbox" style="width: 80%; background: silver; opacity: 0.7"/>
+                                        <input type="hidden" name="@Html.IdFor(model => model.OrderCode)" value="@Model.OrderCode"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Mã phiếu xuất</label>
+                                    <label class="control-label">Mã hóa đơn</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input disabled="disabled" type="text" id="@Html.IdFor(model => model.Code)" value="@Model.Code" class="k-textbox" style="width: 80%; background: silver; opacity: 0.7"/>
-                                    <input type="hidden" name="@Html.IdFor(model => model.Code)" value="@Model.Code" />
-                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                    <input type="hidden" name="@Html.IdFor(model => model.Code)" value="@Model.Code"/>
+                                    @Html.ValidationMessageFor(model => model.Code, "", new {@class = "text-danger"})
                                 </div>
                             </div>
                         </div>
@@ -32,8 +48,8 @@
                                     <label class="control-label">Khách hàng</label>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
-                                    @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.CustomerName, new {htmlAttributes = new {@class = "k-textbox", style = "width: 80%"}})
+                                    @Html.ValidationMessageFor(model => model.CustomerName, "", new {@class = "text-danger"})
                                 </div>
                             </div>
                         </div>
@@ -43,8 +59,8 @@
                                     <label class="control-label">Số điện thoại</label>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CustomerPhone, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
-                                    @Html.ValidationMessageFor(model => model.CustomerPhone, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.CustomerPhone, new {htmlAttributes = new {@class = "k-textbox", style = "width: 80%"}})
+                                    @Html.ValidationMessageFor(model => model.CustomerPhone, "", new {@class = "text-danger"})
                                 </div>
                             </div>
                         </div>
@@ -55,8 +71,8 @@
                                 <label class="control-label">Địa chỉ</label>
                             </div>
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.CustomerAddress, new { @class = "k-textbox", style = "width: 95%" })
-                                @Html.ValidationMessageFor(model => model.CustomerAddress, "", new { @class = "text-danger" })
+                                @Html.TextAreaFor(model => model.CustomerAddress, new {@class = "k-textbox", style = "width: 95%"})
+                                @Html.ValidationMessageFor(model => model.CustomerAddress, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -64,8 +80,8 @@
                                 <label class="control-label">Trạng thái</label>
                             </div>
                             <div class="col-md-8">
-                                <input id="@Html.IdFor(model => model.Status)" style="width: 85%" />
-                                <input type="hidden" name="@Html.IdFor(model => model.Status)" value="@Html.AttributeEncode(Model.Status)" />
+                                <input id="@Html.IdFor(model => model.Status)" style="width: 85%"/>
+                                <input type="hidden" name="@Html.IdFor(model => model.Status)" value="@Html.AttributeEncode(Model.Status)"/>
                             </div>
                         </div>
                     </div>
@@ -175,7 +191,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (!Model.ApprovedBy.HasValue)
+                            @if (!Model.ApprovedBy.HasValue && !Model.OrderId.HasValue)
                             {
                                 <div class="col-md-4">
                                     <div id="window"></div>
@@ -205,9 +221,9 @@
                                         productWindow.kendoWindow({
                                             title: "Chọn sản phẩm",
                                             actions: ["Close"],
-                                            content: "/Admin/Delivery/ProductAddPopup?deliveryId=" +
+                                            content: "/Admin/Invoice/ProductAddPopup?invoiceId=" +
                                                 "@Model.Id" +
-                                                "&btnId=btnRefreshItems&formId=delivery-edit-form",
+                                                "&btnId=btnRefreshItems&formId=invoice-edit-form",
                                             visible: false
                                         }).data('kendoWindow').center();
                                         productWindow.data("kendoWindow").open().maximize();
@@ -293,7 +309,7 @@
 
         function additionalData() {
             var data = {
-                DeliveryId: "@Model.Id"
+                InvoiceId: "@Model.Id"
             };
             addAntiForgeryToken(data);
             return data;
@@ -308,19 +324,19 @@
                                 autoSync: false,
                                 transport: {
                                     read: {
-                                        url: "@Html.Raw(Url.Action("DeliveryDetailList", "Delivery"))", //edit
+                                        url: "@Html.Raw(Url.Action("InvoiceDetailList", "Invoice"))", //edit
                                         type: "POST",
                                         dataType: "json",
                                         data: additionalData
                                     },
                                     update: {
-                                        url: "@Html.Raw(Url.Action("DeliveryDetailEdit", "Delivery"))",
+                                        url: "@Html.Raw(Url.Action("InvoiceDetailEdit", "Invoice"))",
                                         type: "POST",
                                         dataType: "json",
                                         data: addAntiForgeryToken
                                     },
                                     destroy: {
-                                        url: "@Html.Raw(Url.Action("DeliveryDetailDelete", "Delivery"))",
+                                        url: "@Html.Raw(Url.Action("InvoiceDetailDelete", "Invoice"))",
                                         type: "POST",
                                         dataType: "json"
                                     },
@@ -400,7 +416,7 @@
                                     format: "{0:#,#}"
                                 }, {
                                     command: ["edit", "destroy"],
-                                    hidden: @((Model.ApprovedBy.HasValue).ToString().ToLower())
+                                    hidden: @((Model.ApprovedBy.HasValue || Model.OrderId.HasValue).ToString().ToLower())
                                 }
                             ],
                             editable:"popup"
@@ -416,9 +432,9 @@
                 alert('Vui lòng nhập số lượng!');
                 return;
             }
-            $.post("@Url.Action("AddDeliveryDetail","Delivery")",
+            $.post("@Url.Action("AddInvoiceDetail", "Invoice")",
                     addAntiForgeryToken({
-                        DeliveryId: @Model.Id,
+                        InvoiceId: @Model.Id,
                         ProductCode: $("#@Html.IdFor(model => model.ProductCode)").val(),
                         Quantity: $("#@Html.IdFor(model => model.Quantity)").val()
                     }))

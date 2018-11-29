@@ -217,5 +217,21 @@ namespace DataAccess.Services
             _shoppingContext.ReceiveDetails.AddOrUpdate(receiveDetail);
             _shoppingContext.SaveChanges();
         }
+
+        public ReceiveModel CreateNewReceive(int currentUserId)
+        {
+            var receive = new ReceiveModel();
+            receive.CreatedBy = currentUserId;
+            receive.CreatedDateTime = DateTime.Now;
+            receive.DocumentDateTime = DateTime.Now;
+            return receive;
+        }
+
+        public bool IsReceiveCodeExisted(string receiveCode)
+        {
+            var isExisted = _shoppingContext.Receives.AsNoTracking().Any(x =>
+                x.Code.Trim().Equals(receiveCode, StringComparison.CurrentCultureIgnoreCase));
+            return isExisted;
+        }
     }
 }

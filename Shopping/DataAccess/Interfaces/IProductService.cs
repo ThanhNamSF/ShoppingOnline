@@ -18,5 +18,7 @@ namespace DataAccess.Interfaces
         void DescreaseProduct(int id, int quantity);
         IEnumerable<ProductModel> GetOthersProductByCategoryId(int productId, int categoryId, int number);
         IEnumerable<ProductModel> GetHostestProducts(int topNumber);
+        bool IsProductCodeExisted(string productCode);
+        bool IsProductExistedInOrderInvoiceReceive(int productId);
     }
 }

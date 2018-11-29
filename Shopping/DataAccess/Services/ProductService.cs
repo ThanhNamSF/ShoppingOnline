@@ -176,7 +176,7 @@ namespace DataAccess.Services
 
         private IQueryable<Product> GetHotestProducts(IQueryable<Product> query)
         {
-            var deliveryDetails = _shoppingContext.DeliveryDetails.AsNoTracking().Where(w => w.Delivery.ApprovedBy.HasValue)
+            var deliveryDetails = _shoppingContext.InvoiceDetails.AsNoTracking().Where(w => w.Invoice.ApprovedBy.HasValue)
                 .Select(s =>
                     new
                     {
@@ -201,7 +201,7 @@ namespace DataAccess.Services
 
         public IEnumerable<ProductModel> GetHostestProducts(int topNumber)
         {
-            var deliveryDetails = _shoppingContext.DeliveryDetails.AsNoTracking().Where(w => w.Delivery.ApprovedBy.HasValue)
+            var deliveryDetails = _shoppingContext.InvoiceDetails.AsNoTracking().Where(w => w.Invoice.ApprovedBy.HasValue)
                 .Select(s =>
                     new
                     {
@@ -222,6 +222,28 @@ namespace DataAccess.Services
                 }).OrderByDescending(o => o.Quantity).Skip(0).Take(topNumber);
             var result = details.Select(s => s.Product).ToList();
             return Mapper.Map<IEnumerable<ProductModel>>(result);
+        }
+
+        public bool IsProductCodeExisted(string productCode)
+        {
+            var isExisted = _shoppingContext.Products.AsNoTracking()
+                .Any(x => x.Code.Trim().Equals(productCode, StringComparison.CurrentCultureIgnoreCase));
+            return isExisted;
+        }
+
+        public bool IsProductExistedInOrderInvoiceReceive(int productId)
+        {
+            var isExistedInOrderDetail =
+                _shoppingContext.OrderDetails.AsNoTracking().Any(x => x.ProductId == productId);
+            if (isExistedInOrderDetail)
+                return true;
+            var isExistedInInvoiceDetail =
+                _shoppingContext.InvoiceDetails.AsNoTracking().Any(x => x.ProductId == productId);
+            if (isExistedInInvoiceDetail)
+                return true;
+            var isExistedInReceiveDetail =
+                _shoppingContext.ReceiveDetails.AsNoTracking().Any(x => x.ProductId == productId);
+            return isExistedInReceiveDetail;
         }
     }
 }

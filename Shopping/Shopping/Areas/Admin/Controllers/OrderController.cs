@@ -22,12 +22,14 @@ namespace Shopping.Areas.Admin.Controllers
         private readonly IOrderService _orderService;
         private readonly IUserService _userService;
         private readonly ICustomerService _customerService;
+        private readonly IInvoiceService _invoiceService;
 
-        public OrderController(IOrderService orderService, IUserService userService, ICustomerService customerService)
+        public OrderController(IOrderService orderService, IUserService userService, ICustomerService customerService, IInvoiceService invoiceService)
         {
             _orderService = orderService;
             _userService = userService;
             _customerService = customerService;
+            _invoiceService = invoiceService;
         }
 
         #region CRUD Order
@@ -86,7 +88,7 @@ namespace Shopping.Areas.Admin.Controllers
             }
             catch (Exception e)
             {
-                ErrorNotification("Cập nhật sản phẩm thất bại");
+                ErrorNotification("Cập nhật đơn hàng thất bại");
                 return View(model);
             }
         }
@@ -98,13 +100,18 @@ namespace Shopping.Areas.Admin.Controllers
                 var order = _orderService.GetOrderById(id);
                 if (order == null)
                     return RedirectToAction("List");
+                if (order.IsHasInvoice)
+                {
+                    ErrorNotification("Xóa đơn hàng thất bại. Đơn hàng này đã được lập hóa đơn");
+                    return RedirectToAction("List");
+                }
                 _orderService.DeleteOrder(id);
-                SuccessNotification("Xóa sản phẩm thành công.");
+                SuccessNotification("Xóa đơn hàng thành công.");
                 return RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Xóa sản phẩm thất bại");
+                ErrorNotification("Xóa đơn hàng thất bại");
                 return RedirectToAction("List");
             }
         }
@@ -132,7 +139,7 @@ namespace Shopping.Areas.Admin.Controllers
 
         #endregion
 
-        #region Approved/Open/Cancel
+        #region Approved/Open/Cancel/Create Invoice
         [HttpPost]
         public ActionResult Approve(int id)
         {
@@ -190,6 +197,30 @@ namespace Shopping.Areas.Admin.Controllers
                 ErrorNotification("Hủy hóa đơn thất bại");
             }
             return RedirectToAction("Edit", new { order.Id });
+        }
+
+        [HttpPost]
+        public ActionResult CreateInvoice(int id)
+        {
+            var order = _orderService.GetOrderById(id);
+            if (order == null)
+            {
+                return RedirectToAction("List");
+            }
+            var customer = _customerService.GetCustomerById(order.CustomerId);
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            if (currentUser != null)
+            {
+                var invoice = _invoiceService.CreateNewInvoice(currentUser.Id, order);
+                _invoiceService.InsertInvoice(invoice);
+                _orderService.CreateInvoice(order.Id);
+                SuccessNotification("Lập hóa đơn thành công. Mời bạn kiểm tra trong danh sách hóa đơn.");
+                return RedirectToAction("Edit", new { order.Id });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
 
         private bool RefundMoneyFromPaymentId(string paymentId)

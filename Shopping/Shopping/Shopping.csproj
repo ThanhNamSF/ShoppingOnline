@@ -248,7 +248,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
-    <Compile Include="Areas\Admin\Controllers\DeliveryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeedbackController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
@@ -9114,6 +9114,9 @@
     <Content Include="Content\MyStyle.css" />
     <Content Include="Content\Resources\Icons\success-icon.png" />
     <Content Include="Content\Resources\Icons\error-icon.png" />
+    <Content Include="Content\sweetalert\sweetalert.css" />
+    <Content Include="Content\sweetalert\sweetalert.js" />
+    <Content Include="Content\sweetalert\sweetalert.min.js" />
     <Content Include="Content\web\css\about.css" />
     <Content Include="Content\web\css\bootstrap.css" />
     <Content Include="Content\web\css\checkout.css" />
@@ -10985,11 +10988,11 @@
     <Content Include="Areas\Admin\Views\Receive\ProductAddPopup.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_PopupLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Notification.cshtml" />
-    <Content Include="Areas\Admin\Views\Delivery\List.cshtml" />
-    <Content Include="Areas\Admin\Views\Delivery\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Delivery\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Delivery\ProductAddPopup.cshtml" />
-    <Content Include="Areas\Admin\Views\Delivery\_CreateOrUpdate.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\ProductAddPopup.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\_CreateOrUpdate.cshtml" />
     <Content Include="Content\web\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\web\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\web\fonts\fontawesome-webfont.woff" />
@@ -11064,6 +11067,7 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Feedback\Create.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Product\SweetAlert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

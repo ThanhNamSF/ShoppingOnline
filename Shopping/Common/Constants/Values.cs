@@ -12,11 +12,16 @@ namespace Common.Constants
         public const string CUSTOMER_SESSION = "CUSTOMER_SESSION";
         public const string ApplicationJson = "application/json";
         public const string CartSession = "CartSession";
+        public const string PaypalNotification = "PaypalNotification";
+        public const string FeedbackNotification = "FeedbackNotification";
+        public const string RegisterNotification = "RegisterNotification";
         public const double USDRatio = 22000;
         public const string All = "Tất cả";
         public const int AdminRole = 0;
         public const int CustomerRole = 1;
         public const int ProductClientPageSize = 9;
         public const int BestSellerNumber = 5;
+        public const string InvoicePrefix = "IVC";
+        public const string OrderPrefix = "ORD";
     }
 }

@@ -13,7 +13,7 @@ namespace DataAccess.Entity
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(30)]
+        [StringLength(12)]
         [Index(IsUnique = true)]
         public string Code { get; set; }
 
@@ -42,6 +42,10 @@ namespace DataAccess.Entity
         public bool Status { get; set; }
 
         public string ImagePath { get; set; }
+
+        public string FrontImagePath { get; set; }
+
+        public string BackImagePath { get; set; }
 
         public int ProductCategoryId { get; set; }
 

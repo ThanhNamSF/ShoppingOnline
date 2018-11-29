@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Common.SearchConditions
 {
-    public class DeliveryDetailSearchCondition
+    public class InvoiceDetailSearchCondition
     {
-        public int DeliveryId { get; set; }
+        public int InvoiceId { get; set; }
+        public int OrderId { get; set; }
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
     }

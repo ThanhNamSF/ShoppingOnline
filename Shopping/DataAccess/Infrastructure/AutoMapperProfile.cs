@@ -24,14 +24,15 @@ namespace DataAccess.Infrastructure
             CreateMap<ReceiveModel, Receive>();
             CreateMap<ReceiveDetailModel, ReceiveDetail>();
             CreateMap<ReceiveDetail, ReceiveDetailModel>();
-            CreateMap<Delivery, DeliveryModel>();
-            CreateMap<DeliveryModel, Delivery>();
-            CreateMap<DeliveryDetailModel, DeliveryDetail>();
-            CreateMap<DeliveryDetail, DeliveryDetailModel>();
+            CreateMap<Invoice, InvoiceModel>();
+            CreateMap<InvoiceModel, Invoice>();
+            CreateMap<InvoiceDetailModel, InvoiceDetail>();
+            CreateMap<InvoiceDetail, InvoiceDetailModel>();
             CreateMap<Order, OrderModel>();
             CreateMap<OrderModel, Order>();
             CreateMap<OrderDetail, OrderDetailModel>();
             CreateMap<OrderDetailModel, OrderDetail>();
+            CreateMap<OrderDetail, InvoiceDetailModel>();
             CreateMap<SlideModel, Slide>();
             CreateMap<Slide, SlideModel>();
             CreateMap<AboutModel, About>();
@@ -44,6 +45,8 @@ namespace DataAccess.Infrastructure
                 .ForMember(x => x.CustomerUserName, opt => opt.MapFrom(x => x.Customer.UserName));
             CreateMap<FeedbackModel, FeedbackGroup>();
             CreateMap<GroupUser, GroupUserModel>();
+            CreateMap<CodeGenerating, CodeGeneratingModel>();
+            CreateMap<CodeGeneratingModel, CodeGenerating>();
         }
     }
 }

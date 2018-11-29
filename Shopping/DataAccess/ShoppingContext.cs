@@ -28,9 +28,10 @@ namespace DataAccess
         public DbSet<Slide> Slides { get; set; }
         public DbSet<Receive> Receives { get; set; }
         public DbSet<ReceiveDetail> ReceiveDetails { get; set; }
-        public DbSet<Delivery> Deliveries { get; set; }
-        public DbSet<DeliveryDetail> DeliveryDetails { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
         public DbSet<GroupUser> GroupUsers { get; set; }
+        public DbSet<CodeGenerating> CodeGeneratings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

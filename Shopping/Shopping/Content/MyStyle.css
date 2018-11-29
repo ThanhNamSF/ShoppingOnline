@@ -79,3 +79,11 @@
         vertical-align: middle;
         margin-right: 10px;
     }
+
+.wrapper {
+    height: 300px;
+    width: 500px;
+    margin-top: 150px;
+    margin-left: 350px;
+    text-align:center;
+}

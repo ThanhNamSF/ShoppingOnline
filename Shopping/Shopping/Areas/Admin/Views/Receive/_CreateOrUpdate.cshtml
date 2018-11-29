@@ -31,8 +31,17 @@
                                     <label class="control-label">Mã phiếu nhập</label>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
-                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                    @if (Model.Id > 0)
+                                    {
+                                        <input disabled="disabled" type="text" id="@Html.IdFor(model => model.Code)" value="@Model.Code" class="k-textbox" style="width: 80%; background: silver; opacity: 0.7" />
+                                        <input type="hidden" name="@Html.IdFor(model => model.Code)" value="@Model.Code" />
+                                    }
+                                    else
+                                    {
+                                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                    }
+
                                 </div>
                             </div>
                         </div>
