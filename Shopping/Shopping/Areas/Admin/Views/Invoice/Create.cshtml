@@ -5,17 +5,17 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Thêm mới phiếu xuất hàng
+            Add new invoice
         </h1>
         <div class="pull-right">
-            <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Quay Lại</a>
+            <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
             <button type="submit" name="save" class="btn bg-blue">
                 <i class="fa fa-floppy-o"></i>
-                Lưu
+                Save
             </button>
             <button type="submit" name="ContinueEditing" value="true" class="btn bg-blue">
                 <i class="fa fa-floppy-o"></i>
-                Lưu và chỉnh sửa
+                Save and edit
             </button>
         </div>
     </div>

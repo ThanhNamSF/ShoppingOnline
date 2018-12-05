@@ -14,7 +14,7 @@ namespace Common
         {
             try
             {
-                var fromAddress = new MailAddress("ShoppingOnlineTNSF@gmail.com", "Shopping Online SF");
+                var fromAddress = new MailAddress("ShoppingOnlineTNSF@gmail.com", "Downy Shoes shop");
                 var toAddress = new MailAddress(emailAddress, senderName);
                 const string fromPassword = "thanhnamsf";
                 string subject = title;

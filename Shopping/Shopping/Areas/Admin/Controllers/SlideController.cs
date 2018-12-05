@@ -63,12 +63,12 @@ namespace Shopping.Areas.Admin.Controllers
                 model.CreatedBy = currentUser.Id;
                 model.CreatedDateTime = DateTime.Now;
                 _slideService.InsertSlide(model);
-                SuccessNotification("Thêm slider mới thành công.");
+                SuccessNotification("Add new slider successfully.");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Thêm slider mới thất bại");
+                ErrorNotification("Add new slider failed");
                 return View(model);
             }
         }
@@ -95,12 +95,12 @@ namespace Shopping.Areas.Admin.Controllers
                 model.UpdatedBy = currentUser.Id;
                 model.UpdatedDateTime = DateTime.Now;
                 _slideService.UpdateSlide(model);
-                SuccessNotification("Cập nhật thông tin slider thành công!");
+                SuccessNotification("Update slider successfully!");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Cập nhật slider thất bại");
+                ErrorNotification("Update slider failed!");
                 return View(model);
             }
         }
@@ -113,12 +113,12 @@ namespace Shopping.Areas.Admin.Controllers
                 if (slide == null)
                     return RedirectToAction("List");
                 _slideService.DeleteSlide(id);
-                SuccessNotification("Xóa slider thành công.");
+                SuccessNotification("Delete slider successfully.");
                 return RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Xóa slider thất bại");
+                ErrorNotification("Delete slider failed");
                 return RedirectToAction("List");
             }
         }

@@ -10,6 +10,7 @@ namespace Common
     {
         Success,
         Error,
+        Empty,
         Warning
     }
 

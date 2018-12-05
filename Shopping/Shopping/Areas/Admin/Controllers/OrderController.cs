@@ -83,12 +83,12 @@ namespace Shopping.Areas.Admin.Controllers
                 model.UpdatedBy = currentUser.Id;
                 model.UpdatedDateTime = DateTime.Now;
                 _orderService.UpdateOrder(model);
-                SuccessNotification("Cập nhật thông tin đơn hàng thành công!");
+                SuccessNotification("Update order information successfully!");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Cập nhật đơn hàng thất bại");
+                ErrorNotification("Update order information failed!");
                 return View(model);
             }
         }
@@ -102,16 +102,16 @@ namespace Shopping.Areas.Admin.Controllers
                     return RedirectToAction("List");
                 if (order.IsHasInvoice)
                 {
-                    ErrorNotification("Xóa đơn hàng thất bại. Đơn hàng này đã được lập hóa đơn");
+                    ErrorNotification("Delete order failed. This order have been invoiced ");
                     return RedirectToAction("List");
                 }
                 _orderService.DeleteOrder(id);
-                SuccessNotification("Xóa đơn hàng thành công.");
+                SuccessNotification("Delete order successfully.");
                 return RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Xóa đơn hàng thất bại");
+                ErrorNotification("Delete order failed.");
                 return RedirectToAction("List");
             }
         }
@@ -160,12 +160,12 @@ namespace Shopping.Areas.Admin.Controllers
             if (customer != null)
             {
                 string emailContent = GetBodyOfOrderInformation(order, customer);
-                SendEmailHelper.SendEmailToCustomer(customer.Email, customer.LastName + " " + customer.FirstName, "Thông tin về đơn hàng", emailContent);
+                SendEmailHelper.SendEmailToCustomer(customer.Email, customer.LastName + " " + customer.FirstName, "Order information", emailContent);
                 string smsContent =
-                    "Đơn hàng của bạn đã được xác nhận. Mời bạn kiểm tra email để biết thêm thông tin chi tiết. Xin cảm ơn!!!";
+                    "Your order have been approved. Please check your email for more information of order. Thanks!!!";
                 SendSmsToCustomer(customer.Phone, smsContent);
             }
-            SuccessNotification("Duyệt đơn hàng thành công.");
+            SuccessNotification("Approve order successfully.");
             return RedirectToAction("Edit", new { order.Id });
         }
 
@@ -182,19 +182,19 @@ namespace Shopping.Areas.Admin.Controllers
             if (RefundMoneyFromPaymentId(order.PaymentId))
             {
                 _orderService.Cancel(id);
-                SuccessNotification("Hủy hóa đơn thành công.");
+                SuccessNotification("Cancel order successfully.");
                 if (customer != null)
                 {
                     string emailContent = GetBodyCancelOrder(customer);
-                    SendEmailHelper.SendEmailToCustomer(customer.Email, customer.LastName + " " + customer.FirstName, "Thông tin về đơn hàng", emailContent);
+                    SendEmailHelper.SendEmailToCustomer(customer.Email, customer.LastName + " " + customer.FirstName, "Order information", emailContent);
                     string smsContent =
-                        "Đơn hàng của bạn đã bị hủy. Mời bạn kiểm trả email để biết thêm thông tin chi tiết. Xin cảm ơn!!!";
+                        "Your order have been cancelled. Please check your email for more information of order. Thanks!!!";
                     SendSmsToCustomer(customer.Phone, smsContent);
                 }
             }
             else
             {
-                ErrorNotification("Hủy hóa đơn thất bại");
+                ErrorNotification("Cancel order failed");
             }
             return RedirectToAction("Edit", new { order.Id });
         }
@@ -214,7 +214,7 @@ namespace Shopping.Areas.Admin.Controllers
                 var invoice = _invoiceService.CreateNewInvoice(currentUser.Id, order);
                 _invoiceService.InsertInvoice(invoice);
                 _orderService.CreateInvoice(order.Id);
-                SuccessNotification("Lập hóa đơn thành công. Mời bạn kiểm tra trong danh sách hóa đơn.");
+                SuccessNotification("Make invoice successfully. Please check it in invoice list.");
                 return RedirectToAction("Edit", new { order.Id });
             }
             else
@@ -263,18 +263,75 @@ namespace Shopping.Areas.Admin.Controllers
         private string GetBodyOfOrderInformation(OrderModel order, CustomerModel customer)
         {
             var orderDetails = _orderService.GetOrderDetailsByOrderId(order.Id);
-            string body = "Xin chào " + customer.UserName + ",";
-            body += "<br /><br />Shop đã nhận được đơn đặt hàng của quý khách.";
+            string body = "<p>Kính chào quý khách,</p>";
+            body += "<br />Cảm ơn quý khách đã mua hàng tại Downy Shoes";
             body += "<br />Thông tin đơn hàng của quý khách bao gồm:";
-            body += "<br /><strong>Ngày đặt hàng: " + order.CreatedDateTime.ToString("dd/MM/yyyy HH:mm:ss") + "</strong>";
-            body += "<br /><strong>Địa chỉ giao hàng: " + order.ReceiverAddress + "</strong>";
-            body += "<br /><strong>Tên người nhận: " + order.ReceiverName + "</strong>";
-            body += "<br /><strong>Số điện thoại: " + order.ReceiverPhone + "</strong>";
-            body += "<br /><strong>Các sản phẩm bao gồm:</strong>";
+            body +=
+                "<table style='ORDER-TOP:rgb(222, 226, 227) 1px solid; BORDER-RIGHT:rgb(222, 226, 227) 1px solid; WHITE-SPACE:normal; WORD-SPACING:0px; BORDER-BOTTOM:rgb(222, 226, 227) 1px solid; TEXT-TRANSFORM:none; COLOR:rgb(34, 34, 34); PADDING-BOTTOM:6px; PADDING-TOP:6px; FONT:12px arial, sans-serif; PADDING-LEFT:6px; BORDER-LEFT:rgb(222, 226, 227) 1px solid; LETTER-SPACING:normal; PADDING-RIGHT:6px; BACKGROUND-COLOR:rgb(255, 255, 255); TEXT-INDENT:0px' cellspacing='0' cellpadding='0'></table>";
+            body += "<tbody>";
+            body += "<tr>";
+
+            body += "<td style='FONT-FAMILY:arial,sans-serif;TEXT-ALIGN:left;MARGIN:0px'>";
+            body += "<p> Mã đơn hàng: ";
+            body += "<b>" + order.Code + "</b>";
+            body += "</p>";
+            body += "<p>Ngày: " + order.CreatedDateTime.ToString("dd/MM/yyyy HH:mm:ss") + "</p>";
+            body += "<p>Địa chỉ: ";
+            body += "<b>" + order.ReceiverAddress + "</b>";
+            body += "</p>";
+            body += "<br/>";
+            body += "</td>";
+
+            body += "<td style='FONT-FAMILY:arial,sans-serif;MARGIN:0px'>";
+            body += "<p> Khách hàng: ";
+            body += "<b>" + customer.LastName + " " + customer.FirstName + "</b>";
+            body += "</p>";
+            body += "<p> Người nhận: ";
+            body += "<b>" + order.ReceiverName + "</b>";
+            body += "</p>";
+            body += "<p>Điện thoại: ";
+            body += "<b>" + order.ReceiverPhone + "</b>";
+            body += "</p>";
+            body += "<br/>";
+            body += "</td>";
+
+            body += "</tr>";
+
+            body += "<tr>";
+            body += "<td style='FONT-FAMILY:arial,sans-serif; MARGIN: 0px' colspan='2'>";
+            body += "<table style='BORDER-TOP:rgb(222, 226, 227) 1px solid; HEIGHT: 94px; BORDER-RIGHT:rgb(222, 226, 227) 1px solid; WIDTH: 512px; BORDER-BOTTOM:rgb(222, 226, 227) 1px solid; BORDER-LEFT:rgb(222, 226, 227) 1px solid' cellspacing='0' cellpadding='6'>";
+            body += "<thead style='BACKGROUND:rgb(220, 239, 245); FONT-WEIGHT:bold; TEXT-ALIGN:center'>";
+            body += "<tr>";
+            body += "<th>STT</th>";
+            body += "<th>Sản phẩm</th>";
+            body += "<th>SL</th>";
+            body += "<th>Đơn giá</th>";
+            body += "<th>Thành tiền</th>";
+            body += "<th></th>";
+            body += "</tr>";
+            body += "</thead>";
+
+            body += "<tbody>";
+            int stt = 1;
             foreach (var item in orderDetails)
             {
-                body += "<br /><strong>" + item.ProductName + "(Số lượng: " + item.Quantity + ").</strong>";
+                body += "<tr style='BORDER-BOTTOM:rgb(222, 226, 227) 1px solid; TEXT-ALIGN:center'>";
+                body += "<td style='FONT-FAMILY:arial,sans-serif; BORDER-BOTTOM:rgb(222, 226, 227) 1px solid; MARGIN: 0px; TEXT-ALIGN:center''>" + (stt++) + "</td>";
+                body += "<td style='FONT-FAMILY:arial,sans-serif; BORDER-BOTTOM:rgb(222, 226, 227) 1px solid; MARGIN: 0px; TEXT-ALIGN:center''>" + item.ProductName + "</td>";
+                body += "<td style='FONT-FAMILY:arial,sans-serif; BORDER-BOTTOM:rgb(222, 226, 227) 1px solid; MARGIN: 0px; TEXT-ALIGN:center''>" + item.Quantity + "</td>";
+                body += "<td style='FONT-FAMILY:arial,sans-serif; BORDER-BOTTOM:rgb(222, 226, 227) 1px solid; MARGIN: 0px; TEXT-ALIGN:center''>" + string.Format("{0:$#,#}", item.UnitPrice) + "</td>";
+                body += "<td style='FONT-FAMILY:arial,sans-serif; BORDER-BOTTOM:rgb(222, 226, 227) 1px solid; MARGIN: 0px; TEXT-ALIGN:center''>" + string.Format("{0:$#,#}", item.Quantity * item.UnitPrice) + "</td>";
+                body += "</tr>";
             }
+            body += "</tbody>";
+
+            body += "</table>";
+            body += "<p>Tổng cộng: <strong>" + string.Format("{0:$#,#}", order.Amount) + "</strong></p>";
+
+            body += "</td>";
+            body += "</tr>";
+            body += "</tbody>";
+            body += "</table>";
 
             body += "<br /><br /> Đơn hàng của quý khách sẽ được giao trong vòng 3 ngày kể từ ngày nhận được thông báo này.";
             body += "<br />Xin chân thành cảm ơn quý khách đã đặt hàng tại cửa hàng chúng tôi.";

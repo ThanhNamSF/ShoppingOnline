@@ -61,19 +61,19 @@ namespace Shopping.Areas.Admin.Controllers
                     return View(model);
                 if (_productService.IsProductCodeExisted(model.Code))
                 {
-                    ErrorNotification("Thêm sản phẩm mới thất bại.Mã sản phẩm đã tồn tại.");
+                    ErrorNotification("Add new product failed.Product code is existed.");
                     return View(model);
                 }
                 var currentUser = Session[Values.USER_SESSION] as UserModel;
                 model.CreatedBy = currentUser.Id;
                 model.CreatedDateTime = DateTime.Now;
                 _productService.InsertProduct(model);
-                SuccessNotification("Thêm sản phẩm mới thành công.");
+                SuccessNotification("Add new product successfully.");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Thêm sản phẩm mới thất bại");
+                ErrorNotification("Add new product failed");
                 return View(model);
             }  
         }
@@ -100,12 +100,12 @@ namespace Shopping.Areas.Admin.Controllers
                 model.UpdatedBy = currentUser.Id;
                 model.UpdatedDateTime = DateTime.Now;
                 _productService.UpdateProduct(model);
-                SuccessNotification("Cập nhật thông tin sản phẩm thành công!");
+                SuccessNotification("Update product information successfully!");
                 return model.ContinueEditing ? RedirectToAction("Edit", new {id = model.Id}) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Cập nhật sản phẩm thất bại");
+                ErrorNotification("Update product failed");
                 return View(model);
             }
         }
@@ -119,16 +119,16 @@ namespace Shopping.Areas.Admin.Controllers
                     return RedirectToAction("List");
                 if (_productService.IsProductExistedInOrderInvoiceReceive(product.Id))
                 {
-                    ErrorNotification("Xóa sản phẩm thất bại. Sản phẩm này đã tồn tại trong đơn đặt hàng hoặc hóa đơn hoặc phiếu nhập.");
+                    ErrorNotification("Delete product failed. This product already exists in order or invoice or receive.");
                     return RedirectToAction("List");
                 }
                 _productService.DeleteProduct(id);
-                SuccessNotification("Xóa sản phẩm thành công.");
+                SuccessNotification("Delete product successfully.");
                 return RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Xóa sản phẩm thất bại");
+                ErrorNotification("Delete product failed");
                 return RedirectToAction("List");
             }
         }

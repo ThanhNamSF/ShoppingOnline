@@ -62,12 +62,12 @@ namespace Shopping.Areas.Admin.Controllers
                 if (feedback == null)
                     return RedirectToAction("List");
                 _feedbackService.DeleteFeedback(id);
-                SuccessNotification("Xóa thành công.");
+                SuccessNotification("Delete successfully.");
                 return RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Xóa thất bại");
+                ErrorNotification("Deleted failed");
                 return RedirectToAction("List");
             }
         }
@@ -88,21 +88,21 @@ namespace Shopping.Areas.Admin.Controllers
                     return RedirectToAction("List");
                 if (string.IsNullOrEmpty(model.ReplyContent))
                 {
-                    ErrorNotification("Nội dung trả lời không được để trống!");
+                    ErrorNotification("Reply content is required!");
                     return RedirectToAction("Edit", new { id = feedback.Id });
                 }
                 var currentUser = Session[Values.USER_SESSION] as UserModel;
                 feedback.ReplierId = currentUser.Id;
                 feedback.RepliedDateTime = DateTime.Now;
                 feedback.ReplyContent = model.ReplyContent;
-                SendEmailHelper.SendEmailToCustomer(feedback.Email, feedback.FullName, "Thông tin phản hồi", feedback.ReplyContent);
+                SendEmailHelper.SendEmailToCustomer(feedback.Email, feedback.FullName, "Feedback information", feedback.ReplyContent);
                 _feedbackService.AddReply(feedback);
-                SuccessNotification("Trả lời phản hồi thành công!");
+                SuccessNotification("Reply feedback successfully!");
                 return RedirectToAction("Edit", new { id = feedback.Id });
             }
             catch (Exception e)
             {
-                ErrorNotification("Trả lời phản hồi thất bại!");
+                ErrorNotification("Reply feedback failed!");
                 return RedirectToAction("Edit", new { id = model.Id });
             }
         }

@@ -5,17 +5,17 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Thông tin phản hồi
+            Feedback information
         </h1>
         <div class="pull-right">
-            <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Quay Lại</a>
+            <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
             <button type="submit" name="reply" class="btn bg-green-active">
                 <i class="fa fa-check-circle-o"></i>
-                Trả lời
+                Reply
             </button>
             <span id="button-delete" class="btn bg-red">
                 <i class="fa fa-trash-o"></i>
-                Xóa
+                Delete
             </span>
             @*<span id="button-reply" class="btn bg-green-active">
                 <i class="fa fa-check-circle-o"></i>
@@ -31,16 +31,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Xác nhận</h4>
+                <h4 class="modal-title">Confirm</h4>
             </div>
             @using (Html.BeginForm("Delete", "Feedback", new { id = Model.Id }))
             {
                 <div class="modal-body">
-                    <p>Bạn có chắc chắn muốn xóa?</p>
+                    <p>Do you want to delete?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Không! cảm ơn.</button>
-                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No! Thanks.</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
                 </div>
             }
         </div>

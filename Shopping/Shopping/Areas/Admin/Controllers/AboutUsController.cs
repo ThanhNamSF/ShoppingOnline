@@ -37,12 +37,12 @@ namespace Shopping.Areas.Admin.Controllers
                 if (!ModelState.IsValid)
                     return View(model);
                 _aboutService.UpdateAbout(model);
-                SuccessNotification("Cập nhật thông tin thành công!");
+                SuccessNotification("Update information successfully!");
                 return RedirectToAction("Edit");
             }
             catch (Exception e)
             {
-                ErrorNotification("Cập nhật thông tin thất bại");
+                ErrorNotification("Update information failed!");
                 return View(model);
             }
         }

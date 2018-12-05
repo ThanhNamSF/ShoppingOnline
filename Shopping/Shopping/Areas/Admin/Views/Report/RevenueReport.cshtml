@@ -27,7 +27,7 @@
 @Html.AntiForgeryToken()
 <div class="content-header clearfix">
     <h1 class="pull-left">
-        Báo cáo doanh thu theo từng tháng
+        Monthly revenue report
     </h1>
     <div class="pull-right">
 
@@ -42,7 +42,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Từ ngày</label>
+                                    <label class="control-label">Month from</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateFrom)" value="@Model.DateFrom.ToString("MM-yyyy")" />
@@ -53,7 +53,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Đến ngày</label>
+                                    <label class="control-label">Month to</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateTo)" value="@Model.DateTo.ToString("MM-yyyy")" />
@@ -66,7 +66,7 @@
                                 <div class="col-md-12">
                                     <button type="button" id="button-search" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
-                                        Xem báo cáo
+                                        View report
                                     </button>
                                 </div>
                             </div>

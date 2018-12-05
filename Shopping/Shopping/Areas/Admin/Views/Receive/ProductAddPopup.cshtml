@@ -20,11 +20,11 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Danh mục sản phẩm
+            Product list
         </h1>
         <button type="button" id="button-search" class="btn btn-primary pull-right">
             <i class="fa fa-search"></i>
-            Tìm kiếm
+            Search
         </button>
     </div>
     <div class="content">
@@ -36,7 +36,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        <label class="control-label">Mã sản phẩm</label>
+                                        <label class="control-label">Product code</label>
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" id="PopupProductCode" class="k-textbox" style="width: 80%" />
@@ -46,7 +46,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        <label class="control-label">Tên sản phẩm</label>
+                                        <label class="control-label">Product name</label>
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" id="ProductName" class="k-textbox" style="width: 80%" />
@@ -56,7 +56,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="col-md-5">
-                                        <label class="control-label">Nhóm sản phẩm</label>
+                                        <label class="control-label">Product category</label>
                                     </div>
                                     <div class="col-md-7">
                                         <input id="@Html.IdFor(model => model.CategoryId)" name="@Html.IdFor(model => model.CategoryId)" />
@@ -74,7 +74,7 @@
                     <div class="panel-footer">
                         <button type="submit" name="save" class="btn bg-blue">
                             <i class="fa fa-floppy-o"></i>
-                            Lưu & Đóng
+                            Save & close
                         </button>
                     </div>
                 </div>
@@ -148,9 +148,9 @@
                     refresh: true,
                     pageSizes: [@(gridPageSizes)],
                     messages: {
-                        itemsPerPage: "Số sản phẩm trên trang",
-                        empty: "Không có sản phẩm",
-                        display: "{0} - {1} của {2} sản phẩm",
+                        itemsPerPage: "Number of product on the page",
+                        empty: "No product",
+                        display: "{0} - {1} of {2} product",
                     }
                 },
                 editable: {
@@ -166,24 +166,24 @@
                 }, {
                     template: '<img src="../../../..#=ImagePath#" width="100px" alt="image" />',
                     width: 120,
-                    title: "Hình ảnh"
+                    title: "Image"
                 }, {
                     field: "Code",
-                    title: "Mã sản phẩm"
+                    title: "Code"
                 }, {
                     field: "Name",
-                    title: "Tên sản phẩm"
+                    title: "Name"
                 }, {
                     field: "Quantity",
-                    title: "Số lượng",
+                    title: "Quantity",
                     format: "{0:#,#}"
                 }, {
                     field: "CreatedDateTime",
-                    title: "Ngày tạo",
+                    title: "Created date",
                     template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
                 }, {
                     field: "Status",
-                    title: "Đã kích hoạt",
+                    title: "Activated",
                     width: 100,
                     attributes: { style: "text-align:center" },
                     template: "#if(Status){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"

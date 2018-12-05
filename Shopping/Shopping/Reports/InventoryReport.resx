@@ -120,4 +120,7 @@
   <metadata name="objectDataSource1.ParameterValues" xml:space="preserve">
     <value>{"categoryId":"Parameters.categoryId.Value"}</value>
   </metadata>
+  <metadata name="$this.ShowSnapGrid" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

@@ -13,15 +13,15 @@
         <!-- product left -->
         <div class="side-bar col-md-3">
             <div class="search-hotel">
-                <h3 class="agileits-sear-head">Tìm kiếm..</h3>
+                <h3 class="agileits-sear-head">Search Here..</h3>
                 
                 <form action="#" method="post">
                     <input type="hidden" name="ProductCategoryId" value="@Model.SearchCondition.ProductCategoryId"/>
-                    <input type="search" value="@Model.SearchCondition.Name" placeholder="Tên sản phẩm..." name="Name">
+                    <input type="search" value="@Model.SearchCondition.Name" placeholder="Product name..." name="Name">
                     <input type="submit" value=" ">
                     <!-- price range -->
                     <div class="range" style="margin-top: 10px">
-                        <h3 class="agileits-sear-head">Giá sản phẩm (USD)</h3>
+                        <h3 class="agileits-sear-head">Price range (USD)</h3>
                         <ul class="dropdown-menu6">
                             <li>
                                 <div id="slider-range"></div>
@@ -32,61 +32,61 @@
                     <!-- //price range -->
                     <!--preference -->
                     <div class="left-side">
-                        <h3 class="agileits-sear-head">Tiêu chí</h3>
+                        <h3 class="agileits-sear-head">Criteria</h3>
                         <ul>
                             <li>
                                 <input name="Top" type="radio" class="checked" value="All" @(Model.SearchCondition.Top == Trend.All.ToString() ? "checked" : "")>
-                                <span class="span">Tất cả</span>
+                                <span class="span">All</span>
                             </li>
                             <li>
                                 <input name="Top" type="radio" class="checked" value="Hot" @(Model.SearchCondition.Top == Trend.Hot.ToString() ? "checked" : "")>
-                                <span class="span">Bán chạy nhất</span>
+                                <span class="span">Hot</span>
                             </li>
                             <li>
                                 <input name="Top" type="radio" class="checked" value="New" @(Model.SearchCondition.Top == Trend.New.ToString() ? "checked" : "")>
-                                <span class="span">Mới nhất</span>
+                                <span class="span">New</span>
                             </li>
                         </ul>
                     </div>
                     <!-- // preference -->
                     <!-- discounts -->
                     <div class="left-side">
-                        <h3 class="agileits-sear-head">Giảm giá</h3>
+                        <h3 class="agileits-sear-head">Discount</h3>
                         <ul>
                             <li>
                                 <input value="0" name="Discount" type="radio" class="checked" @(Model.SearchCondition.Discount == 0 ? "checked" : "")>
-                                <span class="span">Tất cả</span>
+                                <span class="span">All</span>
                             </li>
                             <li>
                                 <input value="0.05" name="Discount" type="radio" class="checked" @(Model.SearchCondition.Discount == 0.05 ? "checked" : "")>
-                                <span class="span">Từ 5% trở lên</span>
+                                <span class="span">5% or More</span>
                             </li>
                             <li>
                                 <input value="0.1" name="Discount" type="radio" class="checked" @(Model.SearchCondition.Discount == 0.1 ? "checked" : "")>
-                                <span class="span">Từ 10% trở lên</span>
+                                <span class="span">10% or More</span>
                             </li>
                             <li>
                                 <input value="0.2" name="Discount" type="radio" class="checked" @(Model.SearchCondition.Discount == 0.2 ? "checked" : "")>
-                                <span class="span">Từ 20% trở lên</span>
+                                <span class="span">20% or More</span>
                             </li>
                             <li>
                                 <input value="0.3" name="Discount" type="radio" class="checked" @(Model.SearchCondition.Discount == 0.3 ? "checked" : "")>
-                                <span class="span">Từ 30% trở lên</span>
+                                <span class="span">30% or More</span>
                             </li>
                             <li>
                                 <input value="0.5" name="Discount" type="radio" class="checked" @(Model.SearchCondition.Discount == 0.5 ? "checked" : "")>
-                                <span class="span">Từ 50% trở lên</span>
+                                <span class="span">50% or More</span>
                             </li>
                             <li>
                                 <input value="0.6" name="Discount" type="radio" class="checked" @(Model.SearchCondition.Discount == 0.6 ? "checked" : "")>
-                                <span class="span">Từ 60% trở lên</span>
+                                <span class="span">60% or More</span>
                             </li>
                         </ul>
                     </div>
                     <!-- //discounts -->
                     <!-- reviews -->
                     <div class="customer-rev left-side">
-                        <h3 class="agileits-sear-head">Đánh giá của khách hàng</h3>
+                        <h3 class="agileits-sear-head">Customer Review</h3>
                         <ul>
                             <li>
                                 <a href="#">
@@ -143,7 +143,7 @@
                     <!-- //reviews -->
                     <!-- deals -->
                     <div class="deal-leftmk left-side">
-                        <h3 class="agileits-sear-head">Các sản phẩm nổi bật</h3>
+                        <h3 class="agileits-sear-head">Special Deals</h3>
                         @foreach (var item in Model.BestSellerProducts)
                         {
                             <div class="special-sec1">
@@ -152,7 +152,7 @@
                                 </div>
                                 <div class="col-xs-8 img-deal1">
                                     <h3>@item.Name</h3>
-                                    <a href="~/Content/web/single.html">@string.Format("{0:#,#}", item.Price) VND</a>
+                                    <a href="~/Content/web/single.html">$@string.Format("{0:#,#}", item.Price)</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -211,7 +211,7 @@
                                             <div class="grid_meta">
                                                 <div class="product_price">
                                                     <div class="grid-price ">
-                                                        <span class="money ">@string.Format("{0:#,#}", item.Price) VND</span>
+                                                        <span class="money ">$@string.Format("{0:#,#}", item.Price)</span>
                                                     </div>
                                                 </div>
                                                 <ul class="stars">

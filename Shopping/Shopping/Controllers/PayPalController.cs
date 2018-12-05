@@ -62,11 +62,11 @@ namespace Shopping.Controllers
                 {
                     name = item.Product.Name,
                     currency = "USD",
-                    price = string.Format("{0:n}" , Math.Round(item.Product.Price / Values.USDRatio, 2)),
+                    price = string.Format("{0:n}" , item.Product.Price),
                     quantity = item.Quantity.ToString(),
                     sku = item.Product.Code
                 });
-                subAmount += Math.Round(item.Product.Price / Values.USDRatio, 2) * item.Quantity;
+                subAmount += item.Product.Price * item.Quantity;
             }
             //itemList.items.Add(new Item()
             //{
@@ -248,6 +248,12 @@ namespace Shopping.Controllers
 
         public ActionResult PaymentWithPaypal(ReceiverInformation receiverInformation)
         {
+            var cart = Session[Values.CartSession] as List<CartItem>;
+            if (cart == null || cart.Count == 0)
+            {
+                TempData[Values.PaypalNotification] = NotificationType.Empty;
+                return RedirectToAction("Index", "Cart");
+            }
             if (TryValidateModel(receiverInformation))
             {
                 _receiverInformation = new ReceiverInformation

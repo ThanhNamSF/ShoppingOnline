@@ -8,12 +8,12 @@
 @Html.AntiForgeryToken()
 <div class="content-header clearfix">
     <h1 class="pull-left">
-        Danh sách sản phẩm
+        Product list
     </h1>
     <div class="pull-right">
         <a href="@Url.Action("Create")" class="btn bg-blue">
             <i class="fa fa-plus-square"></i>
-            Thêm
+            Add
         </a>
     </div>
 </div>
@@ -26,7 +26,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Mã sản phẩm</label>
+                                    <label class="control-label">Code</label>
                                 </div>
                                 <div class="col-md-8">
                                     @Html.EditorFor(model => model.Code)
@@ -36,7 +36,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Tên sản phẩm</label>
+                                    <label class="control-label">Name</label>
                                 </div>
                                 <div class="col-md-8">
                                     @Html.EditorFor(model => model.Name)
@@ -46,7 +46,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-5">
-                                    <label class="control-label">Nhóm sản phẩm</label>
+                                    <label class="control-label">Product category</label>
                                 </div>
                                 <div class="col-md-7">
                                     <input id="@Html.IdFor(model => model.CategoryId)"/>
@@ -58,7 +58,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Từ ngày</label>
+                                    <label class="control-label">Date from</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateFrom)" value="@Model.DateFrom" />
@@ -69,7 +69,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Đến ngày</label>
+                                    <label class="control-label">Date to</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateTo)" value="@Model.DateTo" />
@@ -82,7 +82,7 @@
                                 <div class="col-md-12">
                                     <button type="button" id="button-search" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
-                                        Tìm kiếm
+                                        Search
                                     </button>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
         $("#@Html.IdFor(model => model.CategoryId)").kendoDropDownList({
             dataTextField: "Name",
             dataValueField: "Id",
-            optionLabel:"Tất cả",
+            optionLabel:"All",
             dataSource: {
                 type: "json",
                 serverFiltering: true,
@@ -210,9 +210,9 @@
                 refresh: true,
                 pageSizes: [@(gridPageSizes)],
                 messages: {
-                    itemsPerPage: "Số sản phẩm trên trang",
-                    empty: "Không có sản phẩm",
-                    display: "{0} - {1} của {2} sản phẩm",
+                    itemsPerPage: "Number of product on the page",
+                    empty: "No product",
+                    display: "{0} - {1} of {2} product",
                 },
             },
             editable: {
@@ -224,24 +224,24 @@
             columns: [{
                 template: '<img src="../../../..#=ImagePath#" width="100px" alt="image" />',
                 width: 120,
-                title: "Hình ảnh"
+                title: "Image"
             }, {
                 field: "Code",
-                title: "Mã sản phẩm"
+                title: "Code"
             }, {
                 field: "Name",
-                title: "Tên sản phẩm"
+                title: "Name"
             }, {
                 field: "Quantity",
-                title: "Số lượng",
+                title: "Quantity",
                 format: "{0:#,#}"
             }, {
                 field: "CreatedDateTime",
-                title: "Ngày tạo",
+                title: "Created date",
                 template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
             }, {
                 field: "Status",
-                title: "Đã kích hoạt",
+                title: "Activated",
                 width: 100,
                 attributes: { style: "text-align:center" },
                 template: "#if(Status){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
@@ -251,7 +251,7 @@
                 width: 100,
                 headerAttributes: { style: "text-align:center" },
                 attributes: { style: "text-align:center" },
-                template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Chi tiết</a>'
+                template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Detail</a>'
             }]
         });
 

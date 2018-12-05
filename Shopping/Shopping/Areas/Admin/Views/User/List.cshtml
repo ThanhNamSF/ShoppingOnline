@@ -8,12 +8,12 @@
 @Html.AntiForgeryToken()
 <div class="content-header clearfix">
     <h1 class="pull-left">
-        Danh sách User
+        User list
     </h1>
     <div class="pull-right">
         <a href="@Url.Action("Create")" class="btn bg-blue">
             <i class="fa fa-plus-square"></i>
-            Thêm
+            Add
         </a>
     </div>
 </div>
@@ -26,7 +26,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Tên đăng nhập</label>
+                                    <label class="control-label">Username</label>
                                 </div>
                                 <div class="col-md-8">
                                     @Html.EditorFor(model => model.UserName)
@@ -36,7 +36,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Nhóm quyền</label>
+                                    <label class="control-label">Role</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input id="@Html.IdFor(model => model.GroupUserId)" />
@@ -46,7 +46,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Trạng thái</label>
+                                    <label class="control-label">Status</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input id="@Html.IdFor(model => model.Status)" />
@@ -58,7 +58,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Từ ngày</label>
+                                    <label class="control-label">Date from</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateFrom)" value="@Model.DateFrom" />
@@ -69,7 +69,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Đến ngày</label>
+                                    <label class="control-label">Date to</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateTo)" value="@Model.DateTo" />
@@ -82,7 +82,7 @@
                                 <div class="col-md-12">
                                     <button type="button" id="button-search" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
-                                        Tìm kiếm
+                                        Search
                                     </button>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
         $("#@Html.IdFor(model => model.GroupUserId)").kendoDropDownList({
             dataTextField: "Name",
             dataValueField: "Id",
-            optionLabel:"Tất cả",
+            optionLabel:"All",
             dataSource: {
                 type: "json",
                 serverFiltering: true,
@@ -119,13 +119,13 @@
         });
 
         var data = [
-            { text: "Đã kích hoạt", value: "True" },
-            { text: "Chưa kích hoạt", value: "False" }
+            { text: "Activate", value: "True" },
+            { text: "Not activate", value: "False" }
         ];
         $("#@Html.IdFor(model => model.Status)").kendoDropDownList({
             dataTextField: "text",
             dataValueField: "value",
-            optionLabel: "Tất cả",
+            optionLabel: "All",
             dataSource: data,
             value: "@Model.Status"
         });
@@ -222,9 +222,9 @@
                 refresh: true,
                 pageSizes: [@(gridPageSizes)],
                 messages: {
-                    itemsPerPage: "Số user trên trang",
-                    empty: "Không có user",
-                    display: "{0} - {1} của {2} user",
+                    itemsPerPage: "number of users on the page",
+                    empty: "No users",
+                    display: "{0} - {1} of {2} user",
                 },
             },
             editable: {
@@ -235,23 +235,23 @@
             sortable: false,
             columns: [{
                 field: "UserName",
-                title: "Tên đăng nhập"
+                title: "Username"
             }, {
                 field: "LastName",
-                title: "Họ"
+                title: "Last Name"
             }, {
                 field: "FirstName",
-                title: "Tên"
+                title: "First Name"
             }, {
                 field: "GroupUserName",
-                title: "Nhóm quyền"
+                title: "Role"
             },{
                 field: "CreatedDateTime",
-                title: "Ngày tạo",
+                title: "Created Date",
                 template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
             }, {
                 field: "Status",
-                title: "Đã kích hoạt",
+                title: "Activated",
                 width: 100,
                 attributes: { style: "text-align:center" },
                 template: "#if(Status){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
@@ -261,7 +261,7 @@
                 width: 100,
                 headerAttributes: { style: "text-align:center" },
                 attributes: { style: "text-align:center" },
-                template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Chi tiết</a>'
+                template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Details</a>'
             }]
         });
 

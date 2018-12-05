@@ -68,16 +68,16 @@ namespace Shopping.Areas.Admin.Controllers
                     return View(model);
                 if (_receiveService.IsReceiveCodeExisted(model.Code))
                 {
-                    ErrorNotification("Thêm mới phiếu nhập thất bại. Mã phiếu đã tồn tại");
+                    ErrorNotification("Add new receive failed. Receive code is existed.");
                     return View(model);
                 }
                 _receiveService.InsertReceive(model);
-                SuccessNotification("Thêm mới phiếu nhập thành công");
+                SuccessNotification("Add new receive successfully.");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Thêm mới phiếu nhập thất bại");
+                ErrorNotification("Add new receive failed.");
                 return View(model);
             }
         }
@@ -104,12 +104,12 @@ namespace Shopping.Areas.Admin.Controllers
                 model.UpdatedBy = currentUser.Id;
                 model.UpdatedDateTime = DateTime.Now;
                 _receiveService.UpdateReceive(model);
-                SuccessNotification("Chỉnh sửa thông tin phiếu nhập thành công");
+                SuccessNotification("Update receive information successfully.");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Chỉnh sửa phiếu nhập thất bại");
+                ErrorNotification("Update receive information failed.");
                 return View(model);
             }
         }
@@ -122,12 +122,12 @@ namespace Shopping.Areas.Admin.Controllers
                 if (receive == null)
                     return RedirectToAction("List");
                 _receiveService.DeleteReceive(id);
-                SuccessNotification("Xóa phiếu nhập thành công");
+                SuccessNotification("Delete receive successfully.");
                 return RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Xóa phiếu nhập thất bại");
+                ErrorNotification("Delete receive failed.");
                 return RedirectToAction("List");
             }
         }
@@ -248,7 +248,7 @@ namespace Shopping.Areas.Admin.Controllers
         {
             var detail = _receiveService.GetReceiveDetailById(model.Id);
             if (detail == null)
-                return Json(new DataSourceResult { Errors = "Sản phẩm không tồn tại" });
+                return Json(new DataSourceResult { Errors = "Product is not exists." });
             if (!ModelState.IsValid)
                 return Json(new DataSourceResult { Errors = ModelState.SerializeErrors() });
             _receiveService.UpdateReceiveDetail(model);
@@ -283,20 +283,20 @@ namespace Shopping.Areas.Admin.Controllers
 
             if (!_receiveService.HasReceiveDetail(receive.Id))
             {
-                ErrorNotification("Phiếu nhập chưa có chi tiết. Vui lòng thêm sản phẩm vào chi tiết phiếu nhập trước khi duyệt !");
+                ErrorNotification("Receive don't have any product. Please add some product into receive before approve!");
                 return RedirectToAction("Edit", new { receive.Id });
             }
 
             if (_receiveService.CheckQuantityInReceiveDetail(receive.Id))
             {
-                ErrorNotification("Chi tiết sản phẩm không hợp lệ. Vui lòng kiểm tra lại!");
+                ErrorNotification("Product detail is invalid. Please check again!");
                 return RedirectToAction("Edit", new { receive.Id });
             }
             var currentUser = Session[Values.USER_SESSION] as UserModel;
             receive.ApprovedBy = currentUser.Id;
             receive.Status = true;
             _receiveService.Approved(receive);
-            SuccessNotification("Duyệt phiếu nhập thành công.");
+            SuccessNotification("Approve receive successfully.");
             return RedirectToAction("Edit", new { receive.Id });
         }
 
@@ -310,12 +310,12 @@ namespace Shopping.Areas.Admin.Controllers
             }
             if (!_receiveService.HasReceiveDetail(receive.Id))
             {
-                ErrorNotification("Phiếu nhập chưa có chi tiết. Vui lòng thêm sản phẩm vào chi tiết phiếu nhập trước khi duyệt !");
+                ErrorNotification("Receive don't have any product. Please add some product into receive before approve!");
                 return RedirectToAction("Edit", new { receive.Id });
             }
             if (_receiveService.CheckQuantityInReceiveDetail(receive.Id))
             {
-                ErrorNotification("Chi tiết sản phẩm không hợp lệ. Vui lòng kiểm tra lại!");
+                ErrorNotification("Product detail is invalid. Please check again!");
                 return RedirectToAction("Edit", new { receive.Id });
             }
 
@@ -324,11 +324,11 @@ namespace Shopping.Areas.Admin.Controllers
             receive.Status = false;
             if (_receiveService.Open(receive))
             {
-                SuccessNotification("Mở phiếu nhập thành công.");
+                SuccessNotification("Open receive successfully.");
             }
             else
             {
-                ErrorNotification("Mở phiếu nhập thất bại!");
+                ErrorNotification("Open receive failed!");
             }
             
             return RedirectToAction("Edit", new { receive.Id });

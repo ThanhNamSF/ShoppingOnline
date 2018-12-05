@@ -8,37 +8,37 @@
         @Model.Code
     </h1>
     <div class="pull-right">
-        <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Quay Lại</a>
+        <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
         @if (!Model.Canceled)
         {
             <button type="submit" name="save" class="btn bg-blue">
                 <i class="fa fa-floppy-o"></i>
-                Lưu
+                Save
             </button>
             <button type="submit" name="ContinueEditing" value="true" class="btn bg-blue">
                 <i class="fa fa-floppy-o"></i>
-                Lưu và chỉnh sửa
+                Save and edit
             </button>
             if (!Model.ApproverId.HasValue)
             {
                 <span id="button-approve" class="btn bg-green-active">
                     <i class="fa fa-check-circle-o"></i>
-                    Duyệt
+                    Approve
                 </span>
                 <span id="button-cancel" class="btn bg-orange">
                     <i class="fa fa-trash-o"></i>
-                    Hủy
+                    Cancel
                 </span>
             }
             else if (!Model.IsHasInvoice)
             {
                 <span id="button-invoice" class="btn bg-green-active">
                     <i class="fa fa-address-book"></i>
-                    Lập hóa đơn
+                    Make invoice
                 </span>
                 <span id="button-cancel" class="btn bg-orange">
                     <i class="fa fa-trash-o"></i>
-                    Hủy
+                    Cancel
                 </span>
             }
         }
@@ -46,7 +46,7 @@
         {
             <span id="button-delete" class="btn bg-red">
                 <i class="fa fa-trash-o"></i>
-                Xóa
+                Delete
             </span>
         }
 
@@ -60,16 +60,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Xác nhận</h4>
+                <h4 class="modal-title">Confirm</h4>
             </div>
             @using (Html.BeginForm("Delete", "Order", new { id = Model.Id }))
             {
                 <div class="modal-body">
-                    <p>Bạn có chắc chắn muốn xóa?</p>
+                    <p>Do you want to delete?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Không! cảm ơn.</button>
-                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No! Thanks.</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
                 </div>
             }
         </div>
@@ -80,16 +80,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Xác nhận</h4>
+                <h4 class="modal-title">Confirm</h4>
             </div>
             @using (Html.BeginForm("Approve", "Order", new { id = Model.Id }))
             {
                 <div class="modal-body">
-                    <p>Bạn có chắc chắn muốn duyệt?</p>
+                    <p>Do you want to approve?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Không! cảm ơn.</button>
-                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No! Thanks.</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
                 </div>
             }
         </div>
@@ -100,16 +100,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Xác nhận</h4>
+                <h4 class="modal-title">Confirm</h4>
             </div>
             @using (Html.BeginForm("Cancel", "Order", new { id = Model.Id }))
             {
                 <div class="modal-body">
-                    <p>Bạn có chắc chắn muốn hủy đơn hàng?</p>
+                    <p>Do you want to cancel?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Không! cảm ơn.</button>
-                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No! Thanks.</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
                 </div>
             }
         </div>
@@ -120,16 +120,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Xác nhận</h4>
+                <h4 class="modal-title">Confirm</h4>
             </div>
             @using (Html.BeginForm("CreateInvoice", "Order", new { id = Model.Id }))
             {
                 <div class="modal-body">
-                    <p>Bạn có chắc chắn muốn lập hóa đơn cho đơn hàng này?</p>
+                    <p>Do you want to make invoice for this order?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Không! cảm ơn.</button>
-                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No! Thanks</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
                 </div>
             }
         </div>

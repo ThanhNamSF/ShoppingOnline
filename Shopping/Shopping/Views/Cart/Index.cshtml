@@ -41,7 +41,7 @@
                                 </td>
                                 <td class="invert">@Model.ElementAt(i).Product.Name</td>
 
-                                <td class="invert">@string.Format("{0:#,#}", Model.ElementAt(i).Product.Price * (1 - Model.ElementAt(i).Product.Promotion) * Model.ElementAt(i).Quantity) VND</td>
+                                <td class="invert">$@string.Format("{0:#,#}", Model.ElementAt(i).Product.Price * (1 - Model.ElementAt(i).Product.Promotion) * Model.ElementAt(i).Quantity)</td>
                                 <td class="invert">
                                     <div class="rem">
                                         <div title="@(Model.ElementAt(i).Product.Id)" class="close1"> </div>
@@ -59,9 +59,9 @@
                     <ul>
                         @foreach (var item in Model)
                         {
-                            <li id="item@(item.Product.Id)">@item.Product.Name<i>-</i> <span id="totalItem@(item.Product.Id)">@string.Format("{0:#,#}", item.Product.Price * (1 - item.Product.Promotion) * item.Quantity) VND</span></li>
+                            <li id="item@(item.Product.Id)">@item.Product.Name<i>-</i> <span id="totalItem@(item.Product.Id)">$@string.Format("{0:#,#}", item.Product.Price * (1 - item.Product.Promotion) * item.Quantity)</span></li>
                         }
-                        <li>Total <i>-</i> <span id="total">@string.Format("{0:#,#}", Model.Sum(item => item.Product.Price * (1 - item.Product.Promotion) * item.Quantity)) VND</span></li>
+                        <li>Total <i>-</i> <span id="total">$@string.Format("{0:#,#}", Model.Sum(item => item.Product.Price * (1 - item.Product.Promotion) * item.Quantity))</span></li>
                     </ul>
                 </div>
                 <div class="col-md-8 address_form">
@@ -216,6 +216,9 @@
         else if (message == '@NotificationType.Error') {
             swal("Thất bại!", "Giao dịch không thành công!", "error");
         }
+        else if (message == '@NotificationType.Empty') {
+            swal("Thất bại!", "Không có sản phẩm trong giỏ hàng!", "error");
+        }
     });
 </script>
 <!--Alert-->
@@ -229,8 +232,8 @@
             function (returnedData) {
                 if (returnedData.status == true) {
                     divUpd.text(newVal);
-                    $("#totalItem" + productId).text(returnedData.amount + "VND");
-                    $("#total").text(returnedData.amountTotal + "VND");
+                    $("#totalItem" + productId).text("$" + returnedData.amount);
+                    $("#total").text("$" + returnedData.amountTotal);
                 }
 
             });
@@ -243,8 +246,8 @@
             function (returnedData) {
                 if (returnedData.status == true) {
                     divUpd.text(newVal);
-                    $("#totalItem" + productId).text(returnedData.amount + "VND");
-                    $("#total").text(returnedData.amountTotal + "VND");
+                    $("#totalItem" + productId).text("$" + returnedData.amount);
+                    $("#total").text("$" + returnedData.amountTotal);
                 }
             });
     });
@@ -258,7 +261,7 @@
                 function (returnedData) {
                     if (returnedData.status == true) {
                         $("#item" + productId).remove();
-                        $("#total").text(returnedData.amountTotal + "VND");
+                        $("#total").text("$" + returnedData.amountTotal);
                         $("#totalProduct").text(returnedData.totalProduct + " Products")
                         $('.rem' + productId).fadeOut('slow', function (c) {
                             $('.rem' + productId).remove();

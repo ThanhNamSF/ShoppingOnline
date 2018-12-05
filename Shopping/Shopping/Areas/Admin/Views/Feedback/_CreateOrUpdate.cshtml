@@ -15,7 +15,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <label>Ngày tạo</label>
+                                    <label>Created date</label>
                                 </div>
                                 <div class="col-md-10">
                                     <strong>@Model.CreatedDateTime</strong>
@@ -23,7 +23,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <label class="control-label">Tên người gửi</label>
+                                    <label class="control-label">Sender</label>
                                 </div>
                                 <div class="col-md-10">
                                     <input type="text" value="@Model.FullName" class="k-textbox" style="width: 80%" disabled="disabled" />
@@ -32,7 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <label class="control-label">Số điện thoại</label>
+                                    <label class="control-label">Phone number</label>
                                 </div>
                                 <div class="col-md-10">
                                     <input type="text" value="@Model.Phone" class="k-textbox" style="width: 80%" disabled="disabled" />
@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <label class="control-label">Địa chỉ Email</label>
+                                    <label class="control-label">Email address</label>
                                 </div>
                                 <div class="col-md-10">
                                     <input type="text" value="@Model.Email" class="k-textbox" style="width: 80%" disabled="disabled" />
@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <label class="control-label">Tiêu đề</label>
+                                    <label class="control-label">Title</label>
                                 </div>
                                 <div class="col-md-10">
                                     <input type="text" value="@Model.Title" class="k-textbox" style="width: 80%" disabled="disabled" />
@@ -59,7 +59,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <label class="control-label">Nội dung</label>
+                                    <label class="control-label">Content</label>
                                 </div>
                                 <div class="col-md-10">
                                     <textarea class="k-textbox" style="width: 80%; word-wrap:break-word;" disabled="disabled">@Model.Content</textarea>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <label class="control-label">Trả lời</label>
+                                    <label class="control-label">Reply content</label>
                                 </div>
                                 <div class="col-md-10">
                                     @Html.TextAreaFor(model => model.ReplyContent, new { htmlAttributes = new { @class = "form-control", style = "width: 80%" } })
@@ -81,7 +81,7 @@
                                 <div class="col-md-12">
                                     <a href="#" id="button-history-feedback" class="btn bg-blue pull-right">
                                         <i class="fa fa-history"></i>
-                                        Xem lịch sử trả lời
+                                        Reply history
                                     </a>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
         }
     
         myWindow.kendoWindow({
-            title: "Lịch sử trả lời phản hồi",
+            title: "Reply history",
             visible: false,
             actions: ["Pin", "Minimize", "Maximize", "Close"],
             close: onClose,

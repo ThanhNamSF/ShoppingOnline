@@ -8,7 +8,7 @@
 @Html.AntiForgeryToken()
 <div class="content-header clearfix">
     <h1 class="pull-left">
-        Danh sách phản hồi
+        Feedback list
     </h1>
 </div>
 <div class="content">
@@ -20,7 +20,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Tài khoản gửi</label>
+                                    <label class="control-label">Username</label>
                                 </div>
                                 <div class="col-md-8">
                                     @Html.EditorFor(model => model.UserName)
@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Từ ngày</label>
+                                    <label class="control-label">Date from</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateFrom)" value="@Model.DateFrom" />
@@ -41,7 +41,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Đến ngày</label>
+                                    <label class="control-label">Date to</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateTo)" value="@Model.DateTo" />
@@ -54,7 +54,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Trạng thái</label>
+                                    <label class="control-label">Status</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input id="@Html.IdFor(model => model.IsReplied)" />
@@ -66,7 +66,7 @@
                                 <div class="col-md-12">
                                     <button type="button" id="button-search" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
-                                        Tìm kiếm
+                                        Search
                                     </button>
                                 </div>
                             </div>
@@ -86,14 +86,14 @@
     $(document).ready(function () {
 
         var data = [
-            { text: "Chưa trả lời", value: "False" },
-            { text: "Đã trả lời", value: "True" }
+            { text: "Not replied", value: "False" },
+            { text: "Replied", value: "True" }
         ];
 
         $("#@Html.IdFor(model => model.IsReplied)").kendoDropDownList({
             dataTextField: "text",
             dataValueField: "value",
-            optionLabel: "Tất cả",
+            optionLabel: "All",
             dataSource: data,
             value: "@Model.IsReplied"
         });
@@ -187,9 +187,9 @@
                 refresh: true,
                 pageSizes: [@(gridPageSizes)],
                 messages: {
-                    itemsPerPage: "Số phản hồi trên trang",
-                    empty: "Không có phản hồi",
-                    display: "{0} - {1} của {2} phản hồi",
+                    itemsPerPage: "Number of feedback on the page",
+                    empty: "No feedback",
+                    display: "{0} - {1} of {2} feedback",
                 },
             },
             editable: {
@@ -200,30 +200,30 @@
             sortable: false,
             columns: [{
                 field: "CustomerUserName",
-                title: "Tên tài khoản gửi"
+                title: "Customer username"
             }, {
                 field: "Title",
-                title: "Tiêu đề"
+                title: "Title"
             }, {
                 field: "CreatedDateTime",
-                title: "Ngày tạo",
+                title: "Created date",
                 template: "#= kendo.toString(kendo.parseDate(CreatedDateTime), 'dd-MM-yyyy') #"
             }, {
                 field: "ReplierId",
-                title: "Đã trả lời",
+                title: "Replied",
                 width: 100,
                 attributes: { style: "text-align:center" },
                 template: "#if(ReplierId){#<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>#}else{#<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>#}#"
             }, {
                 field: "ReplierUserName",
-                title: "Tài khoản trả lời",
+                title: "Replier username",
             }, {
                 field: "Id",
                 title: " ",
                 width: 100,
                 headerAttributes: { style: "text-align:center" },
                 attributes: { style: "text-align:center" },
-                template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Chi tiết</a>'
+                template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Detail</a>'
             }]
         });
     });

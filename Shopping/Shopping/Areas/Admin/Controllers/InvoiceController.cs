@@ -69,12 +69,12 @@ namespace Shopping.Areas.Admin.Controllers
                 if (!ModelState.IsValid)
                     return View(model);
                 _invoiceService.InsertInvoice(model);
-                SuccessNotification("Thêm mới phiếu xuất thành công");
+                SuccessNotification("Add new invoice successfully");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Thêm mới phiếu xuất thất bại");
+                ErrorNotification("Add new invoice failed");
                 return View(model);
             }
         }
@@ -101,12 +101,12 @@ namespace Shopping.Areas.Admin.Controllers
                 model.UpdatedBy = currentUser.Id;
                 model.UpdatedDateTime = DateTime.Now;
                 _invoiceService.UpdateInvoice(model);
-                SuccessNotification("Chỉnh sửa thông tin phiếu xuất thành công");
+                SuccessNotification("Update invoice information successfully");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Chỉnh sửa phiếu xuất thất bại");
+                ErrorNotification("Update invoice information failed");
                 return View(model);
             }
         }
@@ -119,12 +119,12 @@ namespace Shopping.Areas.Admin.Controllers
                 if (invoice == null)
                     return RedirectToAction("List");
                 _invoiceService.DeleteInvoice(id);
-                SuccessNotification("Xóa phiếu xuất thành công");
+                SuccessNotification("Delete invoice successfully");
                 return RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Xóa phiếu xuất thất bại");
+                ErrorNotification("Delete invoice failed");
                 return RedirectToAction("List");
             }
         }
@@ -245,7 +245,7 @@ namespace Shopping.Areas.Admin.Controllers
         {
             var detail = _invoiceService.GetInvoiceDetailById(model.Id);
             if (detail == null)
-                return Json(new DataSourceResult { Errors = "Sản phẩm không tồn tại" });
+                return Json(new DataSourceResult { Errors = "Product is not exist." });
             if (!ModelState.IsValid)
                 return Json(new DataSourceResult { Errors = ModelState.SerializeErrors() });
             _invoiceService.UpdateInvoiceDetail(model);
@@ -280,13 +280,13 @@ namespace Shopping.Areas.Admin.Controllers
 
             if (!_invoiceService.HasInvoiceDetail(invoice.Id))
             {
-                ErrorNotification("Phiếu xuất chưa có chi tiết. Vui lòng thêm sản phẩm vào chi tiết phiếu xuất trước khi duyệt !");
+                ErrorNotification("Invoice don't have any product. Please add product into invoice before approve!");
                 return RedirectToAction("Edit", new { invoice.Id });
             }
 
             if (_invoiceService.CheckQuantityInInvoiceDetail(invoice.Id))
             {
-                ErrorNotification("Chi tiết sản phẩm không hợp lệ. Vui lòng kiểm tra lại!");
+                ErrorNotification("Product detail is invalid. Please check again!");
                 return RedirectToAction("Edit", new { invoice.Id });
             }
             var currentUser = Session[Values.USER_SESSION] as UserModel;
@@ -294,11 +294,11 @@ namespace Shopping.Areas.Admin.Controllers
             invoice.Status = true;
             if (_invoiceService.Approved(invoice))
             {
-                SuccessNotification("Duyệt phiếu xuất thành công.");
+                SuccessNotification("Approve invoice successfully.");
             }
             else
             {
-                ErrorNotification("Duyệt phiếu xuất thất bại!");
+                ErrorNotification("Approve invoice failed!");
             }
             
             return RedirectToAction("Edit", new { invoice.Id });
@@ -314,12 +314,12 @@ namespace Shopping.Areas.Admin.Controllers
             }
             if (!_invoiceService.HasInvoiceDetail(invoice.Id))
             {
-                ErrorNotification("Phiếu xuất chưa có chi tiết. Vui lòng thêm sản phẩm vào chi tiết phiếu xuất trước khi duyệt !");
+                ErrorNotification("Invoice don't have any product. Please add product into invoice before approve!");
                 return RedirectToAction("Edit", new { invoice.Id });
             }
             if (_invoiceService.CheckQuantityInInvoiceDetail(invoice.Id))
             {
-                ErrorNotification("Chi tiết sản phẩm không hợp lệ. Vui lòng kiểm tra lại!");
+                ErrorNotification("Product detail is invalid. Please check again!");
                 return RedirectToAction("Edit", new { invoice.Id });
             }
 
@@ -327,7 +327,7 @@ namespace Shopping.Areas.Admin.Controllers
             invoice.ApprovedDateTime = null;
             invoice.Status = false;
             _invoiceService.Open(invoice);
-            SuccessNotification("Mở phiếu xuất thành công.");
+            SuccessNotification("Open invoice successfully.");
             return RedirectToAction("Edit", new { invoice.Id });
         }
 

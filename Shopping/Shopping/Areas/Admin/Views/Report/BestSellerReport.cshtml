@@ -26,7 +26,7 @@
 @Html.AntiForgeryToken()
 <div class="content-header clearfix">
     <h1 class="pull-left">
-        Báo cáo những sản phẩm bán chạy nhất
+        The best selling report
     </h1>
     <div class="pull-right">
 
@@ -41,7 +41,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    <label class="control-label">Từ ngày</label>
+                                    <label class="control-label">Date from</label>
                                 </div>
                                 <div class="col-md-9">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateFrom)" value="@Model.DateFrom.ToString("dd-MM-yyyy")" />
@@ -52,7 +52,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    <label class="control-label">Đến ngày</label>
+                                    <label class="control-label">Date to</label>
                                 </div>
                                 <div class="col-md-9">
                                     <input type="datetime" id="@Html.IdFor(model => model.DateTo)" value="@Model.DateTo.ToString("dd-MM-yyyy")" />
@@ -78,7 +78,7 @@
                                 <div class="col-md-12">
                                     <button type="button" id="button-search" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
-                                        Xem báo cáo
+                                        View report
                                     </button>
                                 </div>
                             </div>

@@ -108,7 +108,27 @@ namespace DataAccess.Services
             var otherProducts = _shoppingContext.Products.AsNoTracking()
                 .Where(w => w.Id != productId && w.ProductCategoryId == categoryId).OrderBy(r => Guid.NewGuid())
                 .Take(number).ToList();
-            return Mapper.Map<List<ProductModel>>(otherProducts);
+            var otherProductModels = Mapper.Map<List<ProductModel>>(otherProducts);
+
+            var hostesProductIds = GetHostestProducts(Values.BestSellerNumber).Select(s => s.Id);
+            var minDate = DateTime.Now.AddDays(-3);
+            foreach (var item in otherProductModels)
+            {
+                if (hostesProductIds.Contains(item.Id))
+                {
+                    item.Trend = Trend.Hot.ToString();
+                }
+                else if (item.CreatedDateTime >= minDate)
+                {
+                    item.Trend = Trend.New.ToString();
+                }
+                else
+                {
+                    item.Trend = Trend.All.ToString();
+                }
+            }
+
+            return otherProductModels;
         }
 
         public PageList<ProductModel> SearchProducts(ProductClientSearchCondition condition)
@@ -136,7 +156,7 @@ namespace DataAccess.Services
 
             if (condition.MinPrice >= 0 && condition.MaxPrice >= 0)
             {
-                query = query.Where(p => p.Price >= condition.MinPrice * Values.USDRatio && p.Price <= condition.MaxPrice * Values.USDRatio);
+                query = query.Where(p => p.Price >= condition.MinPrice && p.Price <= condition.MaxPrice);
             }
             if(condition.Discount > 0)
             {

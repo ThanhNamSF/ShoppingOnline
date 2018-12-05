@@ -10,7 +10,7 @@
 <div class="content">
     <div class="form-horizontal">
         <div class="panel-group">
-            <strong style="font-size: 16px">Thông tin chính</strong>
+            <strong style="font-size: 16px">Main information</strong>
             <div class="panel panel-default">
                 <div class="panel-body">
                     @if (Model.OrderId.HasValue)
@@ -19,7 +19,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        <label class="control-label">Mã đơn hàng</label>
+                                        <label class="control-label">Order code</label>
                                     </div>
                                     <div class="col-md-8">
                                         <input disabled="disabled" type="text" id="@Html.IdFor(model => model.OrderCode)" value="@Model.OrderCode" class="k-textbox" style="width: 80%; background: silver; opacity: 0.7"/>
@@ -33,7 +33,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Mã hóa đơn</label>
+                                    <label class="control-label">Invoice code</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input disabled="disabled" type="text" id="@Html.IdFor(model => model.Code)" value="@Model.Code" class="k-textbox" style="width: 80%; background: silver; opacity: 0.7"/>
@@ -45,7 +45,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Khách hàng</label>
+                                    <label class="control-label">Customer</label>
                                 </div>
                                 <div class="col-md-8">
                                     @Html.EditorFor(model => model.CustomerName, new {htmlAttributes = new {@class = "k-textbox", style = "width: 80%"}})
@@ -56,7 +56,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Số điện thoại</label>
+                                    <label class="control-label">Phone number</label>
                                 </div>
                                 <div class="col-md-8">
                                     @Html.EditorFor(model => model.CustomerPhone, new {htmlAttributes = new {@class = "k-textbox", style = "width: 80%"}})
@@ -68,7 +68,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="col-md-2">
-                                <label class="control-label">Địa chỉ</label>
+                                <label class="control-label">Address</label>
                             </div>
                             <div class="col-md-10">
                                 @Html.TextAreaFor(model => model.CustomerAddress, new {@class = "k-textbox", style = "width: 95%"})
@@ -77,7 +77,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="col-md-4">
-                                <label class="control-label">Trạng thái</label>
+                                <label class="control-label">Status</label>
                             </div>
                             <div class="col-md-8">
                                 <input id="@Html.IdFor(model => model.Status)" style="width: 85%"/>
@@ -89,14 +89,14 @@
             </div>
         </div>
         <div class="panel-group">
-            <strong style="font-size: 16px">Thông tin mở rộng</strong>
+            <strong style="font-size: 16px">More information</strong>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Người tạo</label>
+                                    <label class="control-label">Created by</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input id="@Html.IdFor(model => model.CreatedBy)" />
@@ -107,7 +107,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Người duyệt</label>
+                                    <label class="control-label">Approved by</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input id="@Html.IdFor(model => model.ApprovedBy)" name="@Html.IdFor(model => model.ApprovedBy)" />
@@ -119,7 +119,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Ngày tạo</label>
+                                    <label class="control-label">Created date</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.CreatedDateTime)" value="@Model.CreatedDateTime" />
@@ -131,7 +131,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Ngày duyệt</label>
+                                    <label class="control-label">Approved date</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="datetime" id="@Html.IdFor(model => model.ApprovedDateTime)" value="@Model.ApprovedDateTime" />
@@ -144,7 +144,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="col-md-2">
-                                <label class="control-label">Ghi chú</label>
+                                <label class="control-label">Note</label>
                             </div>
                             <div class="col-md-10">
                                 @Html.TextAreaFor(model => model.Description, new { @class = "k-textbox", style = "width: 95%" })
@@ -158,14 +158,14 @@
         @if (Model.Id > 0)
         {
             <div class="panel-group">
-                <strong style="font-size: 16px">Chi tiết sản phẩm</strong>
+                <strong style="font-size: 16px">Product list</strong>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        <label class="control-label">Mã sản phẩm</label>
+                                        <label class="control-label">Product code</label>
                                     </div>
                                     <div class="col-md-8">
                                         @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "k-textbox", style = "width: 80%" } })
@@ -176,7 +176,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        <label class="control-label">Số lượng</label>
+                                        <label class="control-label">Quantity</label>
                                     </div>
                                     <div class="col-md-8">
                                         @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { min = 0 } })
@@ -198,11 +198,11 @@
                                     <div class="pull-right">
                                         <a href="#" id="button-add-product" class="btn bg-blue">
                                             <i class="fa fa-plus-square"></i>
-                                            Thêm
+                                            Add
                                         </a>
                                         <a href="#" id="button-search-product" class="btn bg-blue">
                                             <i class="fa fa-plus-square"></i>
-                                            Chọn từ danh sách
+                                            Select from product list
                                         </a>
                                     </div>
                                 </div>
@@ -219,7 +219,7 @@
                                     $("#button-search-product").click(function () {
                                         var productWindow = $("#window");
                                         productWindow.kendoWindow({
-                                            title: "Chọn sản phẩm",
+                                            title: "Select product",
                                             actions: ["Close"],
                                             content: "/Admin/Invoice/ProductAddPopup?invoiceId=" +
                                                 "@Model.Id" +
@@ -244,15 +244,15 @@
         }
         else
         {
-            <strong style="font-size: 16px">Vui lòng lưu thông tin trước khi nhập chi tiết!</strong>
+            <strong style="font-size: 16px">Please save information first!</strong>
         }
     </div>
 </div>
 <script>
     $(document).ready(function () {
         var data = [
-            { text: "Mở", value: "False" },
-            { text: "Đã duyệt", value: "True" }
+            { text: "Open", value: "False" },
+            { text: "Approved", value: "True" }
         ];
         $("#@Html.IdFor(model => model.Status)").kendoDropDownList({
             dataTextField: "text",
@@ -384,9 +384,9 @@
                                 refresh: true,
                                 pageSizes: [@(gridPageSizes)],
                                 messages: {
-                                    itemsPerPage: "Số hàng trên trang",
-                                    empty: "Không có chi tiết phiếu xuất kho",
-                                    display: "{0} - {1} của {2} chi tiết phiếu xuất kho",
+                                    itemsPerPage: "Number of product on the page",
+                                    empty: "No product",
+                                    display: "{0} - {1} of {2} product",
                                 },
                             },
                             scrollable: false,
@@ -394,26 +394,26 @@
                                 {
                                     template: '<img src="../../../..#=ProductImagePath#" width="100px" alt="image" />',
                                     width: 120,
-                                    title: "Hình ảnh",
+                                    title: "Image",
                                     field: "ProductImagePath"
                                 }, {
                                     field: "ProductCode",
-                                    title: "Mã sản phẩm"
+                                    title: "Code"
                                 }, {
                                     field: "ProductName",
-                                    title: "Tên sản phẩm"
+                                    title: "Name"
                                 }, {
                                     field: "UnitPrice",
-                                    title: "Đơn giá",
-                                    format: "{0:#,#}"
+                                    title: "Unit price",
+                                    format: "{0:$#,#}"
                                 }, {
                                     field: "Quantity",
-                                    title: "Số Lượng",
+                                    title: "Quantity",
                                     format: "{0:#,#}"
                                 }, {
                                     field: "Amount",
-                                    title: "Thành tiền",
-                                    format: "{0:#,#}"
+                                    title: "Amount",
+                                    format: "{0:$#,#}"
                                 }, {
                                     command: ["edit", "destroy"],
                                     hidden: @((Model.ApprovedBy.HasValue || Model.OrderId.HasValue).ToString().ToLower())
@@ -428,8 +428,8 @@
         $("#button-add-product").click(function(e) {
             e.preventDefault();
             var qty = $("#@Html.IdFor(model => model.Quantity)").val();
-            if (qty === '0' || qty==='') {
-                alert('Vui lòng nhập số lượng!');
+            if (qty === 0) {
+                alert('Please enter quantity!');
                 return;
             }
             $.post("@Url.Action("AddInvoiceDetail", "Invoice")",
@@ -440,11 +440,11 @@
                     }))
                 .done(function(data) {
                     if (data.IsProductSkusNotFound) {
-                        alert('Không tìm thấy sản phẩm.');
+                        alert('Not found product.');
                         return;
                     }
                     if (data.IsDupp) {
-                        alert('Sản phẩm đã tồn tại trong chi tiết phiếu xuất.');
+                        alert('Product is existed in invoice.');
                         return;
                     }
                     var grid = $('#main-grid').data('kendoGrid');

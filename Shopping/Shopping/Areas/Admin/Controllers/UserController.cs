@@ -71,12 +71,12 @@ namespace Shopping.Areas.Admin.Controllers
                 model.CreatedBy = currentUser.Id;
                 model.CreatedDateTime = DateTime.Now;
                 _userService.InsertUser(model);
-                SuccessNotification("Thêm user mới thành công.");
+                SuccessNotification("Add new user successfully.");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Thêm user mới thất bại");
+                ErrorNotification("Add new user failed");
                 return View(model);
             }
         }
@@ -103,12 +103,12 @@ namespace Shopping.Areas.Admin.Controllers
                 model.UpdatedBy = currentUser.Id;
                 model.UpdatedDateTime = DateTime.Now;
                 _userService.UpdateUser(model);
-                SuccessNotification("Cập nhật thông tin user thành công!");
+                SuccessNotification("Update user information successfully!");
                 return model.ContinueEditing ? RedirectToAction("Edit", new { id = model.Id }) : RedirectToAction("List");
             }
             catch (Exception e)
             {
-                ErrorNotification("Cập nhật user thất bại");
+                ErrorNotification("Update user information failed!");
                 return View(model);
             }
         }
