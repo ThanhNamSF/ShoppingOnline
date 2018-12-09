@@ -8,15 +8,10 @@ namespace Common.SearchConditions
 {
     public class FeedbackSearchCondition
     {
-        public FeedbackSearchCondition()
-        {
-            DateFrom = DateTime.Now;
-            DateTo = DateTime.Now;
-        }
         public string UserName { get; set; }
         public bool? IsReplied { get; set; }
-        public DateTime DateFrom { get; set; }
-        public DateTime DateTo { get; set; }
+        public DateTime? DateFrom { get; set; }
+        public DateTime? DateTo { get; set; }
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
     }

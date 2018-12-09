@@ -172,11 +172,16 @@ namespace DataAccess.Services
             {
                 query = query.Where(p => p.Code.ToLower().Contains(condition.Code.ToLower()));
             }
+            if (condition.DateFrom.HasValue)
+            {
+                query = query.Where(p => p.CreatedDateTime >= condition.DateFrom.Value);
+            }
 
-            var dateTo = condition.DateTo.AddDays(1);
-
-            query = query.Where(p =>
-                p.CreatedDateTime >= condition.DateFrom && p.CreatedDateTime < dateTo);
+            if (condition.DateTo.HasValue)
+            {
+                var dateTo = condition.DateTo.Value.AddDays(1);
+                query = query.Where(p => p.CreatedDateTime < dateTo);
+            }
             var products = query.OrderBy(o => o.CreatedDateTime).Skip(condition.PageSize * condition.PageNumber).Take(condition.PageSize).ToList();
             return new PageList<InvoiceModel>(Mapper.Map<List<InvoiceModel>>(products), query.Count());
         }

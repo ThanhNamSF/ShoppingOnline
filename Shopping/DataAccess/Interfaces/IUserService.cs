@@ -13,7 +13,7 @@ namespace DataAccess.Interfaces
     public interface IUserService
     {
         UserModel GetUserLogin(UserModel userModel);
-        IEnumerable<UserModel> GetAllUser();
+        IEnumerable<UserModel> GetAllUserByRole(int role);
         UserModel GetUserById(int id);
         void CreateUser(UserModel userModel);
         PageList<UserModel> SearchUsers(UserSearchCondition condition);

@@ -149,12 +149,17 @@ namespace Shopping.Areas.Admin.Controllers
                 return RedirectToAction("List");
             }
 
+            if (!order.DeliverId.HasValue)
+            {
+                ErrorNotification("Please select a deliver for order!.");
+                return RedirectToAction("Edit", new { order.Id });
+            }
+
             var customer = _customerService.GetCustomerById(order.CustomerId);
             var currentUser = Session[Values.USER_SESSION] as UserModel;
             if (currentUser != null)
             {
                 order.ApproverId = currentUser.Id;
-                order.Status = true;
             }
             _orderService.Approved(order);
             if (customer != null)
@@ -179,9 +184,11 @@ namespace Shopping.Areas.Admin.Controllers
             }
 
             var customer = _customerService.GetCustomerById(order.CustomerId);
-            if (RefundMoneyFromPaymentId(order.PaymentId))
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            if (currentUser != null && RefundMoneyFromPaymentId(order.PaymentId))
             {
-                _orderService.Cancel(id);
+                order.CanceledBy = currentUser.Id;
+                _orderService.Cancel(order);
                 SuccessNotification("Cancel order successfully.");
                 if (customer != null)
                 {
@@ -195,6 +202,29 @@ namespace Shopping.Areas.Admin.Controllers
             else
             {
                 ErrorNotification("Cancel order failed");
+            }
+            return RedirectToAction("Edit", new { order.Id });
+        }
+
+        [HttpPost]
+        public ActionResult Close(int id)
+        {
+            var order = _orderService.GetOrderById(id);
+            if (order == null)
+            {
+                return RedirectToAction("List");
+            }
+
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            if (currentUser != null)
+            {
+                order.ClosedBy = currentUser.Id;
+                _orderService.Close(order);
+                SuccessNotification("Close order successfully.");
+            }
+            else
+            {
+                ErrorNotification("Close order failed");
             }
             return RedirectToAction("Edit", new { order.Id });
         }

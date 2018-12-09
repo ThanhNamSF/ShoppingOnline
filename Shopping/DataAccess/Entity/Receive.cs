@@ -35,10 +35,12 @@ namespace DataAccess.Entity
 
         public DateTime DocumentDateTime { get; set; }
 
-        public int CreatedBy { get; set; }
+        [ForeignKey("Creator")]
+        public int? CreatedBy { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 
+        [ForeignKey("Updater")]
         public int? UpdatedBy { get; set; }
 
         public DateTime? UpdatedDateTime { get; set; }
@@ -49,6 +51,10 @@ namespace DataAccess.Entity
         public DateTime? ApprovedDateTime { get; set; }
 
         public virtual User Approver { get; set; }
+
+        public virtual User Creator { get; set; }
+
+        public virtual User Updater { get; set; }
 
         public virtual ICollection<ReceiveDetail> ReceiveDetails { get; set; }
 

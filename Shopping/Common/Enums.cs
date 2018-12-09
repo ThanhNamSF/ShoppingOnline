@@ -16,14 +16,18 @@ namespace Common
 
     public enum UserRole
     {
-        Customer,
-        Admin
+        Admin = 1,
+        Salesman = 2,
+        Shipper = 3
     }
 
     public enum OrderStatus
     {
-        Open,
-        Closed
+        Cancelled,
+        Approved,
+        Assigned,
+        Closed,
+        Open
     }
 
     public enum Trend

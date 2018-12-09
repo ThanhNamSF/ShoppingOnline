@@ -34,9 +34,11 @@ namespace DataAccess.Entity
         public string Detail { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
-        public int CreatedBy { get; set; }
+        [ForeignKey("Creator")]
+        public int? CreatedBy { get; set; }
 
         public DateTime? UpdatedDateTime { get; set; }
+        [ForeignKey("Updater")]
         public int? UpdatedBy { get; set; }
 
         public bool Status { get; set; }
@@ -48,6 +50,9 @@ namespace DataAccess.Entity
         public string BackImagePath { get; set; }
 
         public int ProductCategoryId { get; set; }
+
+        public virtual User Creator { get; set; }
+        public virtual User Updater { get; set; }
 
         public virtual ProductCategory ProductCategory { get; set; }
 

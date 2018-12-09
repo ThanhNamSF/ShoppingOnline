@@ -26,13 +26,19 @@ namespace DataAccess.Entity
 
         public DateTime CreatedDateTime { get; set; }
 
-        public int CreatedBy { get; set; }
+        [ForeignKey("Creator")]
+        public int? CreatedBy { get; set; }
 
         public DateTime? UpdatedDateTime { get; set; }
 
+        [ForeignKey("Updater")]
         public int? UpdatedBy { get; set; }
 
         public bool Status { get; set; }
+
+        public virtual User Creator { get; set; }
+
+        public virtual User Updater { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
 

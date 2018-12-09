@@ -24,16 +24,16 @@ namespace DataAccess.Services
 
         public void AddReply(FeedbackModel feedbackModel)
         {
-            var feedBackGroup = new FeedbackGroup()
+            var feedBackDetail = new FeedbackDetail()
             {
                 FeedbackId = feedbackModel.Id,
                 RepliedDateTime = feedbackModel.RepliedDateTime,
                 ReplyContent = feedbackModel.ReplyContent,
                 UserId = feedbackModel.ReplierId
             };
-            if (feedBackGroup != null)
+            if (feedBackDetail != null)
             {
-                _shoppingContext.FeedbackGroups.Add(feedBackGroup);
+                _shoppingContext.FeedbackDetails.Add(feedBackDetail);
                 _shoppingContext.SaveChanges();
             }
         }
@@ -50,7 +50,7 @@ namespace DataAccess.Services
 
         public IEnumerable<FeedbackModel> GetAllFeedbackByFeedbackId(int feedbackId)
         {
-            var feedbacks = _shoppingContext.FeedbackGroups.AsNoTracking().Where(w => w.FeedbackId == feedbackId)
+            var feedbacks = _shoppingContext.FeedbackDetails.AsNoTracking().Where(w => w.FeedbackId == feedbackId)
                 .Select(s => new FeedbackModel()
                 {
                     ReplyContent = s.ReplyContent,
@@ -88,19 +88,25 @@ namespace DataAccess.Services
             {
                 if (condition.IsReplied.Value)
                 {
-                    query = query.Where(p => p.FeedbackGroups.Count > 0);
+                    query = query.Where(p => p.FeedbackDetails.Count > 0);
                 }
                 else
                 {
-                    query = query.Where(p => p.FeedbackGroups.Count == 0);
+                    query = query.Where(p => p.FeedbackDetails.Count == 0);
                 }
                 
             }
 
-            var dateTo = condition.DateTo.AddDays(1);
+            if (condition.DateFrom.HasValue)
+            {
+                query = query.Where(p => p.CreatedDateTime >= condition.DateFrom.Value);
+            }
 
-            query = query.Where(p =>
-                p.CreatedDateTime >= condition.DateFrom && p.CreatedDateTime < dateTo);
+            if (condition.DateTo.HasValue)
+            {
+                var dateTo = condition.DateTo.Value.AddDays(1);
+                query = query.Where(p => p.CreatedDateTime < dateTo);
+            }
             var feedbacks = query.OrderBy(o => o.CreatedDateTime).Skip(condition.PageSize * condition.PageNumber).Take(condition.PageSize).ToList();
             return new PageList<FeedbackModel>(Mapper.Map<List<FeedbackModel>>(feedbacks), query.Count());
         }

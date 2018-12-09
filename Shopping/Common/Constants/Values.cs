@@ -15,7 +15,7 @@ namespace Common.Constants
         public const string PaypalNotification = "PaypalNotification";
         public const string FeedbackNotification = "FeedbackNotification";
         public const string RegisterNotification = "RegisterNotification";
-        public const string All = "All";
+        public const string All = "Tất cả";
         public const int AdminRole = 0;
         public const int CustomerRole = 1;
         public const int ProductClientPageSize = 9;

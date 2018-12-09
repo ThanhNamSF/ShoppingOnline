@@ -9,7 +9,7 @@
     </h1>
     <div class="pull-right">
         <a class="btn bg-blue" href="@Html.Raw(Url.Action("List"))"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
-        @if (!Model.Canceled)
+        @if (!Model.CanceledBy.HasValue && !Model.ClosedBy.HasValue)
         {
             <button type="submit" name="save" class="btn bg-blue">
                 <i class="fa fa-floppy-o"></i>
@@ -30,17 +30,21 @@
                     Cancel
                 </span>
             }
-            else if (!Model.IsHasInvoice)
+            else
             {
-                <span id="button-invoice" class="btn bg-green-active">
-                    <i class="fa fa-address-book"></i>
-                    Make invoice
-                </span>
-                <span id="button-cancel" class="btn bg-orange">
-                    <i class="fa fa-trash-o"></i>
-                    Cancel
+                if (!Model.IsHasInvoice)
+                {
+                    <span id="button-invoice" class="btn bg-green-active">
+                        <i class="fa fa-address-book"></i>
+                        Make invoice
+                    </span>
+                }
+                <span id="button-close" class="btn bg-aqua-active">
+                    <i class="fa fa-book"></i>
+                    Close
                 </span>
             }
+            
         }
         else
         {
@@ -135,6 +139,26 @@
         </div>
     </div>
 </div>
+<div id="close-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirm</h4>
+            </div>
+            @using (Html.BeginForm("Close", "Order", new { id = Model.Id }))
+            {
+                <div class="modal-body">
+                    <p>Do you want to close this order?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No! Thanks</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 <script>
     $("#button-delete").click(function() {
         $("#delete-modal").modal("show");
@@ -147,6 +171,9 @@
     });
     $("#button-invoice").click(function () {
         $("#invoice-modal").modal("show");
+    });
+    $("#button-close").click(function () {
+        $("#close-modal").modal("show");
     });
 </script>
 

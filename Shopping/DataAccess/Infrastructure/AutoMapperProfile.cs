@@ -43,7 +43,7 @@ namespace DataAccess.Infrastructure
                 .ForMember(x => x.Email, opt => opt.MapFrom(x => x.Customer.Email))
                 .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.Customer.Phone))
                 .ForMember(x => x.CustomerUserName, opt => opt.MapFrom(x => x.Customer.UserName));
-            CreateMap<FeedbackModel, FeedbackGroup>();
+            CreateMap<FeedbackModel, FeedbackDetail>();
             CreateMap<GroupUser, GroupUserModel>();
             CreateMap<CodeGenerating, CodeGeneratingModel>();
             CreateMap<CodeGeneratingModel, CodeGenerating>();

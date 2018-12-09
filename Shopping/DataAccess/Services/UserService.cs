@@ -47,9 +47,9 @@ namespace DataAccess.Services
             }
         }
 
-        public IEnumerable<UserModel> GetAllUser()
+        public IEnumerable<UserModel> GetAllUserByRole(int role)
         {
-            var users = _shoppingContext.Users.AsNoTracking().ToList();
+            var users = _shoppingContext.Users.AsNoTracking().Where(w => w.GroupUser.Id == role).ToList();
             return Mapper.Map<List<UserModel>>(users);
         }
 
@@ -62,7 +62,7 @@ namespace DataAccess.Services
         public UserModel GetUserLogin(UserModel userModel)
         {
             var userLogin = _shoppingContext.Users.AsNoTracking().FirstOrDefault(x =>
-                x.UserName.Equals(userModel.UserName) && x.Password.Equals(userModel.Password) && x.Status);
+                x.UserName.Equals(userModel.UserName) && x.Password.Equals(userModel.Password) && x.Status && !x.GroupUser.Name.Equals(UserRole.Shipper.ToString()));
             return Mapper.Map<UserModel>(userLogin);
         }
 
@@ -92,10 +92,16 @@ namespace DataAccess.Services
                 query = query.Where(p => p.Status == condition.Status.Value);
             }
 
-            var dateTo = condition.DateTo.AddDays(1);
+            if (condition.DateFrom.HasValue)
+            {
+                query = query.Where(p => p.CreatedDateTime >= condition.DateFrom.Value);
+            }
 
-            query = query.Where(p =>
-                p.CreatedDateTime >= condition.DateFrom && p.CreatedDateTime < dateTo);
+            if (condition.DateTo.HasValue)
+            {
+                var dateTo = condition.DateTo.Value.AddDays(1);
+                query = query.Where(p => p.CreatedDateTime < dateTo);
+            }
             var users = query.OrderBy(o => o.CreatedDateTime).Skip(condition.PageSize * condition.PageNumber).Take(condition.PageSize).ToList();
             return new PageList<UserModel>(Mapper.Map<List<UserModel>>(users), query.Count());
         }

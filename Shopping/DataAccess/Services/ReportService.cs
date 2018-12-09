@@ -54,14 +54,13 @@ namespace DataAccess.Services
 
         public RevenueReportModel GetRevenueReport(DateTime dateFrom, DateTime dateTo, string createdBy)
         {
-            var addDate = dateTo.AddMonths(1);
-            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => (w.CreatedDateTime >= dateFrom && w.CreatedDateTime <= addDate) &&
-                                                                           !w.Canceled).OrderBy(w => w.CreatedDateTime).ToList();
+            var addMonth = dateTo.AddMonths(1);
+            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => (w.CreatedDateTime >= dateFrom && w.CreatedDateTime < addMonth) &&
+                                                                           !w.CanceledBy.HasValue).OrderBy(w => w.CreatedDateTime).ToList();
 
             var invoices = _shoppingContext.Invoices.AsNoTracking().Where(w => w.ApprovedBy.HasValue && !w.OrderId.HasValue &&
-                                                                               (w.ApprovedDateTime >= dateFrom && w.ApprovedDateTime <= addDate))
+                                                                               (w.ApprovedDateTime >= dateFrom && w.ApprovedDateTime < addMonth))
                                                                                     .OrderBy(w => w.CreatedDateTime).ToList();
-
             var model = new RevenueReportModel()
             {
                 TimeFrom = dateFrom.ToString("MM/yyyy"),
@@ -118,6 +117,7 @@ namespace DataAccess.Services
                 }
             }
 
+            model.Details = model.Details.OrderBy(p => DateTime.Parse(p.Time)).ToList();
             return model;
         }
 
@@ -133,7 +133,7 @@ namespace DataAccess.Services
                     CategoryName = s.Product.ProductCategory.Name,
                     ProductName = s.Product.Name
                 }).ToList();
-            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled && w.Order.CreatedDateTime >= dateFrom && w.Order.CreatedDateTime < addDateTo).Select(s =>
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.CanceledBy.HasValue && w.Order.CreatedDateTime >= dateFrom && w.Order.CreatedDateTime < addDateTo).Select(s =>
                 new TopProductBestSellerDetailReportModel()
                 {
                     Quantity = s.Quantity,
@@ -172,7 +172,7 @@ namespace DataAccess.Services
                 ProductCode = s.Product.Code
             }).ToList();
 
-            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled && !w.Order.IsHasInvoice).Select(s => new TopProductProfitableDetailReportModel()
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.CanceledBy.HasValue && !w.Order.IsHasInvoice).Select(s => new TopProductProfitableDetailReportModel()
             {
                 Quantity = s.Quantity,
                 UnitPrice = s.UnitPrice,

@@ -31,8 +31,6 @@ namespace DataAccess.Entity
         [StringLength(12)]
         public string ReceiverPhone { get; set; }
 
-        public bool Status { get; set; }
-
         public DateTime? ApprovedDateTime { get; set; }
 
         public DateTime? ReceivedDateTime { get; set; }
@@ -43,22 +41,35 @@ namespace DataAccess.Entity
         [Required]
         public string PaymentId { get; set; }
 
-        public bool Canceled { get; set; }
+        [ForeignKey("Canceller")]
+        public int? CanceledBy { get; set; }
 
+        [ForeignKey("Updater")]
         public int? UpdatedBy { get; set; }
         public int CustomerId { get; set; }
-        
+
+        [ForeignKey("Approver")]
         public int? ApproverId { get; set; }
-        
+
+        [ForeignKey("Deliver")]
         public int? DeliverId { get; set; }
+
+        [ForeignKey("Closer")]
+        public int? ClosedBy { get; set; }
 
         public bool IsHasInvoice { get; set; }
 
         public virtual Customer Customer { get; set; }
 
+        public virtual User Updater { get; set; }
+
         public virtual User Approver { get; set; }
 
         public virtual User Deliver { get; set; }
+
+        public virtual User Closer { get; set; }
+
+        public virtual User Canceller { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 

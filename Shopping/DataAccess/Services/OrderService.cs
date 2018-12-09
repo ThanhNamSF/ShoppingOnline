@@ -31,22 +31,31 @@ namespace DataAccess.Services
             }
             receive.ApproverId = orderModel.ApproverId;
             receive.ApprovedDateTime = DateTime.Now;
-            receive.Status = orderModel.Status;
             _shoppingContext.SaveChanges();
         }
 
-        public void Cancel(int orderId)
+        public void Cancel(OrderModel orderModel)
         {
-            var orderCancel = _shoppingContext.Orders.Find(orderId);
+            var orderCancel = _shoppingContext.Orders.Find(orderModel.Id);
             if (orderCancel != null)
             {
-                orderCancel.ReceivedDateTime = null;
-                orderCancel.Canceled = true;
+                orderCancel.CanceledBy = orderModel.CanceledBy;
                 foreach (var item in orderCancel.OrderDetails)
                 {
                     var product = _shoppingContext.Products.FirstOrDefault(x => x.Id == item.ProductId);
                     product.Quantity += item.Quantity;
                 }
+                _shoppingContext.SaveChanges();
+            }
+        }
+
+        public void Close(OrderModel orderModel)
+        {
+            var orderClose = _shoppingContext.Orders.Find(orderModel.Id);
+            if (orderClose != null)
+            {
+                orderClose.ClosedBy = orderModel.ClosedBy;
+                orderClose.ReceivedDateTime = DateTime.Now;
                 _shoppingContext.SaveChanges();
             }
         }
@@ -75,7 +84,30 @@ namespace DataAccess.Services
         {
             var order = _shoppingContext.Orders.Find(id);
             if (order != null)
-                return Mapper.Map<OrderModel>(order);
+            {
+                var orderModel = Mapper.Map<OrderModel>(order);
+                if (orderModel.CanceledBy.HasValue)
+                {
+                    orderModel.StatusEnum = (int)OrderStatus.Cancelled;
+                }
+                else if (orderModel.ApproverId.HasValue)
+                {
+                    orderModel.StatusEnum = (int)OrderStatus.Approved;
+                }
+                else if (orderModel.DeliverId.HasValue)
+                {
+                    orderModel.StatusEnum = (int)OrderStatus.Assigned;
+                }
+                else if (orderModel.ClosedBy.HasValue)
+                {
+                    orderModel.StatusEnum = (int)OrderStatus.Closed;
+                }
+                else
+                {
+                    orderModel.StatusEnum = (int)OrderStatus.Open;
+                }
+                return orderModel;
+            }
             return null;
         }
 
@@ -126,31 +158,63 @@ namespace DataAccess.Services
                 query = query.Where(p => p.Code.ToLower().Contains(condition.OrderCode.ToLower()));
             }
 
-            if (condition.ApprovedStatus.HasValue)
+            switch (condition.Status)
             {
-                query = query.Where(p => p.ApproverId.HasValue == condition.ApprovedStatus.Value);
+                case (int)OrderStatus.Cancelled:
+                    query = query.Where(p => p.CanceledBy.HasValue);
+                    break;
+                case (int)OrderStatus.Approved:
+                    query = query.Where(p => p.ApproverId.HasValue);
+                    break;
+                case (int)OrderStatus.Assigned:
+                    query = query.Where(p => p.DeliverId.HasValue);
+                    break;
+                case (int)OrderStatus.Closed:
+                    query = query.Where(p => p.ClosedBy.HasValue);
+                    break;
+                case (int)OrderStatus.Open:
+                    query = query.Where(p => !p.ClosedBy.HasValue && !p.DeliverId.HasValue && !p.ApproverId.HasValue && !p.CanceledBy.HasValue);
+                    break;
+                default:
+                    break;
             }
 
-            if (condition.AsignmentStatus.HasValue)
+            if (condition.DateFrom.HasValue)
             {
-                query = query.Where(p => p.DeliverId.HasValue == condition.AsignmentStatus.Value);
+                query = query.Where(p => p.CreatedDateTime >= condition.DateFrom.Value);
             }
 
-            if (condition.DeliveredStatus.HasValue)
+            if (condition.DateTo.HasValue)
             {
-                query = query.Where(p => p.ReceivedDateTime.HasValue == condition.DeliveredStatus.Value);
+                var dateTo = condition.DateTo.Value.AddDays(1);
+                query = query.Where(p => p.CreatedDateTime < dateTo);
             }
-
-            if (condition.Canceled.HasValue)
-            {
-                query = query.Where(p => p.Canceled == condition.Canceled.Value);
-            }
-            var dateTo = condition.DateTo.AddDays(1);
-
-            query = query.Where(p =>
-                p.CreatedDateTime >= condition.DateFrom && p.CreatedDateTime < dateTo);
             var orders = query.OrderBy(o => o.CreatedDateTime).Skip(condition.PageSize * condition.PageNumber).Take(condition.PageSize).ToList();
-            return new PageList<OrderModel>(Mapper.Map<List<OrderModel>>(orders), query.Count());
+            var orderModels = Mapper.Map<List<OrderModel>>(orders);
+            foreach (var item in orderModels)
+            {
+                if (item.CanceledBy.HasValue)
+                {
+                    item.Status = OrderStatus.Cancelled.ToString();
+                }
+                else if (item.ApproverId.HasValue)
+                {
+                    item.Status = OrderStatus.Approved.ToString();
+                }
+                else if (item.DeliverId.HasValue)
+                {
+                    item.Status = OrderStatus.Assigned.ToString();
+                }
+                else if (item.ClosedBy.HasValue)
+                {
+                    item.Status = OrderStatus.Closed.ToString();
+                }
+                else
+                {
+                    item.Status = OrderStatus.Open.ToString(); ;
+                }
+            }
+            return new PageList<OrderModel>(orderModels, query.Count());
         }
 
         public void UpdateOrder(OrderModel orderModel)

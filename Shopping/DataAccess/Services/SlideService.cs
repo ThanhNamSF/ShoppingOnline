@@ -62,10 +62,16 @@ namespace DataAccess.Services
                 query = query.Where(p => p.Name.ToLower().Contains(condition.Name.ToLower()));
             }
 
-            var dateTo = condition.DateTo.AddDays(1);
+            if (condition.DateFrom.HasValue)
+            {
+                query = query.Where(p => p.CreatedDateTime >= condition.DateFrom.Value);
+            }
 
-            query = query.Where(p =>
-                p.CreatedDateTime >= condition.DateFrom && p.CreatedDateTime < dateTo);
+            if (condition.DateTo.HasValue)
+            {
+                var dateTo = condition.DateTo.Value.AddDays(1);
+                query = query.Where(p => p.CreatedDateTime < dateTo);
+            }
             var Slides = query.OrderBy(o => o.CreatedDateTime).Skip(condition.PageSize * condition.PageNumber).Take(condition.PageSize).ToList();
             return new PageList<SlideModel>(Mapper.Map<List<SlideModel>>(Slides), query.Count());
         }

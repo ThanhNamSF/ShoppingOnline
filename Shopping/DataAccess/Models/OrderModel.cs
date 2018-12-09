@@ -14,18 +14,21 @@ namespace DataAccess.Models
         public string ReceiverName { get; set; }
         public string ReceiverAddress { get; set; }
         public string ReceiverPhone { get; set; }
-        public bool Status { get; set; }
         public DateTime? ApprovedDateTime { get; set; }
         public DateTime? ReceivedDateTime { get; set; }
         public string PaymentId { get; set; }
         public DateTime CreatedDateTime { get; set; }
-        public bool Canceled { get; set; }
+        public int? CanceledBy { get; set; }
         public int CustomerId { get; set; }
         public int? ApproverId { get; set; }
         public int? DeliverId { get; set; }
         public int? UpdatedBy { get; set; }
+        public int? ClosedBy { get; set; }
         public DateTime? UpdatedDateTime { get; set; }
         public bool ContinueEditing { get; set; }
         public bool IsHasInvoice { get; set; }
+
+        public string Status { get; set; }
+        public int StatusEnum { get; set; }
     }
 }

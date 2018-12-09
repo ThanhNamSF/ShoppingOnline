@@ -39,10 +39,16 @@ namespace DataAccess.Services
                 query = query.Where(p => p.ProductCategoryId == condition.CategoryId);
             }
 
-            var dateTo = condition.DateTo.AddDays(1);
+            if (condition.DateFrom.HasValue)
+            {
+                query = query.Where(p => p.CreatedDateTime >= condition.DateFrom.Value);
+            }
 
-            query = query.Where(p =>
-                p.CreatedDateTime >= condition.DateFrom && p.CreatedDateTime < dateTo);
+            if (condition.DateTo.HasValue)
+            {
+                var dateTo = condition.DateTo.Value.AddDays(1);
+                query = query.Where(p => p.CreatedDateTime < dateTo);
+            }
             var products = query.OrderBy(o => o.CreatedDateTime).Skip(condition.PageSize * condition.PageNumber).Take(condition.PageSize).ToList();
             return new PageList<ProductModel>(Mapper.Map<List<ProductModel>>(products), query.Count());
         }
@@ -203,7 +209,7 @@ namespace DataAccess.Services
                         Quantity = s.Quantity,
                         Product = s.Product
                     }).ToList();
-            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled).Select(s =>
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.CanceledBy.HasValue).Select(s =>
                 new
                 {
                     Quantity = s.Quantity,
@@ -228,7 +234,7 @@ namespace DataAccess.Services
                         Quantity = s.Quantity,
                         Product = s.Product
                     }).ToList();
-            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.Canceled).Select(s =>
+            var orderDetails = _shoppingContext.OrderDetails.AsNoTracking().Where(w => !w.Order.CanceledBy.HasValue).Select(s =>
                 new
                 {
                     Quantity = s.Quantity,

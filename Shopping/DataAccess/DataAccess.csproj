@@ -83,7 +83,7 @@
     <Compile Include="Entity\About.cs" />
     <Compile Include="Entity\CodeGenerating.cs" />
     <Compile Include="Entity\Customer.cs" />
-    <Compile Include="Entity\FeedbackGroup.cs" />
+    <Compile Include="Entity\FeedbackDetail.cs" />
     <Compile Include="Entity\Feedback.cs" />
     <Compile Include="Entity\Invoice.cs" />
     <Compile Include="Entity\InvoiceDetail.cs" />
@@ -112,6 +112,11 @@
     <Compile Include="Interfaces\IReportService.cs" />
     <Compile Include="Interfaces\ISlideService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Migrations\201812091449048_v1.cs" />
+    <Compile Include="Migrations\201812091449048_v1.Designer.cs">
+      <DependentUpon>201812091449048_v1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AboutModel.cs" />
     <Compile Include="Models\CodeGeneratingModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
@@ -161,6 +166,11 @@
       <Project>{08c5e219-2b2e-425c-96a7-c0ebffff5a67}</Project>
       <Name>Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812091449048_v1.resx">
+      <DependentUpon>201812091449048_v1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

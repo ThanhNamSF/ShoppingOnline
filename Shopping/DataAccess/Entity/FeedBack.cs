@@ -20,6 +20,6 @@ namespace DataAccess.Entity
 
         public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<FeedbackGroup> FeedbackGroups { get; set; }
+        public virtual ICollection<FeedbackDetail> FeedbackDetails { get; set; }
     }
 }

@@ -15,7 +15,8 @@ namespace DataAccess.Interfaces
         void UpdateOrder(OrderModel orderModel);
         PageList<OrderDetailModel> SearchOrderDetails(OrderDetailSearchCondition condition);
         void Approved(OrderModel orderModel);
-        void Cancel(int orderId);
+        void Cancel(OrderModel orderModel);
+        void Close(OrderModel orderModel);
         IEnumerable<OrderDetailModel> GetOrderDetailsByOrderId(int orderId);
         void CreateInvoice(int orderId);
     }

@@ -358,7 +358,6 @@ namespace Shopping.Controllers
                     ReceiverAddress = _receiverInformation.Address + ", " + _receiverInformation.Street,
                     CreatedDateTime = DateTime.Now,
                     Amount = cart.Sum(item => item.Product.Price * item.Quantity),
-                    Status = false,
                     CustomerId = customer.Id, //Edit later
                     Code = _codeGeneratingService.GenerateCode(Values.OrderPrefix),
                     PaymentId = payment.id
