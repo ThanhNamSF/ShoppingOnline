@@ -82,6 +82,7 @@ namespace DataAccess.Services
             var invoiceDeleted = _shoppingContext.Invoices.Find(id);
             if (invoiceDeleted != null)
             {
+                invoiceDeleted.Order.IsHasInvoice = false;
                 _shoppingContext.Invoices.Remove(invoiceDeleted);
                 _shoppingContext.SaveChanges();
             }

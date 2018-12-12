@@ -19,5 +19,6 @@ namespace DataAccess.Interfaces
         void Close(OrderModel orderModel);
         IEnumerable<OrderDetailModel> GetOrderDetailsByOrderId(int orderId);
         void CreateInvoice(int orderId);
+        IEnumerable<OrderModel> GetAllOrderByCustomerId(int customerId);
     }
 }

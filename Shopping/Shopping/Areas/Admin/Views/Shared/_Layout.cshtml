@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Common
+@using Common.Constants
+@using DataAccess.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -203,7 +206,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="@Url.Action("Logout","Login")" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -250,7 +253,13 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="@Html.Raw(Url.Action("List","User"))"><i class="fa fa-users"></i>Employee</a></li>
+                            @{
+                                var currentUser = Session[Values.USER_SESSION] as UserModel;
+                                if (currentUser != null && currentUser.GroupUserId == (int)UserRole.Admin)
+                                {
+                                    <li><a href="@Html.Raw(Url.Action("List", "User"))"><i class="fa fa-users"></i>Employee</a></li>
+                                }
+                            }
                             <li><a href="@Html.Raw(Url.Action("List", "Product"))"><i class="fa fa-product-hunt"></i>Product</a></li>
                             <li><a href="@Html.Raw(Url.Action("List", "Order"))"><i class="fa fa-first-order"></i>Order</a></li>
                             <li><a href="@Html.Raw(Url.Action("List", "Invoice"))"><i class="fa fa-sellsy"></i>Invoice</a></li>

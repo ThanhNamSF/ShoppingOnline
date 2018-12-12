@@ -86,6 +86,7 @@
             $("#@Html.IdFor(model => model.CategoryId)").kendoDropDownList({
                 dataTextField: "Name",
                 dataValueField: "Id",
+                optionLabel: "All",
                 dataSource: {
                     type: "json",
                     serverFiltering: true,
@@ -109,7 +110,7 @@
                 var data = {
                     Name: $('#ProductName').val(),
                     Code: $('#PopupProductCode').val(),
-                    CategoryId: $('#@Html.IdFor(model => model.CategoryId)').val()
+                    CategoryId: $('#@Html.IdFor(model => model.CategoryId)').val() || 0
                 };
                 addAntiForgeryToken(data);
                 return data;

@@ -30,6 +30,11 @@ namespace Shopping.Areas.Admin.Controllers
 
         public ActionResult List()
         {
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            if (currentUser.GroupUserId != (int) UserRole.Admin)
+            {
+                return RedirectToAction("UnAuthorize", "Exception");
+            }
             var model = new UserSearchCondition();
             return View(model);
         }
@@ -51,6 +56,11 @@ namespace Shopping.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            if (currentUser.GroupUserId != (int)UserRole.Admin)
+            {
+                return RedirectToAction("UnAuthorize", "Exception");
+            }
             var model = new UserModel();
             return View(model);
         }
@@ -83,6 +93,11 @@ namespace Shopping.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
+            var currentUser = Session[Values.USER_SESSION] as UserModel;
+            if (currentUser.GroupUserId != (int)UserRole.Admin)
+            {
+                return RedirectToAction("UnAuthorize", "Exception");
+            }
             var user = _userService.GetUserById(id);
             if (user == null)
                 return RedirectToAction("List");
@@ -127,7 +142,7 @@ namespace Shopping.Areas.Admin.Controllers
 
         public JsonResult GetAllShipperUser()
         {
-            var users = _userService.GetAllUserByRole((int)UserRole.Shipper);
+            var users = _userService.GetSortedShipperByOrderQuantity();
             return this.Json(users, JsonRequestBehavior.AllowGet);
         }
 

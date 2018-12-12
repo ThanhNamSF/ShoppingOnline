@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Common;
 using Common.Constants;
@@ -278,16 +275,18 @@ namespace Shopping.Areas.Admin.Controllers
                 return RedirectToAction("Create");
             }
 
-            if (!_invoiceService.HasInvoiceDetail(invoice.Id))
+            if (!invoice.OrderId.HasValue)
             {
-                ErrorNotification("Invoice don't have any product. Please add product into invoice before approve!");
-                return RedirectToAction("Edit", new { invoice.Id });
-            }
-
-            if (_invoiceService.CheckQuantityInInvoiceDetail(invoice.Id))
-            {
-                ErrorNotification("Product detail is invalid. Please check again!");
-                return RedirectToAction("Edit", new { invoice.Id });
+                if (!_invoiceService.HasInvoiceDetail(invoice.Id))
+                {
+                    ErrorNotification("Invoice don't have any product. Please add product into invoice before approve!");
+                    return RedirectToAction("Edit", new { invoice.Id });
+                }
+                if (_invoiceService.CheckQuantityInInvoiceDetail(invoice.Id))
+                {
+                    ErrorNotification("Product detail is invalid. Please check again!");
+                    return RedirectToAction("Edit", new { invoice.Id });
+                }
             }
             var currentUser = Session[Values.USER_SESSION] as UserModel;
             invoice.ApprovedBy = currentUser.Id;
@@ -312,15 +311,19 @@ namespace Shopping.Areas.Admin.Controllers
             {
                 return RedirectToAction("Create");
             }
-            if (!_invoiceService.HasInvoiceDetail(invoice.Id))
+
+            if (!invoice.OrderId.HasValue)
             {
-                ErrorNotification("Invoice don't have any product. Please add product into invoice before approve!");
-                return RedirectToAction("Edit", new { invoice.Id });
-            }
-            if (_invoiceService.CheckQuantityInInvoiceDetail(invoice.Id))
-            {
-                ErrorNotification("Product detail is invalid. Please check again!");
-                return RedirectToAction("Edit", new { invoice.Id });
+                if (!_invoiceService.HasInvoiceDetail(invoice.Id))
+                {
+                    ErrorNotification("Invoice don't have any product. Please add product into invoice before approve!");
+                    return RedirectToAction("Edit", new { invoice.Id });
+                }
+                if (_invoiceService.CheckQuantityInInvoiceDetail(invoice.Id))
+                {
+                    ErrorNotification("Product detail is invalid. Please check again!");
+                    return RedirectToAction("Edit", new { invoice.Id });
+                }
             }
 
             invoice.ApprovedBy = null;

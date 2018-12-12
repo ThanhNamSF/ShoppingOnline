@@ -21,5 +21,6 @@ namespace DataAccess.Interfaces
         void DeleteUser(int id);
         void UpdateUser(UserModel userModel);
         bool CheckUserNameIsExisted(string userName);
+        IEnumerable<UserModel> GetSortedShipperByOrderQuantity();
     }
 }

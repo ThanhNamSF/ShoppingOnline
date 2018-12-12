@@ -49,5 +49,15 @@ namespace Shopping.Areas.Admin.Controllers
             TempData["AlertMessage"] = Messages.LOGIN_FAILED;
             return Login();
         }
+
+        public ActionResult Logout()
+        {
+            if (Session[Values.USER_SESSION] != null)
+            {
+                Session.Remove(Values.USER_SESSION);
+            }
+
+            return RedirectToAction("Login");
+        }
     }
 }

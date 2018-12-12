@@ -49,8 +49,37 @@ namespace DataAccess.Services
 
         public IEnumerable<UserModel> GetAllUserByRole(int role)
         {
-            var users = _shoppingContext.Users.AsNoTracking().Where(w => w.GroupUser.Id == role).ToList();
+            var users = _shoppingContext.Users.AsNoTracking().Where(w => w.GroupUser.Id == role && w.Status).ToList();
             return Mapper.Map<List<UserModel>>(users);
+        }
+
+        public IEnumerable<UserModel> GetSortedShipperByOrderQuantity()
+        {
+            var users = _shoppingContext.Users.AsNoTracking().Where(w => w.GroupUser.Id == (int)UserRole.Shipper && w.Status);
+            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => w.ApproverId.HasValue);
+            var result = users.GroupJoin(orders,
+                                        u => u.Id,
+                                        o => o.DeliverId,
+                                        (u, o) => new
+                                        {
+                                            user = u,
+                                            order = o
+                                        })
+                            .SelectMany(temp => temp.order.DefaultIfEmpty(),
+                                        (temp, o) => new
+                                        {
+                                            Id = temp.user.Id,
+                                            UserName = temp.user.UserName,
+                                            Quantity = o == null ? 0 : 1
+                                        })
+                            .GroupBy(s => s.Id)
+                            .OrderBy(s => s.Count(item => item.Quantity > 0))
+                            .Select(s => new UserModel
+                                    {
+                                        Id = s.Key,
+                                        UserName = s.FirstOrDefault().UserName
+                                    }).ToList();
+            return result;
         }
 
         public UserModel GetUserById(int id)

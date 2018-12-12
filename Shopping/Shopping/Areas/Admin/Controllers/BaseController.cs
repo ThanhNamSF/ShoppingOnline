@@ -9,7 +9,7 @@ namespace Shopping.Areas.Admin.Controllers
 {
     public class BaseController : Controller
     {
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var session = Session[Values.USER_SESSION] as UserModel;
             if (session == null)
@@ -17,7 +17,7 @@ namespace Shopping.Areas.Admin.Controllers
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Login", action = "Index", Area = "Admin" }));
             }
 
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuting(filterContext);
         }
 
         protected void SetAlert(string message, NotificationType type)

@@ -80,6 +80,12 @@ namespace DataAccess.Services
             }
         }
 
+        public IEnumerable<OrderModel> GetAllOrderByCustomerId(int customerId)
+        {
+            var orders = _shoppingContext.Orders.AsNoTracking().Where(w => w.CustomerId == customerId && !w.CanceledBy.HasValue);
+            return Mapper.Map<IEnumerable<OrderModel>>(orders);
+        }
+
         public OrderModel GetOrderById(int id)
         {
             var order = _shoppingContext.Orders.Find(id);
