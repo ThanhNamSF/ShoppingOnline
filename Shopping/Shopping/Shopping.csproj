@@ -11072,6 +11072,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Product\SweetAlert.cshtml" />
     <Content Include="Views\OrderHistory\GetAllOrderHistory.cshtml" />
+    <Content Include="Views\OrderHistory\GetAllOrderDetailHistory.cshtml" />
+    <Content Include="Views\Shared\_PopupLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

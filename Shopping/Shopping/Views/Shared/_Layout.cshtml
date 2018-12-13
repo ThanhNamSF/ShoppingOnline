@@ -36,6 +36,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="~/Content/web//fonts.googleapis.com/css?family=Montserrat:100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
           rel="stylesheet">
     <link href="~/Content/web//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+    <!--Kendo UI-->
+    <link rel="stylesheet" href="~/Content/KendoUI/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/Content/KendoUI/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="~/Content/KendoUI/styles/kendo.default.mobile.min.css" />
     <!--Sweet Alert-->
     <link href="~/Content/sweetalert/sweetalert.css" rel="stylesheet" />
     <script src="~/Content/sweetalert/sweetalert.min.js"></script>
@@ -59,6 +63,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="~/Content/web/js/easy-responsive-tabs.js"></script>
     <!-- FlexSlider -->
     <script src="~/Content/web/js/jquery.flexslider.js"></script>
+    <script type="text/javascript" src="~/Content/web/js/bootstrap-3.1.1.min.js"></script>
+    <!-- Kendo UI combined JavaScript -->
+    <script src="~/Content/KendoUI/js/jquery.min.js"></script>
+    <script src="~/Content/KendoUI/js/kendo.all.min.js"></script>
+
+
 </head>
 <body>
     <div class="banner_top innerpage" id="home">
@@ -74,7 +84,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <ul>
                             <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
                             <li><a href="@Url.Action("About","Home")">About</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="@Url.Action("Index","OrderHistory")">Order History</a></li>
                             <li><a href="@Url.Action("Index","Product")">Shop Now</a></li>
                             <li><a href="@Url.Action("Create","Feedback")">Contact</a></li>
                             @if (Session[Values.CUSTOMER_SESSION] != null)
@@ -187,7 +197,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <ul>
                             <li><a href="@Url.Action("Index","Home")" class="active">Home</a></li>
                             <li><a href="@Url.Action("About","Home")">About</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="@Url.Action("Index","OrderHistory")">Order History</a></li>
                             <li><a href="@Url.Action("Index","Product")">Shop Now</a></li>
                             <li><a href="@Url.Action("Create","Feedback")">Contact</a></li>
                             @if (Session[Values.CUSTOMER_SESSION] != null)
@@ -279,7 +289,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
         </script>
         <!-- //end-smoth-scrolling -->
-        <script type="text/javascript" src="~/Content/web/js/bootstrap-3.1.1.min.js"></script>
+        
 
     </body>
 </html>

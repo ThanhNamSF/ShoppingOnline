@@ -30,6 +30,12 @@ namespace Shopping.Controllers
             return View(model);
         }
 
+        public ActionResult GetAllOrderDetailHistory(int orderId)
+        {
+            var model = _orderService.GetOrderDetailsByOrderId(orderId);
+            return View(model);
+        }
+
 
     }
 }

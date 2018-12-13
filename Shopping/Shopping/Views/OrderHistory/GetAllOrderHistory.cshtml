@@ -11,6 +11,7 @@
 
             <div class="checkout-right">
                 <h4>Total: <span id="totalProduct">@Model.Count() Orders</span></h4>
+                <div id="window"></div>
                 <table class="timetable_sub">
                     <thead>
                         <tr>
@@ -27,19 +28,33 @@
                     <tbody>
                         @for (int i = 0; i < Model.Count(); i++)
                         {
-                        <tr class="rem@(Model.ElementAt(i).Id)">
-                            <td class="invert">@(i + 1)</td>
-                            <td class="invert">@(Model.ElementAt(i).Code)</td>
-                            <td class="invert">@(Model.ElementAt(i).CreatedDateTime)</td>
-                            <td class="invert">@(Model.ElementAt(i).ReceiverName)</td>
-                            <td class="invert">@(Model.ElementAt(i).ReceiverAddress)</td>
-                            <td class="invert">@(Model.ElementAt(i).ReceiverPhone)</td>
+                            <tr class="rem@(Model.ElementAt(i).Id)">
+                                <td class="invert">@(i + 1)</td>
+                                <td class="invert">@(Model.ElementAt(i).Code)</td>
+                                <td class="invert">@(Model.ElementAt(i).CreatedDateTime)</td>
+                                <td class="invert">@(Model.ElementAt(i).ReceiverName)</td>
+                                <td class="invert">@(Model.ElementAt(i).ReceiverAddress)</td>
+                                <td class="invert">@(Model.ElementAt(i).ReceiverPhone)</td>
 
-                            <td class="invert">$@string.Format("{0:#,#}", Model.ElementAt(i).Amount)</td>
-                            <td class="invert">
-                                <button class="btn btn-info">Detail</button>
-                            </td>
-                        </tr>
+                                <td class="invert">$@string.Format("{0:#,#}", Model.ElementAt(i).Amount)</td>
+                                <td class="invert">
+                                    <button class="btn btn-info" id="@Model.ElementAt(i).Id">Detail</button>
+                                    <script>
+                                    $(document).ready(function () {
+                                        $("#@Model.ElementAt(i).Id").click(function () {
+                                            var orderDetail = $("#window");
+                                            orderDetail.kendoWindow({
+                                                title: "Order detail",
+                                                actions: ["Close"],
+                                                content: "/OrderHistory/GetAllOrderDetailHistory?orderId=" + @Model.ElementAt(i).Id,
+                                                visible: false
+                                            }).data('kendoWindow').center();
+                                            orderDetail.data("kendoWindow").open().maximize();
+                                        });
+                                    });
+                                    </script>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
